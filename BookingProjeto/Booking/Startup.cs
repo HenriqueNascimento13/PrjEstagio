@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Booking.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Booking
 {
@@ -45,11 +47,13 @@ namespace Booking
         {
             //...
             services.AddMvc();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("RequireAdminRole",
-                    policy => policy.RequireRole("Admin"));
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/auth/login";
+                    options.AccessDeniedPath = "/auth/acessdenied";
+                });
+            
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -62,11 +66,13 @@ namespace Booking
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("Booking")));
+      options.UseSqlServer(
+      Configuration.GetConnectionString("Booking")));
+
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+               
+               .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

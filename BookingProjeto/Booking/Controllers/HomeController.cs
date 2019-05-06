@@ -19,7 +19,7 @@ namespace Booking.Controllers
             return View();
         }
 
-        [Authorize(Roles = "User")]
+        
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -27,10 +27,18 @@ namespace Booking.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Book()
+        {
+            ViewData["Message"] = "Your book page.";
 
             return View();
         }
