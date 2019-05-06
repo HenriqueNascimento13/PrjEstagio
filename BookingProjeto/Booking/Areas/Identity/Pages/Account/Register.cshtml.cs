@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace Booking.Areas.Identity.Pages.Account
@@ -20,15 +19,6 @@ namespace Booking.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        RegisterViewModel registerViewModel = new RegisterViewModel();
-
-        public RegisterViewModel()
-        {
-            Roles = new List<SelectListItem>();
-            Roles.Add(new SelectListItem() { Value = "1", Text = "Admin" });
-            Roles.Add(new SelectListItem() { Value = "2", Text = "Operator" });
-            Roles.Add(new SelectListItem() { Value = "3", Text = "User" });
-        }
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -42,15 +32,6 @@ namespace Booking.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        [DataType(DataType.Text)]
-        [Display(Name = "Perfis de usuário : ")]
-        [UIHint("List")]
-        public List<SelectListItem> Roles { get; set; }
-
-        public string Role { get; set; }
-
-       
-
         [BindProperty]
         public InputModel Input { get; set; }
 
@@ -60,11 +41,11 @@ namespace Booking.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-           [Display(Name = "Email")]
+            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0                 } must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -73,12 +54,23 @@ namespace Booking.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+        }
 
-/");
+        public void OnGet(string returnUrl = null)
+        {
+            ReturnUrl = returnUrl;
+        }
+
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(use                 _logger.LogInformation("User created a new account with password.");
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
