@@ -2671,3 +2671,5 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.Views.pdb
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csproj.CopyComplete
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.exe
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.pdb
+C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.exe
+C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.pdb
