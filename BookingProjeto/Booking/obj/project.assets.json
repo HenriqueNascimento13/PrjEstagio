@@ -10615,36 +10615,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Henrique\\.nuget\\packages\\": {},
+    "C:\\Users\\admin\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\Booking.csproj",
-      "projectName": "Booking",
-      "projectPath": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\Booking.csproj",
-      "packagesPath": "C:\\Users\\Henrique\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\obj\\",
-      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
-      "configFilePaths": [
-        "C:\\Users\\Henrique\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-      ],
-      "originalTargetFrameworks": [
-        "net461"
-      ],
-      "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
-      },
       "frameworks": {
         "net461": {
           "projectReferences": {}
         }
+      },
+      "originalTargetFrameworks": [
+        "net461"
+      ],
+      "outputPath": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\obj\\",
+      "packagesPath": "C:\\Users\\Henrique\\.nuget\\packages\\",
+      "projectName": "Booking",
+      "projectPath": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\Booking.csproj",
+      "projectStyle": "PackageReference",
+      "projectUniqueName": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\Booking.csproj",
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "warningProperties": {
         "warnAsError": [
