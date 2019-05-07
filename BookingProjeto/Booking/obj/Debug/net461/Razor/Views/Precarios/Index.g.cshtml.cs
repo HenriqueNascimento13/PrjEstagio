@@ -69,7 +69,7 @@ using Booking.Models;
                 BeginContext(152, 10, true);
 =======
             BeginContext(139, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "800d5d232bd4471bb0004ab765ac1ba8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8026eda253d4fafef9dcc70eef286549413b00db3804", async() => {
                 BeginContext(162, 10, true);
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 WriteLiteral("Create New");

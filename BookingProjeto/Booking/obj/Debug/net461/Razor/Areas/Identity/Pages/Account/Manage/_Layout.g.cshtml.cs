@@ -13,6 +13,7 @@ namespace Booking.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+<<<<<<< HEAD
 #line 3 "C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
 using Microsoft.AspNetCore.Identity;
 
@@ -20,6 +21,15 @@ using Microsoft.AspNetCore.Identity;
 #line hidden
 #line 2 "C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
 using Booking.Areas.Identity;
+=======
+#line 2 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Booking.Areas.Identity;
+
+#line default
+#line hidden
+#line 3 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
 
 #line default
 #line hidden
@@ -73,10 +83,14 @@ using Booking.Areas.Identity.Pages.Account.Manage;
             EndContext();
             BeginContext(225, 29, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "8344f14abdc6424a850b9505c24df040", async() => {
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d17eba3d02424dd793f060a1feef22fa", async() => {
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "ca5a5079833b7dd4ee49478f573175eefcd17cc54921", async() => {
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();

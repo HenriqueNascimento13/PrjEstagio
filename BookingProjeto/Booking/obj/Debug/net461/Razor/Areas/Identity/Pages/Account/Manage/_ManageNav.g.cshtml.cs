@@ -13,6 +13,7 @@ namespace Booking.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+<<<<<<< HEAD
 #line 3 "C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
 using Microsoft.AspNetCore.Identity;
 
@@ -20,6 +21,15 @@ using Microsoft.AspNetCore.Identity;
 #line hidden
 #line 2 "C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
 using Booking.Areas.Identity;
+=======
+#line 2 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Booking.Areas.Identity;
+
+#line default
+#line hidden
+#line 3 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
 
 #line default
 #line hidden
@@ -89,10 +99,14 @@ WriteAttributeValue("", 211, ManageNavPages.IndexNavClass(ViewContext), 211, 42,
             EndContext();
             BeginContext(255, 33, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "824a12618eb7432aa0ad153050cbd88d", async() => {
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "950f9550733948e4baa7927c9bf79b7d", async() => {
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c4d12c041060441f5901d31ac1ccb912e1cf2a57239", async() => {
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
                 BeginContext(277, 7, true);
                 WriteLiteral("Profile");
                 EndContext();
@@ -125,10 +139,14 @@ WriteAttributeValue("", 310, ManageNavPages.ChangePasswordNavClass(ViewContext),
             EndContext();
             BeginContext(363, 64, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "33e76d3d6cb8418980cd7c5f0fb1b6d0", async() => {
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e08fe7d7d7d6452f89e11d95fdba7d18", async() => {
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c4d12c041060441f5901d31ac1ccb912e1cf2a59067", async() => {
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
                 BeginContext(415, 8, true);
                 WriteLiteral("Password");
                 EndContext();
@@ -171,10 +189,14 @@ WriteAttributeValue("", 489, ManageNavPages.ExternalLoginsNavClass(ViewContext),
             EndContext();
             BeginContext(542, 70, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63a7fed285ff46309fbc52b31fedd80d", async() => {
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b311d1a6bd14bda940017ea9ee859cd", async() => {
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c4d12c041060441f5901d31ac1ccb912e1cf2a511258", async() => {
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
                 BeginContext(593, 15, true);
                 WriteLiteral("External logins");
                 EndContext();
@@ -216,10 +238,14 @@ WriteAttributeValue("", 641, ManageNavPages.TwoFactorAuthenticationNavClass(View
             EndContext();
             BeginContext(703, 69, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6108643f888a4ce3a5d346ad6241a998", async() => {
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9db7c5b926d645eaa0c52efec59196aa", async() => {
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c4d12c041060441f5901d31ac1ccb912e1cf2a513434", async() => {
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
                 BeginContext(743, 25, true);
                 WriteLiteral("Two-factor authentication");
                 EndContext();
@@ -252,10 +278,14 @@ WriteAttributeValue("", 794, ManageNavPages.PersonalDataNavClass(ViewContext), 7
             EndContext();
             BeginContext(845, 46, false);
 <<<<<<< HEAD
+<<<<<<< HEAD
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "606f94d677a5438e9fd3ab659fb5f5af", async() => {
 =======
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f9bd5eb2fdf2480eb7008c01b47e12ad", async() => {
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c4d12c041060441f5901d31ac1ccb912e1cf2a515281", async() => {
+>>>>>>> d73a95442e9772ba287bc6d31656c91e772a1a9d
                 BeginContext(874, 13, true);
                 WriteLiteral("Personal data");
                 EndContext();

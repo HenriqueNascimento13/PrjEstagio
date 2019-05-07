@@ -72,7 +72,7 @@ using Booking.Models;
                 BeginContext(152, 10, true);
 =======
             BeginContext(139, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "db7bcdeee58c4697a1cd7721d62cea3a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3828644e4daa1aa7449de51614ac44bdd1eaf314698", async() => {
                 BeginContext(162, 10, true);
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 WriteLiteral("Create New");
@@ -308,7 +308,7 @@ using Booking.Models;
                 BeginContext(2313, 4, true);
 =======
             BeginContext(2343, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1d8d1dfb286148d886edebfca7dbb373", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3828644e4daa1aa7449de51614ac44bdd1eaf3114701", async() => {
                 BeginContext(2395, 4, true);
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 WriteLiteral("Edit");
@@ -349,7 +349,7 @@ using Booking.Models;
                 BeginContext(2395, 7, true);
 =======
             BeginContext(2423, 66, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f42df6bcd69b43aaa649354d63c024a7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3828644e4daa1aa7449de51614ac44bdd1eaf3117045", async() => {
                 BeginContext(2478, 7, true);
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 WriteLiteral("Details");
@@ -390,7 +390,7 @@ using Booking.Models;
                 BeginContext(2479, 6, true);
 =======
             BeginContext(2509, 64, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c01626eaab247a3a3238c9b3a918ab3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3828644e4daa1aa7449de51614ac44bdd1eaf3119395", async() => {
                 BeginContext(2563, 6, true);
 >>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 WriteLiteral("Delete");
