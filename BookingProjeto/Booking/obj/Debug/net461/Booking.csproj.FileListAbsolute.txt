@@ -2357,7 +2357,6 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.HttpsPolicy.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Identity.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Identity.UI.Views.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Identity.UI.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.JsonPatch.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Localization.dll
@@ -2574,12 +2573,10 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XmlDocume
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XmlSerializer.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XPath.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XPath.XDocument.dll
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.exe.config
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csproj.CoreCompileInputs.cache
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.RazorAssemblyInfo.cache
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.RazorAssemblyInfo.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\UserSecretsAssemblyInfo.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.AssemblyInfoInputs.cache
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.AssemblyInfo.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.TagHelpers.input.cache
@@ -2632,11 +2629,6 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Regimes\
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Regimes\Details.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Regimes\Edit.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Regimes\Index.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Create.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Delete.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Details.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Edit.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Index.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\ServicosHotels\Create.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\ServicosHotels\Delete.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\ServicosHotels\Details.g.cshtml.cs
@@ -2666,3 +2658,13 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.Views.pdb
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csproj.CopyComplete
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.exe
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.pdb
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
+C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Identity.UI.Views.V3.dll
+C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
+C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.AspNetCore.Server.IIS.dll
+C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\Microsoft.Extensions.Logging.EventSource.dll
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Create.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Delete.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Details.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Edit.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Index.g.cshtml.cs

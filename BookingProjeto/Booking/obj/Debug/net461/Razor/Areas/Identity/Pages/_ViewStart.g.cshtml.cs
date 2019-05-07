@@ -13,13 +13,13 @@ namespace Booking.Areas.Identity.Pages
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 3 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
-using Microsoft.AspNetCore.Identity;
+#line 2 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Booking.Areas.Identity;
 
 #line default
 #line hidden
-#line 2 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
-using Booking.Areas.Identity;
+#line 3 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
 
 #line default
 #line hidden

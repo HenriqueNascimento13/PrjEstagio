@@ -13,13 +13,13 @@ namespace Booking.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
-#line 3 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
-using Microsoft.AspNetCore.Identity;
+#line 2 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Booking.Areas.Identity;
 
 #line default
 #line hidden
-#line 2 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
-using Booking.Areas.Identity;
+#line 3 "C:\Temp\Git\Projeto\BookingProjeto\Booking\Areas\Identity\Pages\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity;
 
 #line default
 #line hidden
@@ -72,7 +72,7 @@ using Booking.Areas.Identity.Pages.Account.Manage;
             WriteLiteral("\r\n<h2>Manage your account</h2>\r\n\r\n<div>\r\n    <h4>Change your account settings</h4>\r\n    <hr />\r\n    <div class=\"row\">\r\n        <div class=\"col-md-3\">\r\n            ");
             EndContext();
             BeginContext(225, 29, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d17eba3d02424dd793f060a1feef22fa", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "ca5a5079833b7dd4ee49478f573175eefcd17cc54921", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();

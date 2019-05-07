@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,8 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Booking.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 
 namespace Booking
 {
@@ -24,62 +21,25 @@ namespace Booking
             Configuration = configuration;
         }
 
-        private async Task CreateRoles(IServiceProvider serviceProvider)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] rolesNames = { "Admin", "User" };
-            IdentityResult result;
-            foreach (var namesRole in rolesNames)
-            {
-                var roleExist = await roleManager.RoleExistsAsync(namesRole);
-                if (!roleExist)
-                {
-                    result = await roleManager.CreateAsync(new IdentityRole(namesRole));
-                }
-            }
-        }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //...
             services.AddMvc();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/auth/login";
-                    options.AccessDeniedPath = "/auth/acessdenied";
-                });
-            
-
+            services.AddDbContext<BookingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Booking")));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-
             });
-
-
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-      options.UseSqlServer(
-      Configuration.GetConnectionString("Booking")));
-
-            services.AddDefaultIdentity<IdentityUser>()
-               
-               .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -104,11 +64,6 @@ namespace Booking
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            //CreateRoles(serviceProvider).Wait();
         }
-    }
-
-    internal class ApplicationUser
-    {
     }
 }

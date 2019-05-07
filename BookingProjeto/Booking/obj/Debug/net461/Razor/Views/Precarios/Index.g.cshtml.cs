@@ -64,7 +64,7 @@ using Booking.Models;
             WriteLiteral("\r\n<h2>Index</h2>\r\n\r\n<p>\r\n    ");
             EndContext();
             BeginContext(139, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "800d5d232bd4471bb0004ab765ac1ba8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8026eda253d4fafef9dcc70eef286549413b00db3804", async() => {
                 BeginContext(162, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
