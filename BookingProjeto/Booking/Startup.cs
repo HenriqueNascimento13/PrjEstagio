@@ -24,7 +24,7 @@ namespace Booking
             Configuration = configuration;
         }
 
-        private async Task CreateRoles(IServiceProvider serviceProvider)
+        /*private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -38,9 +38,10 @@ namespace Booking
                     result = await roleManager.CreateAsync(new IdentityRole(namesRole));
                 }
             }
-        }
+        }*/
 
         public IConfiguration Configuration { get; }
+      
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -53,7 +54,15 @@ namespace Booking
                     options.LoginPath = "/auth/login";
                     options.AccessDeniedPath = "/auth/acessdenied";
                 });
-            
+
+            /*services.AddDbContext<ApplicationDbContext>(options =>
+      options.UseSqlServer(
+      Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<IdentityUser>()
+               
+               .AddEntityFrameworkStores<ApplicationDbContext>();*/
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -61,17 +70,33 @@ namespace Booking
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
 
+
             });
-
-
-
             services.AddDbContext<ApplicationDbContext>(options =>
+             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<ApplicationUser, ApplicationRole>();
+
+            services.AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AuthorizePage("/Hoteis/Create");
+                    options.Conventions.AuthorizePage("/Hoteis/Edit");
+                    options.Conventions.AuthorizePage("/Hoteis/Delete");
+                    options.Conventions.AllowAnonymousToPage("/Index");
+
+
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+
+           /* (services.AddDbContext<ApplicationDbContext>(options =>
       options.UseSqlServer(
       Configuration.GetConnectionString("Booking")));
 
             services.AddDefaultIdentity<IdentityUser>()
                
-               .AddEntityFrameworkStores<ApplicationDbContext>();
+               .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
 
 
@@ -81,6 +106,7 @@ namespace Booking
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
+            app.UseAuthentication();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,6 +121,8 @@ namespace Booking
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseMvc();
+            
 
             app.UseAuthentication();
 
@@ -104,7 +132,7 @@ namespace Booking
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            CreateRoles(serviceProvider).Wait();
+            //CreateRoles(serviceProvider).Wait();
         }
     }
 
