@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Booking;
+using Booking.Models;
 
 namespace Booking.Controllers
 {
@@ -16,6 +17,15 @@ namespace Booking.Controllers
         public ReservasController(BookingContext context)
         {
             _context = context;
+        }
+
+        public List<Oferta> getOfertas() {
+            List<Oferta> ofertas = new List<Oferta>();
+            ofertas.Add(new Oferta() { hotelName = "hotel1", roomCategory = "duplo", price = 100});
+            ofertas.Add(new Oferta() { hotelName = "hotel2", roomCategory = "single", price = 90 });
+            ofertas.Add(new Oferta() { hotelName = "hotel3", roomCategory = "triplo", price = 150 });
+
+            return ofertas;
         }
 
         // GET: Reservas

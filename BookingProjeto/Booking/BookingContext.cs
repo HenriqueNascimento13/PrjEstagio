@@ -31,7 +31,7 @@ namespace Booking
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=Ricki-PC;Initial Catalog=Booking;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-IH74466;Initial Catalog=Booking;Integrated Security=True");
             }
         }
 
@@ -308,15 +308,19 @@ namespace Booking
 
             modelBuilder.Entity<Utilizadores>(entity =>
             {
-                entity.HasKey(e => e.Email);
+                entity.HasKey(e => e.Utilizador);
 
-                entity.Property(e => e.Email)
+                entity.Property(e => e.Utilizador)
                     .HasMaxLength(150)
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Pass)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.TipoUtilizador)
+                    .IsRequired()
+                    .HasMaxLength(20);
             });
 
             OnModelCreatingPartial(modelBuilder);
