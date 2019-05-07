@@ -59,8 +59,13 @@ using Booking.Models;
             BeginContext(42, 101, true);
             WriteLiteral("\n\n<div class=\"col-xs-12\" id=\"main\" >\n\n    <div class=\"col-xs-4\" id=\"img\" style=\" left: 0%;\">\n        ");
             EndContext();
+<<<<<<< HEAD
             BeginContext(143, 50, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "6954f4052cc64dcaad71e49eefd29f87", async() => {
+=======
+            BeginContext(151, 50, false);
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9436982f11874973944416255020844b", async() => {
+>>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -101,8 +106,13 @@ using Booking.Models;
     <div class=""col-xs-4"" id=""img"" style="" left: 0%;"">
         ");
             EndContext();
+<<<<<<< HEAD
             BeginContext(742, 50, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "cec99276078e49c9a56886d5de4e9876", async() => {
+=======
+            BeginContext(768, 50, false);
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "e7da1696695c40fd9c1623b74feab7d1", async() => {
+>>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

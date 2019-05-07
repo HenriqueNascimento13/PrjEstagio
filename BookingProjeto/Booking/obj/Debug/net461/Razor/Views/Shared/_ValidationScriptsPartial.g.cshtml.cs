@@ -64,6 +64,7 @@ using Booking.Models;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
+<<<<<<< HEAD
             BeginContext(0, 221, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("environment", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4803f4c0d2fd443384e775a83d039adb", async() => {
                 BeginContext(35, 5, true);
@@ -71,6 +72,15 @@ using Booking.Models;
                 EndContext();
                 BeginContext(40, 71, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3b8b84167c64f94a1fb779a4b93782b", async() => {
+=======
+            BeginContext(0, 224, false);
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("environment", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edaacd6e0eff4df9b45d9b2978dca315", async() => {
+                BeginContext(35, 6, true);
+                WriteLiteral("\r\n    ");
+                EndContext();
+                BeginContext(41, 71, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c3611bb30da945908717490c44f6ebb7", async() => {
+>>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -87,8 +97,13 @@ using Booking.Models;
                 BeginContext(111, 5, true);
                 WriteLiteral("\n    ");
                 EndContext();
+<<<<<<< HEAD
                 BeginContext(116, 90, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f85e50f9f19a40868beef8ab812d676d", async() => {
+=======
+                BeginContext(118, 90, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90e680174a4a47a2bfffc1d0e0b60865", async() => {
+>>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -122,6 +137,7 @@ using Booking.Models;
             BeginContext(221, 1, true);
             WriteLiteral("\n");
             EndContext();
+<<<<<<< HEAD
             BeginContext(222, 931, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("environment", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "afc1061bcae341a5b1265a44188c1c7f", async() => {
                 BeginContext(257, 5, true);
@@ -131,6 +147,17 @@ using Booking.Models;
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "726ee8d8baaa465a9b66e16581a23092", async() => {
                     BeginContext(642, 5, true);
                     WriteLiteral("\n    ");
+=======
+            BeginContext(226, 944, false);
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("environment", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f4d627b9114846b7abaf95362299fb3e", async() => {
+                BeginContext(261, 6, true);
+                WriteLiteral("\r\n    ");
+                EndContext();
+                BeginContext(267, 399, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f9461ac0f777400387fd7b71abff2ae1", async() => {
+                    BeginContext(651, 6, true);
+                    WriteLiteral("\r\n    ");
+>>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                     EndContext();
                 }
                 );
@@ -155,10 +182,17 @@ using Booking.Models;
                 BeginContext(656, 5, true);
                 WriteLiteral("\n    ");
                 EndContext();
+<<<<<<< HEAD
                 BeginContext(661, 477, false);
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4369f84086e34d79a13e09c65c00b139", async() => {
                     BeginContext(1124, 5, true);
                     WriteLiteral("\n    ");
+=======
+                BeginContext(672, 482, false);
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a4325d091eda44acb1dee2ed8baa7276", async() => {
+                    BeginContext(1139, 6, true);
+                    WriteLiteral("\r\n    ");
+>>>>>>> 6a335fcb95e3f864fc78cf6f7a68700a8315f0c1
                     EndContext();
                 }
                 );
