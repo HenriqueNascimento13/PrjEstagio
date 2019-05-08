@@ -25,7 +25,7 @@ namespace Booking.Models
 
         public string Pais { get; set; }
 
-        public Decimal Preco { get; set; }
+        public decimal Preco { get; set; }
 
     }
 }
