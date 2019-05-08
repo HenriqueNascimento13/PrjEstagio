@@ -2609,11 +2609,6 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Home\Boo
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Home\Contact.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Home\Index.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Home\Privacy.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Hoteis\Create.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Hoteis\Delete.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Hoteis\Details.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Hoteis\Edit.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Hoteis\Index.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagamentoes\Create.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagamentoes\Delete.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagamentoes\Details.g.cshtml.cs
@@ -2645,11 +2640,6 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoPaga
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoPagamentoes\Details.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoPagamentoes\Edit.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoPagamentoes\Index.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Create.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Delete.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Details.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Edit.g.cshtml.cs
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Index.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\_ViewImports.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\_ViewStart.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.RazorTargetAssemblyInfo.cache
@@ -2668,3 +2658,8 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Details.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Edit.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Reservas\Index.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Create.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Delete.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Details.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Edit.g.cshtml.cs
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\TipoQuartoes\Index.g.cshtml.cs
