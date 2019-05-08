@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Booking;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
@@ -19,6 +20,7 @@ namespace Booking.Controllers
         }
 
         // GET: Reservas
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var bookingContext = _context.Reservas.Include(r => r.CodPagamentoNavigation).Include(r => r.IdclienteNavigation).Include(r => r.IdhotelNavigation).Include(r => r.IdregimeNavigation).Include(r => r.IdtipoQuartoNavigation);
@@ -26,6 +28,7 @@ namespace Booking.Controllers
         }
 
         // GET: Reservas/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace Booking.Controllers
         }
 
         // GET: Reservas/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["CodPagamento"] = new SelectList(_context.Pagamento, "CodPagamento", "DataValidadeCartao");
@@ -62,6 +66,7 @@ namespace Booking.Controllers
         // POST: Reservas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Idreserva,Idhotel,Idcliente,Idregime,IdtipoQuarto,CodPagamento,QuantAdultos,QuantCriancas,CheckIn,CheckOut")] Reservas reservas)
@@ -81,6 +86,7 @@ namespace Booking.Controllers
         }
 
         // GET: Reservas/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -104,6 +110,7 @@ namespace Booking.Controllers
         // POST: Reservas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("Idreserva,Idhotel,Idcliente,Idregime,IdtipoQuarto,CodPagamento,QuantAdultos,QuantCriancas,CheckIn,CheckOut")] Reservas reservas)
@@ -142,6 +149,7 @@ namespace Booking.Controllers
         }
 
         // GET: Reservas/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -165,6 +173,7 @@ namespace Booking.Controllers
         }
 
         // POST: Reservas/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)

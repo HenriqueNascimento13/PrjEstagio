@@ -8,24 +8,7 @@
     <h2>@ViewBag.Message</h2>
 <h2>List Of Offers</h2>
 
-<table border="1">
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.HotelName</td>
-            <td>@item.RoomCategory</td>
-            @if (item.FromDate != null)
-            {
-                <td>@item.FromDate  <br />@item.ToDate </td>
-            }
 
-            <td>
-                <div class="discount"> @(item.PriceBeforeDiscount < item.Price ? "" : item.PriceBeforeDiscount.ToString())</div>
-                <br />@item.Price
-            </td>
-        </tr>
-    }
-</table>
 
 <div class="col-xs-12" id="main">
 

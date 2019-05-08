@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Booking;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
@@ -26,6 +27,7 @@ namespace Booking.Controllers
         }
 
         // GET: ServicosHotels/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(short? id)
         {
             if (id == null)
@@ -45,6 +47,7 @@ namespace Booking.Controllers
         }
 
         // GET: ServicosHotels/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["Idhotel"] = new SelectList(_context.Hoteis, "Idhotel", "CodPostal");
@@ -55,6 +58,7 @@ namespace Booking.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Idservicos,Idhotel,Descricao")] ServicosHotel servicosHotel)
         {
@@ -69,6 +73,7 @@ namespace Booking.Controllers
         }
 
         // GET: ServicosHotels/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(short? id)
         {
             if (id == null)
@@ -88,6 +93,7 @@ namespace Booking.Controllers
         // POST: ServicosHotels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(short id, [Bind("Idservicos,Idhotel,Descricao")] ServicosHotel servicosHotel)
@@ -122,6 +128,7 @@ namespace Booking.Controllers
         }
 
         // GET: ServicosHotels/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(short? id)
         {
             if (id == null)
@@ -141,6 +148,7 @@ namespace Booking.Controllers
         }
 
         // POST: ServicosHotels/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(short id)
