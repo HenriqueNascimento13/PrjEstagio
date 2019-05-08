@@ -48,14 +48,6 @@ namespace Booking.Controllers
 
         public ActionResult Index(DateTime? fromDate, DateTime? toDate)
         {
-            //var Dados = from c in db.Reservas.Join(db.Reservas, t => t.Idcliente, p => p.Idcliente, (t, p) => new { t, p })
-            //            .Select(s => new {
-
-            //           
-
-            var dados = from a in db.Reservas
-                        .Select a;
-
             var listOffers = new List<Ofertas>();
   
             listOffers.Add(new Ofertas() { FromDate = fromDate, ToDate = toDate, HotelName = "Hotel 1", RoomCategory = "Double", Price = 100, PriceBeforeDiscount = 110 });
