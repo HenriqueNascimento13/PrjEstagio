@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Booking;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RegimesController : Controller
     {
         private readonly BookingContext _context;
@@ -19,6 +21,7 @@ namespace Booking.Controllers
         }
 
         // GET: Regimes
+        
         public async Task<IActionResult> Index()
         {
             var bookingContext = _context.Regimes.Include(r => r.IdhotelNavigation);
