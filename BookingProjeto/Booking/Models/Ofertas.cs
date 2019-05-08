@@ -15,6 +15,6 @@ namespace Booking.Models
         public string RoomCategory { get; set; }
 
         public decimal Price { get; set; }
-        public decimal PriceBeforeDiscount { get; set; }
+        //public decimal PriceBeforeDiscount { get; set; }
     }
 }
