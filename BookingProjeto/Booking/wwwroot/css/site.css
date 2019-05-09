@@ -52,6 +52,7 @@ body {
     margin-bottom: 3%;
     height: 220px;
     padding: 0%;
+    float: left;
 }
 
 #img {
@@ -73,6 +74,7 @@ h3, h4, h5 {
 h2 {
     color: #4682B4;
     font-family: inherit;
+    margin-bottom: 0px;
 }
 
 h3, h4, h5 {
@@ -104,6 +106,7 @@ h3, h4, h5 {
     border: 1px solid #ccc;
     overflow: hidden;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .reservation-room-types {
@@ -139,6 +142,13 @@ h3, h4, h5 {
     margin-top: 20px;
 }
 
+.titulo2 {
+    background-color: black;
+    padding: 20px;
+    color: white;
+    margin-top: 0px;
+}
+
 .reserva, .hotel {
     padding: 20px;
     background-color: #fff;
@@ -146,8 +156,12 @@ h3, h4, h5 {
     border: 1px solid #ccc;
 }
 
-p {
+#pBook {
     margin-bottom: 10px;
+}
+
+p{
+    margin-bottom: 0px;
 }
 
 table{
@@ -160,4 +174,16 @@ table{
     height: 100%;
     position: center;
     padding: 2px;
+}
+#preco{
+    text-align: right; 
+    color: #4682B4; 
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+#desde {
+    text-align: right; 
+    margin-bottom: 0px;
+    margin-left: 2%;
 }
