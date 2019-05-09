@@ -111,47 +111,12 @@ namespace Booking.Controllers
 
                         list.Add(quartos);
                     }
+                    
                 }
+
             }
             return View(list);
         }
-
-        //PARA AS ESTRELAS
-
-        /*@if(@item.NumEstrelas.Equals("1"))
-        {
-            <p><i class="fa fa-star" style="font-size:24px;color:yellow"></i></p>
-        }
-        else
-        if (@item.NumEstrelas.Equals("2"))
-        {
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i><i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-        }
-        else
-        if (@item.NumEstrelas.Equals("3"))
-        {
-            <p><i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-                <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-                <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            </p>
-        }
-        else
-        if (@item.NumEstrelas.Equals("4"))
-        {
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-        }
-        else
-        if (@item.NumEstrelas.Equals("5"))
-        {
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
-        }*/
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
