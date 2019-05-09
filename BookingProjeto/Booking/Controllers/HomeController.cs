@@ -93,21 +93,24 @@ namespace Booking.Controllers
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
-                    var quartos = new QuartosDisp();
 
-                    quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
-                    quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
-                    quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
-                    quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                    quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                    quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                    quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                    quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                    quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                    quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+                    while (rd.Read())
+                    {
+                        var quartos = new QuartosDisp();
 
-                    list.Add(quartos);
+                        quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                        quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                        quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                        quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                        quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                        quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                        quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                        quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                        quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                        quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
 
+                        list.Add(quartos);
+                    }
                     
                 }
 

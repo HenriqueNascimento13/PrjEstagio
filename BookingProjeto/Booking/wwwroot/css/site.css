@@ -21,35 +21,43 @@ body {
 }
 
 
-
 #jumbotron {
-    background-image: url(../images/stay.jpg);
-    background-size: cover;
-    background-repeat: no-repeat, repeat;
+    background-image: url(https://dkgzabag3frbh.cloudfront.net/attachments/properties/banners/2/large_Screen_Shot_2017-09-04_at_5.51.45_pm.png);
+    background-position: 50%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    border-bottom: 0;
     width: 100%;
     position: center;
+    height: 350px;
+    padding: 0%;
 }
-
-
-
 
 #form {
     font: bold;
     opacity: 1;
     position: relative;
-    bottom: 0px;
     font-family: Arial;
     font-size: 15px;
+    padding: 10px 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin-top: 296px;
 }
 
 #main {
     border: none;
     background-color: rgb(255,255,255);
     margin-bottom: 3%;
+    height: 220px;
+    padding: 0%;
 }
 
 #img {
     border: none;
+    margin-left: 0%;
+    height: 220px;
+    padding: 0%;
 }
 
 /* Catarina */
@@ -138,4 +146,11 @@ p {
 table{
     background-color:white;
     border-color: black;
+}
+
+#imgReservas{
+    width: 100%;
+    height: 100%;
+    position: center;
+    padding: 2px;
 }
