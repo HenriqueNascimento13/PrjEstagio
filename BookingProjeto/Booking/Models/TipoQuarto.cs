@@ -17,7 +17,7 @@ namespace Booking
         public byte Capacidade { get; set; }
         public int Inventario { get; set; }
         public string Descricao { get; set; }
-        public byte[] Imagem { get; set; }
+        public string Imagem { get; set; }
 
         public virtual Hoteis IdhotelNavigation { get; set; }
         public virtual ICollection<EspecificacoesQuarto> EspecificacoesQuarto { get; set; }
