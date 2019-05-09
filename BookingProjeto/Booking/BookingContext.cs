@@ -32,8 +32,9 @@ namespace Booking
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Data Server=Ricki-PC;Database=Booking;Trusted_Connection=True;");
-               
-                
+                optionsBuilder.UseSqlServer("Data Server=DESKTOP-IH74466;Database=Booking;Trusted_Connection=True;");
+
+
             }
         }
 
