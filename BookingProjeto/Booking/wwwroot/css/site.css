@@ -60,11 +60,17 @@ body {
     padding: 0%;
 }
 
+
 /* Catarina */
 
 h3, h4, h5 {
     font-weight: 700;
     margin-top: 0;
+    font-family: inherit;
+}
+
+h2 {
+    color: #4682B4;
     font-family: inherit;
 }
 
