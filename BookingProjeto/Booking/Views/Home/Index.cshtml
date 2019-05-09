@@ -8,61 +8,30 @@
 <h2>List Of Offers</h2>
 
 
-<<<<<<< HEAD
-@*<table class="table table-bordered">
-        <tr>
-            <th>Nome do Hotel</th>
-            <th>Tipo de Quarto</th>
-            <th>Data de Entrada <br /> Data de Saída </th>
-            <th>Preço</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-=======
->>>>>>> zuka/master
-
-            <tr>
-                <td>@item.HotelName</td>
-                <td>@item.RoomCategory</td>
-                @if (item.FromDate != null)
-                {
-                    <td>@item.FromDate  <br />@item.ToDate </td>
-                }
-
-                <td>
-                    <br />@item.Price
-                </td>
-            </tr>
-        }
-    </table>*@
-
 
 @foreach (var item in Model)
 {
 <div class="col-xs-12" id="main">
+    <div class="col-xs-4" id="img" style=" left: 0%;">
+        @item.Imagem
+    </div>
 
-    @if (item.Imagem != null)
-    {
-        <div class="col-xs-4" id="img" style=" left: 0%;">
-            @item.Imagem
+    <div class="col-xs-7" id="text" style="left: 0%;">
+
+        <div class="col-sm-7 col-lg-8">
+            <h2>@item.NomeHotel @item.NumEstrelas</h2>
+            <h4>@item.Morada @item.Localidade @item.CodPostal @item.Pais</h4>
+            <p>
+                @item.TipoQuarto
+                @item.Capacidade
+            </p>
         </div>
-    }
-        <div class="col-xs-7" id="text" style="left: 0%;">
-
-            <div class="col-sm-7 col-lg-8">
-                <h2>@item.NomeHotel @item.NumEstrelas</h2>
-                <h4>@item.Morada @item.Localidade @item.CodPostal @item.Pais</h4>
-                <p>
-                    @item.TipoQuarto
-                    @item.Capacidade
-                </p>
-            </div>
-            <div class="col-sm-5 col-lg-4">
-                <p>@item.Preco</p>
-                <a href="Book" class="btn btn-info" role="button">Reservar</a>
-            </div>
+        <div class="col-sm-5 col-lg-4">
+            <p>@item.Preco</p>
+            <a href="Book" class="btn btn-info" role="button">Reservar</a>
         </div>
     </div>
+</div>
 }
 
     <div class="col-xs-12" id="main">

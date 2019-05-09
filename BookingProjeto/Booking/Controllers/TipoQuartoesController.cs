@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Booking;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
@@ -25,7 +24,7 @@ namespace Booking.Controllers
             var bookingContext = _context.TipoQuarto.Include(t => t.IdhotelNavigation);
             return View(await bookingContext.ToListAsync());
         }
-        [Authorize(Roles = "Admin")]
+
         // GET: TipoQuartoes/Details/5
         public async Task<IActionResult> Details(long? id)
         {
@@ -44,7 +43,7 @@ namespace Booking.Controllers
 
             return View(tipoQuarto);
         }
-        [Authorize(Roles = "Admin")]
+
         // GET: TipoQuartoes/Create
         public IActionResult Create()
         {
@@ -55,7 +54,6 @@ namespace Booking.Controllers
         // POST: TipoQuartoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdtipoQuarto,Idhotel,Capacidade,Inventario,Descricao,Imagem")] TipoQuarto tipoQuarto)
@@ -69,7 +67,7 @@ namespace Booking.Controllers
             ViewData["Idhotel"] = new SelectList(_context.Hoteis, "Idhotel", "CodPostal", tipoQuarto.Idhotel);
             return View(tipoQuarto);
         }
-        [Authorize(Roles = "Admin")]
+
         // GET: TipoQuartoes/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
@@ -92,7 +90,6 @@ namespace Booking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long id, [Bind("IdtipoQuarto,Idhotel,Capacidade,Inventario,Descricao,Imagem")] TipoQuarto tipoQuarto)
         {
             if (id != tipoQuarto.IdtipoQuarto)
@@ -125,7 +122,6 @@ namespace Booking.Controllers
         }
 
         // GET: TipoQuartoes/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -143,7 +139,7 @@ namespace Booking.Controllers
 
             return View(tipoQuarto);
         }
-        [Authorize(Roles = "Admin")]
+
         // POST: TipoQuartoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -42,10 +42,13 @@ namespace Booking
             });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
+<<<<<<< HEAD
                     Configuration.GetConnectionString("henrique")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
+=======
+>>>>>>> a83241f01eff6e80352c3f26ec842a4e12eeeb64
                     Configuration.GetConnectionString("catarina")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(

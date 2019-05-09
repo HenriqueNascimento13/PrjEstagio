@@ -31,10 +31,14 @@ namespace Booking
         {
             if (!optionsBuilder.IsConfigured)
             {
+<<<<<<< HEAD
                 optionsBuilder.UseSqlServer("Data Server=Ricki-PC;Database=Booking;Trusted_Connection=True;");
                 optionsBuilder.UseSqlServer("Data Server=DESKTOP-IH74466;Database=Booking;Trusted_Connection=True;");
 
 
+=======
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-IH74466;Initial Catalog=Booking;Integrated Security=True");
+>>>>>>> a83241f01eff6e80352c3f26ec842a4e12eeeb64
             }
         }
 
@@ -112,6 +116,8 @@ namespace Booking
                     .HasMaxLength(15);
 
                 entity.Property(e => e.Descricao).HasColumnType("ntext");
+
+                entity.Property(e => e.Imagem).HasMaxLength(300);
 
                 entity.Property(e => e.Localidade)
                     .IsRequired()
@@ -301,6 +307,8 @@ namespace Booking
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Idhotel).HasColumnName("IDHotel");
+
+                entity.Property(e => e.Imagem).HasMaxLength(300);
 
                 entity.HasOne(d => d.IdhotelNavigation)
                     .WithMany(p => p.TipoQuarto)
