@@ -1,7 +1,7 @@
 ﻿@model List<Booking.Models.QuartosDisp>
 @{
     ViewData["Title"] = "Home Page";
-    ViewBag.Title = "View";
+    ViewBag.Title = "";
 }
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -29,7 +29,7 @@
                         <p>Capacidade de pessoas: @item.Capacidade</p>
                     </div>
 
-                    <div class="col-md-2" style="margin: 10% 0% 5% 0%">
+                    <div class="col-md-2" style="margin: 10% 0% 5% 0%; text-align: right">
                         <h6 id="desde">Desde</h6>
                         <p id="preco">@item.Preco €</p>
                         <a href="/Home/Book" class="btn btn-info" role="button">Reservar</a>
