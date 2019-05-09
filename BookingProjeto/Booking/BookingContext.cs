@@ -31,7 +31,7 @@ namespace Booking
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-IH74466;Initial Catalog=Booking;Integrated Security=True");
+                optionsBuilder.UseSqlServer("Data Source=Ricki-Pc;Initial Catalog=Booking;Integrated Security=True");
             }
         }
 
