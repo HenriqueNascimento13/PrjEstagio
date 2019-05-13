@@ -42,7 +42,7 @@ body {
     padding: 10px 30px;
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
-    margin-top: 15%;
+    margin-top: 12.1%;
     color: rgb(255,255,255);
 }
 
@@ -59,11 +59,11 @@ body {
     padding-top: 10px;
     padding-bottom: 0px;
     margin-right: auto;
-    margin-left: 90px;
+    margin-left: 285px;
     padding-left: 100px;
     padding-right: 100px;
     width: 970px;
-    height: 20px;
+    height: 100px;
     
 }
 
@@ -125,13 +125,7 @@ h3, h4, h5 {
     box-sizing: border-box;
 }
 
-.col-sm-2, .col-lg-2, .col-md-2, .col-sm-4 {
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 30px;
-}
-
-.col-md-6, .col-md-3 {
+.col-sm-2, .col-lg-2, .col-md-2, .col-sm-4, .col-md-6, .col-md-3 {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 10px;
@@ -144,7 +138,6 @@ h3, h4, h5 {
 .row {
     margin-left: -10px;
     margin-right: -10px;
-    margin-bottom: 10px;
 }
 
 .titulo {
@@ -198,6 +191,13 @@ table{
     text-align: right; 
     margin-bottom: 0px;
     margin-left: 2%;
+}
+
+#Quartos {
+    background-color: #fff;
+    display: none;
+    margin-bottom: 20px;
+    margin-top:0px;
 }
 
 /*

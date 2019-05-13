@@ -42,7 +42,7 @@ namespace Booking
             });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("henrique")));
+                    Configuration.GetConnectionString("catarina")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(
                 Options => Options.Stores.MaxLengthForKeys = 128)
