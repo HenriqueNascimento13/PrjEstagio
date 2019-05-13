@@ -12,6 +12,9 @@ using System.Data.SqlClient;
 using System.Data;
 using System.IO;
 using System.Drawing;
+using Booking.Controllers;
+using Microsoft.EntityFrameworkCore;
+using System.Runtime.Remoting.Contexts;
 
 namespace Booking.Controllers
 {
@@ -22,8 +25,9 @@ namespace Booking.Controllers
         //{
         //    return View();
         //}
+        private DbContext _context;
 
-        
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -50,15 +54,14 @@ namespace Booking.Controllers
         {
             return View();
         }
-        
+
         public ActionResult Index()
         {
             var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
-            
 
-            using(var cn = new SqlConnection(cs))
+            using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
@@ -90,31 +93,137 @@ namespace Booking.Controllers
                              "from TipoQuarto tq, Hoteis h, Precario p " +
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
 
+                string sql1 = "select  h.NomeHotel, tq.Capacidade, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco, tq.Imagem, tq.IDTipoQuarto, tq.Descricao, rs.IDReserva, rs.CheckIn, rs.CheckOut " +
+                              "from TipoQuarto tq, Reservas rs, Hoteis h, Precario p " +
+                              "where tq.IDTipoQuarto = rs.IDTipoQuarto and tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
+
+                string sql2 = "sql" - "sql1";
+                
+                sql2 = (sql - sql1);
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var ct = cm.CommandText();
+
+                    var rd = cm.ExecuteReader();
+
+                   
+                        while (rd.Read())
+                        {
+                            var quartos2 = new QuartosDisp();
+
+                            quartos2.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                            quartos2.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                            quartos2.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                            quartos2.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                            quartos2.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                            quartos2.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                            quartos2.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                            quartos2.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                            quartos2.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                            quartos2.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+
+                            list.Add(quartos2);
+
+
+                        }
+                    
+
+                    
+
+
+                    //while (rd.Read())
+                    //{
+                    //    var quartos = new QuartosDisp();
+
+                    //    quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                    //    quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                    //    quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                    //    quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                    //    quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                    //    quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                    //    quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                    //    quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                    //    quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                    //    quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+
+                    //    list.Add(quartos);
+
+
+                    //}
+
+                    //else if(false)
+                    //{
+                    //    var quartos2 = new QuartosDisp();
+
+                    //    quartos2.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                    //    quartos2.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                    //    quartos2.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                    //    quartos2.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                    //    quartos2.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                    //    quartos2.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                    //    quartos2.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                    //    quartos2.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                    //    quartos2.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                    //    quartos2.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+
+                    //    list.Add(quartos2);
+
+                    //}
+
+                }
+            }
+            return View(list);
+
+           
+            
+        }
+
+        /*public IActionResult Index(DateTime checkin)
+        {
+
+     
+
+            var list2 = new List<QuartosDisp>();
+
+            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "select rs.CheckIn, rs.checkout" +
+                             "from Reservas rs";
+
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
 
                     while (rd.Read())
                     {
-                        var quartos = new QuartosDisp();
+                        var disp = new QuartosDisp();
 
-                        quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
-                        quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
-                        quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
-                        quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                        quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                        quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                        quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                        quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                        quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                        quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+                        disp.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                        disp.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                        disp.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                        disp.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                        disp.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                        disp.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                        disp.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                        disp.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                        disp.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                        disp.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
 
-                        list.Add(quartos);
+                        list2.Add(disp);
                     }
+
                 }
             }
-            return View(list);
-        }
+
+            return View(list2);
+        }*/
+            
+        
 
         //PARA AS ESTRELAS
 

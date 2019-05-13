@@ -21,5 +21,9 @@ namespace Booking
         public virtual Hoteis IdhotelNavigation { get; set; }
         public virtual Regimes IdregimeNavigation { get; set; }
         public virtual TipoQuarto IdtipoQuartoNavigation { get; set; }
+
+        
     }
+
+    
 }

@@ -21,7 +21,7 @@ namespace Booking.Controllers
 
         // GET: Reservas
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string procurar)
         {
             var bookingContext = _context.Reservas.Include(r => r.CodPagamentoNavigation).Include(r => r.IdclienteNavigation).Include(r => r.IdhotelNavigation).Include(r => r.IdregimeNavigation).Include(r => r.IdtipoQuartoNavigation);
             return View(await bookingContext.ToListAsync());

@@ -30,7 +30,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Book">Contact</a></li>
                 </ul>
@@ -42,12 +42,15 @@
     <div class="container-fluid" id="jumbotron">
         <div class="container-fluid" id="form">
             <div class="container-fluid" id="cont">
-                <form>
+                <form  method="post" action="@Url.Action("Index","Home")">
                     <div class="row">
                         <div class="col-md-3 col-sm-12">
                             <label>Entrada <i class="glyphicon">&#xe109;</i></label>
-                            <input type="date" class="form-control" id="entrada">
+                            <input type="date" asp-items="Model.Reserva"class="form-control" id="checkin">
+                            <input type="submit" class="glyphicon-calendar" name="procurar" value="procurar" />
                         </div>
+
+                        
                         <div class="col-md-3 col-sm-12">
                             <label>Saída <i class="glyphicon">&#xe109;</i> </label>
                             <input type="date" class="form-control" id="saida">
@@ -60,7 +63,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-4">
-                            <label>Crianças(2-12)</label>
+                            <label>Crianças</label>
                             <select class="form-control">
                                 <option value="0" selected="selected" label="0">0</option>
                                 <option value="1" label="1">1</option>
@@ -68,14 +71,7 @@
                                 <option value="3" label="3">3</option>
                             </select>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-4">
-                            <label>Bebés(< 2)</label>
-                            <select class="form-control">
-                                <option value="0" selected="selected" label="0">0</option>
-                                <option value="1" label="1">1</option>
-                                <option value="2" label="2">2</option>
-                            </select>
-                        </div>
+
 
                     </div>
                 </form>
