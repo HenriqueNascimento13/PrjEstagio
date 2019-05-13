@@ -1,4 +1,6 @@
-﻿@model List<Booking.Models.QuartosDisp>
+﻿@model Booking.Models.ViewModel
+
+
 @{
     ViewData["Title"] = "Home Page";
     ViewBag.Title = "";
@@ -11,32 +13,63 @@
 
 <div class="container" id="containerPage">
     <div class="col-lg-9">
-        @foreach (var item in Model)
+        @foreach (var item in Model.Hoteis)
         {
-            <div class="col-md-12" id="main">
-                <div class="col-md-4" id="img">
-                    <img src="@item.Imagem" id="imgReservas" />
+            <div class="container-fluid">
+                <div class="col-md-12" id="main">
+                    <div class="col-md-4" id="img">
+                        <img src="@item.Imagem" id="imgReservas" />
+                    </div>
+
+                    <div class="col-md-8" id="text" style="left: 0%;">
+
+                        <div class="col-md-9">
+                            <h2>@item.NomeHotel </h2>
+
+                            <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
+                            <p>@item.NumEstrelas Estrelas</p>
+                            <br />
+                            <p>Descrição:</p>
+                            <p>@item.Descricao</p>
+                        </div>
+
+                        <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
+                            <h6 id="desde">Desde</h6>
+                            <p id="preco"> €</p>
+
+                            <button type="button" class="btn btn-info" onclick="MudarEstado('Quartos')">Quartos <span class="glyphicon glyphicon-chevron-down"></span></button>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col-md-8" id="text" style="left: 0%;">
-
-                    <div class="col-md-10">
-                        <h2>@item.NomeHotel </h2>
-
-                        <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
-                        <p>@item.NumEstrelas Estrelas</p>
-                        <p style="margin-top:5%;">Quarto: @item.TipoQuarto </p>
-                        <p>Capacidade de pessoas: @item.Capacidade</p>
+                <div id="Quartos">
+                    <div>
+                        <div class="row" style="background-color:lightgrey">
+                            <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"></span></div>
+                            <div class="col-xs-4 text-center">Quartos</div>
+                            <div class="col-xs-7 text-center">Total</div>
+                        </div>
                     </div>
-
-                    <div class="col-md-2" style="margin: 10% 0% 5% 0%; text-align: right">
-                        <h6 id="desde">Desde</h6>
-                        <p id="preco">@item.Preco €</p>
-                        <a href="/Home/Book" class="btn btn-info" role="button">Reservar</a>
-                    </div>
+                    @foreach (var item2 in Model.Quartos)
+                    {
+                     <div class="container-fluid">
+                        <div class="col-xs-1 text-center">
+                            @item2.Capacidade
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            @item2.TipoQuarto
+                        </div>
+                        <div class="col-xs-5 text-center">
+                            @item2.Preco
+                        </div>
+                        <div class="col-xs-2 text-center">
+                            <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>
+                        </div>
+                      </div>
+                     }
                 </div>
             </div>
         }
+
     </div>
 
     <div id="right-container" class="col-lg-3">
