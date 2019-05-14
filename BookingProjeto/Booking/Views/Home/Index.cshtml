@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 ﻿@model List<Booking.Models.QuartosDisp>
+=======
+﻿@model Booking.Models.ViewModel
+
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
 @{
     ViewData["Title"] = "Home Page";
     ViewBag.Title = "View";
@@ -11,18 +16,31 @@
 
 <div class="container" id="containerPage">
     <div class="col-lg-9">
+<<<<<<< HEAD
         @foreach (var item in Model)
+=======
+        @foreach (var item in Model.Quartos)
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
         {
             <div class="col-md-12" id="main">
                 <div class="col-md-4" id="img">
                     <img src="@item.Imagem" id="imgReservas" />
                 </div>
 
+<<<<<<< HEAD
                 <div class="col-md-8" id="text" style="left: 0%;">
+=======
+                            <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
+                            <p>@item.NumEstrelas Estrelas</p>
+                            <br />
+                            <p>@item.Capacidade Pessoas</p>
+                        </div>
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
 
                     <div class="col-md-10">
                         <h2>@item.NomeHotel </h2>
 
+<<<<<<< HEAD
                         <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
                         <p>@item.NumEstrelas Estrelas</p>
                         <p style="margin-top:5%;">Quarto: @item.TipoQuarto </p>
@@ -34,6 +52,35 @@
                         <p id="preco">@item.Preco €</p>
                         <a href="/Home/Book" class="btn btn-info" role="button">Reservar</a>
                     </div>
+=======
+                            <button type="button" class="btn btn-info" onclick="MudarEstado('@item.IdHotel')">Tarifas <span class="glyphicon glyphicon-chevron-down"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="Tarifas" id="@item.IdHotel">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"></span></div>
+                            <div class="col-xs-4 text-center">Quartos</div>
+                            <div class="col-xs-7 text-center">Total</div>
+                        </div>
+                    </div>
+                    @foreach (var item2 in Model.Esp)
+                    {
+                        <div class="container-fluid">
+                            <div class="col-xs-1">
+                                @item.Capacidade
+                            </div>
+                            <div class="col-xs-4 text-center">
+                            </div>
+                            <div class="col-xs-5 text-center">
+                            </div>
+                            <div class="col-xs-2 text-center">
+                                <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>
+                            </div>
+                        </div>
+                    }
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                 </div>
             </div>
         }
@@ -54,6 +101,7 @@
                     <span>88 Resort Street, Ecke Musterplatz, Little Cayman, 8000, Austrália</span>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <i class="material-icons" style="font-size:15px">directions_car</i>
@@ -68,6 +116,7 @@
                     </span>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-phone-alt"></span>
@@ -76,6 +125,7 @@
                     <a href="#">1300 123 456</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-phone-alt"></span>
@@ -84,6 +134,7 @@
                     <a href="tel:61280311222">61280311222</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-envelope"></span>
@@ -92,6 +143,7 @@
                     <a href="mailto:sales@siteminder.com">sales@siteminder.com</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-globe"></span>

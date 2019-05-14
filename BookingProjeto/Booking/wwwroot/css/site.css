@@ -185,4 +185,27 @@ table{
     text-align: right; 
     margin-bottom: 0px;
     margin-left: 2%;
+<<<<<<< HEAD
 }
+=======
+}
+
+.Tarifas {
+    background-color: #fff;
+    margin-bottom: 20px;
+    margin-top:0px;
+    display: none;
+}
+
+/*
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+*/
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e

@@ -57,6 +57,10 @@ namespace Booking.Controllers
             var cs = "Server=Ricki-pc; Database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
+<<<<<<< HEAD
+=======
+            var list2 = new List<EspecificacoesQuarto>();
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
 
            
             
@@ -65,6 +69,7 @@ namespace Booking.Controllers
             {
                 cn.Open();
 
+<<<<<<< HEAD
                 //1 tabela
                 /*string sql = "select r.CheckIn as FromDate, r.CheckOut as ToDate, h.NomeHotel as HotelName, tq.Descricao as RoomCategory, p.Preco as Price " +
                              "from Reservas r, Hoteis h, TipoQuarto tq, Precario p " +
@@ -97,10 +102,20 @@ namespace Booking.Controllers
 
                 //string sql2 = "";
 
+=======
+                string sql = "select tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                             "from TipoQuarto tq, Hoteis h, Precario p " +
+                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
+
+                string sql2 = "select eq.IDEspecificacao, eq.IDTipoQuarto, eq.Descricao " +
+                              "from EspecificacoesQuarto eq";
+
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
 
+<<<<<<< HEAD
                     
 
                     
@@ -140,8 +155,29 @@ namespace Booking.Controllers
                         }
 
 
+=======
+                    while (rd.Read())
+                    {
+                        var quartos = new QuartosDisp();
+
+                        quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IdTipoQuarto"));
+                        quartos.IdHotel = rd.GetInt64(rd.GetOrdinal("IdHotel"));
+                        quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                        quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                        quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                        quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                        quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                        quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                        quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                        quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                        quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                        quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+
+                        list.Add(quartos);
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                     }
                 }
+<<<<<<< HEAD
             }
             return View(list);
         }
@@ -165,6 +201,83 @@ namespace Booking.Controllers
         //    list.Remove(quartos);
 
 
+=======
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        var esp = new EspecificacoesQuarto();
+
+                        esp.Idespecificacao = rd.GetInt16(rd.GetOrdinal("IdEspecificacao"));
+                        esp.IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IdTipoQuarto"));
+                        esp.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
+
+                        list2.Add(esp);
+                    }
+                    rd.Close();
+                }
+
+
+                cn.Close();
+            }
+            ViewModel model = new ViewModel(list, list2);
+
+            return View(model);
+        }
+
+        public IActionResult Book(string hotel, string quarto, decimal preco)
+        {
+
+            ViewBag.Hotel = hotel;
+            ViewBag.Quarto = quarto;
+            ViewBag.Preco = preco;
+            ViewBag.CheckIn = "Data de Entrada";
+            ViewBag.CheckOut = "Data de Saída";
+
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+
+
+        //PARA MOSTRAR OS HOTEIS
+        /*var list2 = new List<Hoteis>();
+        //string sql2 = "select NomeHotel, NumEstrelas, Morada, Localidade, CodPostal, Pais, QuantidadeQuartos, Descricao, Imagem from Hoteis ";
+
+         //using (var cm = new SqlCommand(sql2, cn))
+                //{
+                //    var rd = cm.ExecuteReader();
+
+                //    while (rd.Read())
+                //    {
+                //        var hoteis = new Hoteis();
+                        
+                //        hoteis.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                //        hoteis.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                //        hoteis.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                //        hoteis.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                //        hoteis.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                //        hoteis.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                //        hoteis.QuantidadeQuartos = rd.GetInt16(rd.GetOrdinal("QuantidadeQuartos"));
+                //        hoteis.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
+                //        hoteis.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+
+                //        list2.Add(hoteis);
+                //    }
+                //    rd.Close();
+                //}
+
+        */
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
 
         //PARA AS ESTRELAS
 
@@ -202,6 +315,7 @@ namespace Booking.Controllers
             <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
             <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
         }*/
+<<<<<<< HEAD
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -209,5 +323,8 @@ namespace Booking.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+=======
+        
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
     }
 }
