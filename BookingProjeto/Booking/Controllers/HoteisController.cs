@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Booking;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class HoteisController : Controller
     {
         private readonly BookingContext _context;
@@ -21,14 +19,12 @@ namespace Booking.Controllers
         }
 
         // GET: Hoteis
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Hoteis.ToListAsync());
         }
 
         // GET: Hoteis/Details/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -47,7 +43,6 @@ namespace Booking.Controllers
         }
 
         // GET: Hoteis/Create
-        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -58,7 +53,6 @@ namespace Booking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Idhotel,NomeHotel,NumEstrelas,Morada,Localidade,CodPostal,Pais,QuantidadeQuartos,Descricao,Imagem")] Hoteis hoteis)
         {
             if (ModelState.IsValid)
@@ -71,7 +65,6 @@ namespace Booking.Controllers
         }
 
         // GET: Hoteis/Edit/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -92,7 +85,6 @@ namespace Booking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long id, [Bind("Idhotel,NomeHotel,NumEstrelas,Morada,Localidade,CodPostal,Pais,QuantidadeQuartos,Descricao,Imagem")] Hoteis hoteis)
         {
             if (id != hoteis.Idhotel)
@@ -124,7 +116,6 @@ namespace Booking.Controllers
         }
 
         // GET: Hoteis/Delete/5
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -145,7 +136,6 @@ namespace Booking.Controllers
         // POST: Hoteis/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var hoteis = await _context.Hoteis.FindAsync(id);

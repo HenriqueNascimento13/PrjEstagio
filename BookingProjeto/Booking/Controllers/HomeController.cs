@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -39,25 +40,69 @@ namespace Booking.Controllers
             return View();
         }
 
-        
+        public IActionResult Book()
+        {
+            ViewData["Message"] = "Your book page.";
+
+            return View();
+        }
 
         public IActionResult Privacy()
         {
             return View();
         }
-        
+
         public ActionResult Index()
         {
-            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+            var cs = "Server=Ricki-pc; Database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
+<<<<<<< HEAD
+=======
             var list2 = new List<EspecificacoesQuarto>();
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
 
-            using (var cn = new SqlConnection(cs))
+           
+            
+
+            using(var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
+<<<<<<< HEAD
+                //1 tabela
+                /*string sql = "select r.CheckIn as FromDate, r.CheckOut as ToDate, h.NomeHotel as HotelName, tq.Descricao as RoomCategory, p.Preco as Price " +
+                             "from Reservas r, Hoteis h, TipoQuarto tq, Precario p " +
+                             "where r.IDHotel = h.IDHotel and r.IDTipoQuarto = tq.IDTipoQuarto and p.IDTipoQuarto = tq.IDTipoQuarto";
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        var o = new Ofertas();
+
+                        o.FromDate = rd.GetDateTime(rd.GetOrdinal("FromDate"));
+                        o.ToDate = rd.GetDateTime(rd.GetOrdinal("toDate"));
+                        o.HotelName = rd.GetString(rd.GetOrdinal("HotelName"));
+                        o.RoomCategory = rd.GetString(rd.GetOrdinal("RoomCategory"));
+                        o.Price = rd.GetDecimal(rd.GetOrdinal("Price"));
+
+                        list.Add(o);
+
+                    }
+                }*/
+
+                string sql = "select rs.CheckIn, rs.CheckOut,tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                             "from TipoQuarto tq, Hoteis h, Precario p, Reservas rs " +
+                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and tq.IDTipoQuarto = rs.IDTipoQuarto ";
+
+                //string sql1 = "";
+
+                //string sql2 = "";
+
+=======
                 string sql = "select tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
                              "from TipoQuarto tq, Hoteis h, Precario p " +
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
@@ -65,10 +110,52 @@ namespace Booking.Controllers
                 string sql2 = "select eq.IDEspecificacao, eq.IDTipoQuarto, eq.Descricao " +
                               "from EspecificacoesQuarto eq";
 
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
 
+<<<<<<< HEAD
+                    
+
+                    
+                        while (rd.Read())
+                        {
+                            var quartos = new QuartosDisp();
+
+
+                            
+
+                            quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                            quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                            quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                            quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                            quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                            quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                            quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                            quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                            quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                            quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+
+                        DateTime checkin = new DateTime();
+                        DateTime checkout = new DateTime();
+
+                        checkin = rd.GetDateTime(rd.GetOrdinal("CheckIn"));
+                        checkout = rd.GetDateTime(rd.GetOrdinal("CheckOut"));
+
+                        if (checkout == null || checkout.Date <= DateTime.UtcNow)
+                        {
+
+                            list.Add(quartos);
+
+                        }
+                        else
+                        {
+
+                        }
+
+
+=======
                     while (rd.Read())
                     {
                         var quartos = new QuartosDisp();
@@ -87,9 +174,34 @@ namespace Booking.Controllers
                         quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
 
                         list.Add(quartos);
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                     }
-                    rd.Close();
                 }
+<<<<<<< HEAD
+            }
+            return View(list);
+        }
+
+
+        //Para o if dos quartos
+
+        //    quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+        //    quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+        //    quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+        //    quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+        //    quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+        //    quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+        //    quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+        //    quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+        //    quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+        //    quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+
+
+        //    list1.Add(quartos);
+        //    list.Remove(quartos);
+
+
+=======
 
                 using (var cm = new SqlCommand(sql2, cn))
                 {
@@ -165,66 +277,54 @@ namespace Booking.Controllers
                 //}
 
         */
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
 
         //PARA AS ESTRELAS
 
-        /*if (quartos.NumEstrelas.Equals("1"))
+        /*@if(@item.NumEstrelas.Equals("1"))
         {
-            string html = "<p><i class='fa fa-star' style='font-size:24px; color:yellow'></i></p>";
+            <p><i class="fa fa-star" style="font-size:24px;color:yellow"></i></p>
         }
         else
-        if (quartos.NumEstrelas.Equals("2"))
+        if (@item.NumEstrelas.Equals("2"))
         {
-            string html2 = "< i class='fa fa-star' style='font-size:24px; color:yellow'></i>" +
-                "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>";
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i><i class="fa fa-star" style="font-size:24px;color:yellow"></i>
         }
         else
-        if (quartos.NumEstrelas.Equals("3"))
+        if (@item.NumEstrelas.Equals("3"))
         {
-            string html3 = "<p><i class='fa fa-star' style='font-size: 24px; color:yellow' ></i>" +
-                "<i class='fa fa-star' style ='font -size:24px; color:yellow' ></i>" +
-                "<i class='fa fa-star' style ='font -size:24px; color:yellow' ></i></p>";
+            <p><i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+                <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+                <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            </p>
         }
         else
-        if (quartos.NumEstrelas.Equals("4"))
+        if (@item.NumEstrelas.Equals("4"))
         {
-            string html4 = "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>" +
-                            "<i class='fa fa-star' style ='font -size:24px; color:yellow' ></i>" +
-                            "<i class='fa fa-star' style ='font -size:24px; color:yellow' ></i>" +
-                            "<i class='fa fa-star' style ='font -size:24px; color:yellow' ></i>";
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
         }
         else
-        if (quartos.NumEstrelas.Equals("5"))
+        if (@item.NumEstrelas.Equals("5"))
         {
-            string html5 = "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>" +
-                            "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>" +
-                            "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>" +
-                            "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>" +
-                            "<i class='fa fa-star' style='font-size:24px; color:yellow'></i>";
-        } */
-
-
-        //1 tabela
-        /*string sql = "select r.CheckIn as FromDate, r.CheckOut as ToDate, h.NomeHotel as HotelName, tq.Descricao as RoomCategory, p.Preco as Price " +
-                        "from Reservas r, Hoteis h, TipoQuarto tq, Precario p " +
-                        "where r.IDHotel = h.IDHotel and r.IDTipoQuarto = tq.IDTipoQuarto and p.IDTipoQuarto = tq.IDTipoQuarto";
-
-        using (var cm = new SqlCommand(sql, cn))
-        {
-            var rd = cm.ExecuteReader();
-            while (rd.Read())
-            {
-                var o = new Ofertas();
-
-                o.FromDate = rd.GetDateTime(rd.GetOrdinal("FromDate"));
-                o.ToDate = rd.GetDateTime(rd.GetOrdinal("toDate"));
-                o.HotelName = rd.GetString(rd.GetOrdinal("HotelName"));
-                o.RoomCategory = rd.GetString(rd.GetOrdinal("RoomCategory"));
-                o.Price = rd.GetDecimal(rd.GetOrdinal("Price"));
-
-                list.Add(o);
-            }
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+            <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
         }*/
+<<<<<<< HEAD
+
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+=======
         
+>>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
     }
 }

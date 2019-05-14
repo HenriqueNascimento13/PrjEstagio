@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Booking.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class TipoPagamentoesController : Controller
     {
         private readonly BookingContext _context;
