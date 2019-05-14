@@ -57,19 +57,12 @@ namespace Booking.Controllers
             var cs = "Server=Ricki-pc; Database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
-<<<<<<< HEAD
-=======
             var list2 = new List<EspecificacoesQuarto>();
->>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
-
-           
             
-
             using(var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
-<<<<<<< HEAD
                 //1 tabela
                 /*string sql = "select r.CheckIn as FromDate, r.CheckOut as ToDate, h.NomeHotel as HotelName, tq.Descricao as RoomCategory, p.Preco as Price " +
                              "from Reservas r, Hoteis h, TipoQuarto tq, Precario p " +
@@ -98,33 +91,16 @@ namespace Booking.Controllers
                              "from TipoQuarto tq, Hoteis h, Precario p, Reservas rs " +
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and tq.IDTipoQuarto = rs.IDTipoQuarto ";
 
-                //string sql1 = "";
-
-                //string sql2 = "";
-
-=======
-                string sql = "select tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
-                             "from TipoQuarto tq, Hoteis h, Precario p " +
-                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
-
                 string sql2 = "select eq.IDEspecificacao, eq.IDTipoQuarto, eq.Descricao " +
                               "from EspecificacoesQuarto eq";
 
->>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
-
-<<<<<<< HEAD
-                    
-
-                    
+                
                         while (rd.Read())
                         {
                             var quartos = new QuartosDisp();
-
-
-                            
 
                             quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
                             quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
@@ -153,9 +129,6 @@ namespace Booking.Controllers
                         {
 
                         }
-
-
-=======
                     while (rd.Read())
                     {
                         var quartos = new QuartosDisp();
@@ -174,10 +147,8 @@ namespace Booking.Controllers
                         quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
 
                         list.Add(quartos);
->>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
                     }
                 }
-<<<<<<< HEAD
             }
             return View(list);
         }
@@ -200,8 +171,6 @@ namespace Booking.Controllers
         //    list1.Add(quartos);
         //    list.Remove(quartos);
 
-
-=======
 
                 using (var cm = new SqlCommand(sql2, cn))
                 {
@@ -248,7 +217,6 @@ namespace Booking.Controllers
 
 
 
-
         //PARA MOSTRAR OS HOTEIS
         /*var list2 = new List<Hoteis>();
         //string sql2 = "select NomeHotel, NumEstrelas, Morada, Localidade, CodPostal, Pais, QuantidadeQuartos, Descricao, Imagem from Hoteis ";
@@ -277,7 +245,7 @@ namespace Booking.Controllers
                 //}
 
         */
->>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
+
 
         //PARA AS ESTRELAS
 
@@ -315,16 +283,6 @@ namespace Booking.Controllers
             <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
             <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
         }*/
-<<<<<<< HEAD
 
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-=======
-        
->>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e
     }
 }
