@@ -3,10 +3,11 @@
 
 // Write your JavaScript code.
 
-function MudarEstado(estado) {
-    var display = document.getElementById(estado).style.display;
+function MudarEstado(id) {
+    var display = document.getElementById(id).style.display;
     if(display == "none")
-        document.getElementById(estado).style.display = 'block';
+        document.getElementById(id).style.display = 'block';
     else
-        document.getElementById(estado).style.display = 'none';
+        document.getElementById(id).style.display = 'none';
 }
+

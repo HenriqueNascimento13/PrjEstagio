@@ -7,6 +7,12 @@ namespace Booking.Models
 {
     public class QuartosDisp
     {
+        public long IdTipoQuarto { get; set; }
+
+        public long IdHotel { get; set; }
+
+        //public int IdRegime { get; set; }
+
         public string Imagem { get; set; }
 
         public string TipoQuarto { get; set; }
@@ -26,6 +32,5 @@ namespace Booking.Models
         public string Pais { get; set; }
 
         public decimal Preco { get; set; }
-
     }
 }

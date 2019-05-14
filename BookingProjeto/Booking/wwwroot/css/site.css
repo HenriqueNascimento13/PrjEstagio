@@ -193,11 +193,11 @@ table{
     margin-left: 2%;
 }
 
-#Quartos {
+.Tarifas {
     background-color: #fff;
-    display: none;
     margin-bottom: 20px;
     margin-top:0px;
+    display: none;
 }
 
 /*

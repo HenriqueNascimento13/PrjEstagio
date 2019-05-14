@@ -1,6 +1,5 @@
 ﻿@model Booking.Models.ViewModel
 
-
 @{
     ViewData["Title"] = "Home Page";
     ViewBag.Title = "";
@@ -13,7 +12,7 @@
 
 <div class="container" id="containerPage">
     <div class="col-lg-9">
-        @foreach (var item in Model.Hoteis)
+        @foreach (var item in Model.Quartos)
         {
             <div class="container-fluid">
                 <div class="col-md-12" id="main">
@@ -29,43 +28,40 @@
                             <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
                             <p>@item.NumEstrelas Estrelas</p>
                             <br />
-                            <p>Descrição:</p>
-                            <p>@item.Descricao</p>
+                            <p>@item.Capacidade Pessoas</p>
                         </div>
 
                         <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
                             <h6 id="desde">Desde</h6>
                             <p id="preco"> €</p>
 
-                            <button type="button" class="btn btn-info" onclick="MudarEstado('Quartos')">Quartos <span class="glyphicon glyphicon-chevron-down"></span></button>
+                            <button type="button" class="btn btn-info" onclick="MudarEstado('@item.IdHotel')">Tarifas <span class="glyphicon glyphicon-chevron-down"></span></button>
                         </div>
                     </div>
                 </div>
-                <div id="Quartos">
+                <div class="Tarifas" id="@item.IdHotel">
                     <div>
-                        <div class="row" style="background-color:lightgrey">
+                        <div class="row">
                             <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"></span></div>
                             <div class="col-xs-4 text-center">Quartos</div>
                             <div class="col-xs-7 text-center">Total</div>
                         </div>
                     </div>
-                    @foreach (var item2 in Model.Quartos)
+                    @foreach (var item2 in Model.Esp)
                     {
-                     <div class="container-fluid">
-                        <div class="col-xs-1 text-center">
-                            @item2.Capacidade
+                        <div class="container-fluid">
+                            <div class="col-xs-1">
+                                @item.Capacidade
+                            </div>
+                            <div class="col-xs-4 text-center">
+                            </div>
+                            <div class="col-xs-5 text-center">
+                            </div>
+                            <div class="col-xs-2 text-center">
+                                <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>
+                            </div>
                         </div>
-                        <div class="col-xs-4 text-center">
-                            @item2.TipoQuarto
-                        </div>
-                        <div class="col-xs-5 text-center">
-                            @item2.Preco
-                        </div>
-                        <div class="col-xs-2 text-center">
-                            <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>
-                        </div>
-                      </div>
-                     }
+                    }
                 </div>
             </div>
         }
@@ -87,6 +83,7 @@
                     <span>88 Resort Street, Ecke Musterplatz, Little Cayman, 8000, Austrália</span>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <i class="material-icons" style="font-size:15px">directions_car</i>
@@ -101,6 +98,7 @@
                     </span>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-phone-alt"></span>
@@ -109,6 +107,7 @@
                     <a href="#">1300 123 456</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-phone-alt"></span>
@@ -117,6 +116,7 @@
                     <a href="tel:61280311222">61280311222</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-envelope"></span>
@@ -125,6 +125,7 @@
                     <a href="mailto:sales@siteminder.com">sales@siteminder.com</a>
                 </div>
             </div>
+            <br />
             <div class="row">
                 <div class="col-xs-1">
                     <span class="glyphicon glyphicon-globe"></span>
