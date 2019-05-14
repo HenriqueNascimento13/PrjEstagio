@@ -32,12 +32,5 @@ namespace Booking.Models
         public string Pais { get; set; }
 
         public decimal Preco { get; set; }
-
-
-        public DateTime CheckIn { get; set; }
-
-        public DateTime CheckOut { get; set; }
-
-
     }
 }

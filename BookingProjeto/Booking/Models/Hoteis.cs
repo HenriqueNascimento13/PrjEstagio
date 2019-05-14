@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Booking
 {
@@ -21,7 +22,11 @@ namespace Booking
         public string CodPostal { get; set; }
         public string Pais { get; set; }
         public short QuantidadeQuartos { get; set; }
-        public string Descricao { get; set; }
+
+        [Required(AllowEmptyStrings = true)]
+        public string  Descricao { get; set; }
+
+        [Required(AllowEmptyStrings = true)]
         public string Imagem { get; set; }
 
         public virtual ICollection<Regimes> Regimes { get; set; }

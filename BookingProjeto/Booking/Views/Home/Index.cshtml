@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-
-
-
-
-@{
-    ViewData["Title"] = "Home Page";
-    ViewBag.Title = "View";
-
-=======
-@model Booking.Models.ViewModel
+﻿@model Booking.Models.ViewModel
 
 @{
     ViewData["Title"] = "Home Page";
     ViewBag.Title = "";
->>>>>>> d50c838d9f47baa0a9738f092d3f9a131d5c088c
 }
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -23,10 +12,6 @@
 
 <div class="container" id="containerPage">
     <div class="col-lg-9">
-<<<<<<< HEAD
-
-=======
->>>>>>> d50c838d9f47baa0a9738f092d3f9a131d5c088c
         @foreach (var item in Model.Quartos)
         {
             <div class="container-fluid">
@@ -40,26 +25,16 @@
                         <div class="col-md-9">
                             <h2>@item.NomeHotel </h2>
 
-<<<<<<< HEAD
-
-                <div class="col-md-8" id="text" style="left: 0%;">
-
-=======
                             <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
                             <p>@item.NumEstrelas Estrelas</p>
                             <br />
                             <p>@item.Capacidade Pessoas</p>
                         </div>
->>>>>>> d50c838d9f47baa0a9738f092d3f9a131d5c088c
 
                         <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
                             <h6 id="desde">Desde</h6>
                             <p id="preco"> €</p>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d50c838d9f47baa0a9738f092d3f9a131d5c088c
                             <button type="button" class="btn btn-info" onclick="MudarEstado('@item.IdHotel')">Tarifas <span class="glyphicon glyphicon-chevron-down"></span></button>
                         </div>
                     </div>
@@ -87,13 +62,8 @@
                             </div>
                         </div>
                     }
-<<<<<<< HEAD
-
-=======
->>>>>>> d50c838d9f47baa0a9738f092d3f9a131d5c088c
                 </div>
-            }
-
+            </div>
         }
 
     </div>

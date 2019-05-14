@@ -28,6 +28,7 @@ namespace Booking.Controllers
         }
 
         // GET: EspecificacoesQuartoes/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(short? id)
         {
             if (id == null)
@@ -47,6 +48,7 @@ namespace Booking.Controllers
         }
 
         // GET: EspecificacoesQuartoes/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["IdtipoQuarto"] = new SelectList(_context.TipoQuarto, "IdtipoQuarto", "Descricao");
@@ -58,6 +60,7 @@ namespace Booking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Idespecificacao,IdtipoQuarto,Descricao")] EspecificacoesQuarto especificacoesQuarto)
         {
             if (ModelState.IsValid)
@@ -71,6 +74,7 @@ namespace Booking.Controllers
         }
 
         // GET: EspecificacoesQuartoes/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(short? id)
         {
             if (id == null)
@@ -91,6 +95,7 @@ namespace Booking.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(short id, [Bind("Idespecificacao,IdtipoQuarto,Descricao")] EspecificacoesQuarto especificacoesQuarto)
         {
@@ -124,6 +129,7 @@ namespace Booking.Controllers
         }
 
         // GET: EspecificacoesQuartoes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(short? id)
         {
             if (id == null)
@@ -143,6 +149,7 @@ namespace Booking.Controllers
         }
 
         // POST: EspecificacoesQuartoes/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(short id)
