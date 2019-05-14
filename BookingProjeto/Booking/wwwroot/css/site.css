@@ -42,7 +42,8 @@ body {
     padding: 10px 30px;
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
-    margin-top: 296px;
+    margin-top: 12.1%;
+    color: rgb(255,255,255);
 }
 
 #main {
@@ -52,6 +53,18 @@ body {
     height: 220px;
     padding: 0%;
     float: left;
+}
+
+#cont {
+    padding-top: 10px;
+    padding-bottom: 0px;
+    margin-right: auto;
+    margin-left: 285px;
+    padding-left: 100px;
+    padding-right: 100px;
+    width: 970px;
+    height: 100px;
+    
 }
 
 #img {
@@ -112,13 +125,7 @@ h3, h4, h5 {
     box-sizing: border-box;
 }
 
-.col-sm-2, .col-lg-2, .col-md-2, .col-sm-4 {
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 30px;
-}
-
-.col-md-6, .col-md-3 {
+.col-sm-2, .col-lg-2, .col-md-2, .col-sm-4, .col-md-6, .col-md-3 {
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 10px;
@@ -131,7 +138,6 @@ h3, h4, h5 {
 .row {
     margin-left: -10px;
     margin-right: -10px;
-    margin-bottom: 10px;
 }
 
 .titulo {
@@ -185,9 +191,6 @@ table{
     text-align: right; 
     margin-bottom: 0px;
     margin-left: 2%;
-<<<<<<< HEAD
-}
-=======
 }
 
 .Tarifas {
@@ -208,4 +211,3 @@ table{
     text-align: center;
 }
 */
->>>>>>> c86ece66c62635f82472c8b6b60f802540a4aa3e

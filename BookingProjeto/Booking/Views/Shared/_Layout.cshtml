@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Booking</title>
+    <title>Booking</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -41,37 +41,63 @@
 
     <div class="container-fluid" id="jumbotron">
         <div class="container-fluid" id="form">
-            <div class="container-fluid" >
-                <form class="form-inline">
-                    <label for="entrada">Entrada:</label>
-                    <input type="date" class="form-control" id="entrada">
+            <div class="container-fluid" id="cont">
+                <form>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12">
+                            <label>Entrada <i class="glyphicon">&#xe109;</i></label>
+                            <input type="date" class="form-control" id="entrada">
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <label>Saída <i class="glyphicon">&#xe109;</i> </label>
+                            <input type="date" class="form-control" id="saida">
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-4">
+                            <label>Adultos</label>
+                            <select class="form-control">
+                                <option value="0" label="1">1</option>
+                                <option value="1" selected="selected" label="2">2</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-4">
+                            <label>Crianças(2-12)</label>
+                            <select class="form-control">
+                                <option value="0" selected="selected" label="0">0</option>
+                                <option value="1" label="1">1</option>
+                                <option value="2" label="2">2</option>
+                                <option value="3" label="3">3</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-4">
+                            <label>Bebés(< 2)</label>
+                            <select class="form-control">
+                                <option value="0" selected="selected" label="0">0</option>
+                                <option value="1" label="1">1</option>
+                                <option value="2" label="2">2</option>
+                            </select>
+                        </div>
 
-                    <label for="saida">Saída:</label>
-                    <input type="date" class="form-control" id="saida">
-
-                    <label for="adultos">Adultos:</label>
-                    <input type="number" class="form-control" id="adultos">
-
-                    <label for="criancas">Crianças (2-12):</label>
-                    <input type="number" class="form-control" id="criancas">
-
-                    <label for="bbs">Bebês:</label>
-                    <input type="number" class="form-control" id="bbs">
+                    </div>
                 </form>
+
+                
+
+               
             </div>
         </div>
     </div>
+
 
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer style=" bottom: 0%; position:page;">
+        <footer>
             <p>&copy; 2019 - HHSBooking</p>
         </footer>
     </div>
-    
+
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -93,7 +119,7 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

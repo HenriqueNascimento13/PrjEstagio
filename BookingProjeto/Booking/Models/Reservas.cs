@@ -13,8 +13,8 @@ namespace Booking
         public long CodPagamento { get; set; }
         public short QuantAdultos { get; set; }
         public short QuantCriancas { get; set; }
-        public DateTime CheckIn { get; set; }
-        public DateTime CheckOut { get; set; }
+        public DateTime? CheckIn { get; set; }
+        public DateTime? CheckOut { get; set; }
 
         public virtual Pagamento CodPagamentoNavigation { get; set; }
         public virtual Clientes IdclienteNavigation { get; set; }

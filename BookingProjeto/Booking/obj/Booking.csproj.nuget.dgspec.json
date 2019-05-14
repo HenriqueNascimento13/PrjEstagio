@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\Booking.csproj": {}
+    "C:\\Temp\\Git\\Projeto\\Nova pasta\\BookingProjeto\\Booking\\Booking.csproj": {}
   },
   "projects": {
-    "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\Booking.csproj": {
+    "C:\\Temp\\Git\\Projeto\\Nova pasta\\BookingProjeto\\Booking\\Booking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\Booking.csproj",
+        "projectUniqueName": "C:\\Temp\\Git\\Projeto\\Nova pasta\\BookingProjeto\\Booking\\Booking.csproj",
         "projectName": "Booking",
-        "projectPath": "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\Booking.csproj",
+        "projectPath": "C:\\Temp\\Git\\Projeto\\Nova pasta\\BookingProjeto\\Booking\\Booking.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\obj\\",
+        "outputPath": "C:\\Temp\\Git\\Projeto\\Nova pasta\\BookingProjeto\\Booking\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
