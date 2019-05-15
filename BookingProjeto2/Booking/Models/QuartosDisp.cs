@@ -32,12 +32,11 @@ namespace Booking.Models
         public string Pais { get; set; }
 
         public decimal Preco { get; set; }
-<<<<<<< HEAD:BookingProjeto/Booking/Models/QuartosDisp.cs
-=======
+
 
         public DateTime CheckIn { get; set; }
 
         public DateTime CheckOut { get; set; }
->>>>>>> zuka/master:BookingProjeto2/Booking/Models/QuartosDisp.cs
+
     }
 }

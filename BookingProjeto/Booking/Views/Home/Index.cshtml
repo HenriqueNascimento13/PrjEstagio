@@ -60,7 +60,7 @@
                                 @item.Preco
                             </div>
                             <div class="col-xs-2 text-center">
-                                <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>
+                                <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, checkin = item.CheckIn, checkout = item.CheckOut })" class="btn btn-info" role="button">Reservar</a>
                             </div>
                         </div>
                     }
