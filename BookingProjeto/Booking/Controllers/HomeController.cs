@@ -49,11 +49,11 @@ namespace Booking.Controllers
 
         public ActionResult Index()
         {
-            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
-            var list2 = new List<EspecificacoesQuarto>();
+
             DateTime checkin = new DateTime();
             DateTime checkout = new DateTime();
 
@@ -64,10 +64,6 @@ namespace Booking.Controllers
                 string sql = "select  rs.CheckIn, rs.CheckOut, tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
                              "from TipoQuarto tq, Hoteis h, Precario p, Reservas rs " +
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and tq.IDTipoQuarto = rs.IDTipoQuarto ";
-
-                string sql2 = "select eq.IDEspecificacao, eq.IDTipoQuarto, eq.Descricao " +
-                             "from EspecificacoesQuarto eq, TipoQuarto tq " +
-                             "where tq.IDTipoQuarto = eq.IDTipoQuarto";
 
                 using (var cm = new SqlCommand(sql, cn))
                 {
@@ -111,30 +107,10 @@ namespace Booking.Controllers
                     }
                     rd.Close();
                 }
-
-                using (var cm = new SqlCommand(sql2, cn))
-                {
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
-                    {
-                        var esp = new EspecificacoesQuarto();
-
-                        esp.Idespecificacao = rd.GetInt16(rd.GetOrdinal("IdEspecificacao"));
-                        esp.IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IdTipoQuarto"));
-                        esp.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
-
-                        list2.Add(esp);
-                    }
-                    rd.Close();
-                }
-
-
                 cn.Close();
             }
-            ViewModel model = new ViewModel(list, list2);
 
-            return View(model);
+            return View(list);
         }
 
         public IActionResult Book(string hotel, string quarto, decimal preco, DateTime checkin, DateTime checkout )
