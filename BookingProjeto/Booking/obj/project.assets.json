@@ -10883,23 +10883,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Henrique\\.nuget\\packages\\": {},
+    "C:\\Users\\admin\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\Booking.csproj",
+      "projectUniqueName": "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\Booking.csproj",
       "projectName": "Booking",
-      "projectPath": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\Booking.csproj",
-      "packagesPath": "C:\\Users\\Henrique\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Henrique\\Desktop\\prjestagio\\BookingProjeto\\Booking\\obj\\",
+      "projectPath": "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\Booking.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Temp\\Git\\Projeto\\BookingProjeto\\Booking\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Henrique\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
