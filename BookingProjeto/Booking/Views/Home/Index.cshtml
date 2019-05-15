@@ -35,35 +35,9 @@
                             <h6 id="desde">Desde</h6>
                             <p id="preco"> €</p>
 
-                            <button type="button" class="btn btn-info" onclick="MudarEstado('@item.IdHotel')">Tarifas <span class="glyphicon glyphicon-chevron-down"></span></button>
+                            <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, checkin = item.CheckIn, checkout = item.CheckOut })" class="btn btn-info" role="button">Reservar</a>
                         </div>
                     </div>
-                </div>
-                <div class="Tarifas" id="@item.IdHotel">
-                    <div style="margin-bottom:10px">
-                        <div class="row">
-                            <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"></span></div>
-                            <div class="col-xs-4 text-center">Quartos</div>
-                            <div class="col-xs-7 text-center">Total</div>
-                        </div>
-                    </div>
-                    @foreach (var item2 in Model.Esp)
-                    {
-                        <div class="container-fluid" id="Especificacoes">
-                            <div class="col-xs-1">
-                                @item.Capacidade
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                @item2.Descricao
-                            </div>
-                            <div class="col-xs-5 text-center">
-                                @item.Preco
-                            </div>
-                            <div class="col-xs-2 text-center">
-                                <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         }

@@ -53,19 +53,17 @@ namespace Booking.Controllers
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
-            var list2 = new List<EspecificacoesQuarto>();
+
+            DateTime checkin = new DateTime();
+            DateTime checkout = new DateTime();
 
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
-                string sql = "select tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
-                             "from TipoQuarto tq, Hoteis h, Precario p " +
-                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
-
-                string sql2 = "select eq.IDEspecificacao, eq.IDTipoQuarto, eq.Descricao " +
-                             "from EspecificacoesQuarto eq, TipoQuarto tq " +
-                             "where tq.IDTipoQuarto = eq.IDTipoQuarto";
+                string sql = "select  rs.CheckIn, rs.CheckOut, tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                             "from TipoQuarto tq, Hoteis h, Precario p, Reservas rs " +
+                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and tq.IDTipoQuarto = rs.IDTipoQuarto ";
 
                 using (var cm = new SqlCommand(sql, cn))
                 {
@@ -87,45 +85,42 @@ namespace Booking.Controllers
                         quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
                         quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
                         quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+                        quartos.CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn"));
+                        quartos.CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"));
 
-                        list.Add(quartos);
+                        checkin = rd.GetDateTime(rd.GetOrdinal("CheckIn"));
+                        checkout = rd.GetDateTime(rd.GetOrdinal("CheckOut"));
+
+                        if (false)
+                        {
+                            if (quartos.CheckOut == null || quartos.CheckOut <= DateTime.UtcNow || quartos.CheckOut.Equals("01-01-0001"))
+                            {
+
+                                list.Add(quartos);
+
+                            }
+                        }
+                        else
+                        {
+                            list.Add(quartos);
+                        }
                     }
                     rd.Close();
                 }
-
-                using (var cm = new SqlCommand(sql2, cn))
-                {
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
-                    {
-                        var esp = new EspecificacoesQuarto();
-
-                        esp.Idespecificacao = rd.GetInt16(rd.GetOrdinal("IdEspecificacao"));
-                        esp.IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IdTipoQuarto"));
-                        esp.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
-
-                        list2.Add(esp);
-                    }
-                    rd.Close();
-                }
-
-
                 cn.Close();
             }
-            ViewModel model = new ViewModel(list, list2);
 
-            return View(model);
+            return View(list);
         }
 
-        public IActionResult Book(string hotel, string quarto, decimal preco)
+        public IActionResult Book(string hotel, string quarto, decimal preco, DateTime checkin, DateTime checkout )
         {
 
             ViewBag.Hotel = hotel;
             ViewBag.Quarto = quarto;
             ViewBag.Preco = preco;
-            ViewBag.CheckIn = "Data de Entrada";
-            ViewBag.CheckOut = "Data de Saída";
+            ViewBag.CheckIn = checkin.ToShortDateString().ToString();
+            ViewBag.CheckOut = checkout.ToShortDateString().ToString();
 
             return View();
         }
