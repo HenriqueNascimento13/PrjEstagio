@@ -200,6 +200,10 @@ table{
     display: none;
 }
 
+#Especificacoes{
+    margin-bottom: 5px;
+}
+
 /*
 .footer {
     position: fixed;

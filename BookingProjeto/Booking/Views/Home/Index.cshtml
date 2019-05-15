@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="Tarifas" id="@item.IdHotel">
-                    <div>
+                    <div style="margin-bottom:10px">
                         <div class="row">
                             <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-user"></span></div>
                             <div class="col-xs-4 text-center">Quartos</div>
@@ -49,13 +49,15 @@
                     </div>
                     @foreach (var item2 in Model.Esp)
                     {
-                        <div class="container-fluid">
+                        <div class="container-fluid" id="Especificacoes">
                             <div class="col-xs-1">
                                 @item.Capacidade
                             </div>
                             <div class="col-xs-4 text-center">
+                                @item2.Descricao
                             </div>
                             <div class="col-xs-5 text-center">
+                                @item.Preco
                             </div>
                             <div class="col-xs-2 text-center">
                                 <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto })" class="btn btn-info" role="button">Reservar</a>

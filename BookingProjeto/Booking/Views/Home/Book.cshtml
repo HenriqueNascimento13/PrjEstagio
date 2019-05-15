@@ -14,7 +14,7 @@
             <div class="content-review">
 
                 <div class="reservation-room-types">
-                    <form>
+                    <form method="POST">
                         <div class="above">
                             <h3>@ViewBag.Hotel</h3>
                             <h4>@ViewBag.Quarto</h4>
@@ -22,22 +22,22 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-12">
                                     <label>Nome do Responsável*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="nomeR" class="form-control" required="required" />
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label>Sobrenome do Responsável*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="sobrenomeR" class="form-control" required="required" />
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-4">
                                     <label>Adultos</label>
-                                    <select class="form-control">
+                                    <select class="form-control" name="adultos">
                                         <option value="0" label="1">1</option>
                                         <option value="1" selected="selected" label="2">2</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-4">
                                     <label>Crianças</label>
-                                    <select class="form-control">
+                                    <select class="form-control" name="criancas">
                                         <option value="0" selected="selected" label="0">0</option>
                                         <option value="1" label="1">1</option>
                                         <option value="2" label="2">2</option>
@@ -62,49 +62,49 @@
                 <div>
                     <h5>Dados do hóspede</h5>
                     <div class="DadosHosp">
-                        <form>
+                        <form method="POST">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Nome*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="nome" class="form-control" required="required" />
                                 </div>
                                 <div class="col-md-6">
                                     <label>Sobrenome*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="sobrenome" class="form-control" required="required" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" required="required" />
+                                    <input type="email" name="email" class="form-control" required="required" />
                                 </div>
                                 <div class="col-md-6">
                                     <label>Telefone*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="telefone" class="form-control" required="required" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Endereço*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="endereco" class="form-control" required="required" />
                                 </div>
                                 <div class="col-xs-6 col-md-3">
                                     <label>Código Postal*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="codPostal" class="form-control" required="required" />
                                 </div>
                                 <div class="col-xs-6 col-md-3">
                                     <label>Localidade*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="localidade" class="form-control" required="required" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Cartão de Cidadão*</label>
-                                    <input type="email" class="form-control" required="required" />
+                                    <input type="email" name="cc" class="form-control" required="required" />
                                 </div>
                                 <div class="col-md-6">
                                     <label>Data de Nascimento*</label>
-                                    <input type="text" class="form-control" required="required" />
+                                    <input type="text" name="dataNasc" class="form-control" required="required" />
                                 </div>
                             </div>
                         </form>
@@ -113,21 +113,21 @@
                     <div style="margin-top:20px">
                         <h5>Dados de Pagamento</h5>
                         <div class="review-payment-details">
-                            <form>
+                            <form method="POST">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Nome do Titular*</label>
-                                        <input type="text" class="form-control" required="required" />
+                                        <input type="text" name="nomeTitular" class="form-control" required="required" />
                                     </div>
                                     <div class="col-md-6">
                                         <label>Número do Cartão*</label>
-                                        <input type="text" class="form-control" required="required" />
+                                        <input type="text" name="numCartao" class="form-control" required="required" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Tipo do Cartão*</label>
-                                        <input type="email" class="form-control" required="required" />
+                                        <input type="email" name="tipoCartao" class="form-control" required="required" />
                                     </div>
                                     <div class="col-md-6" style="margin-top:22px">
                                         <img class="cards-img-valign img-thumbnail" alt="visa-logo.png" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAUCAYAAADhj08IAAAAAXNSR0IArs4c6QAABIppVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICAgICAgICAgIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIj4KICAgICAgICAgPHhtcE1NOkRlcml2ZWRGcm9tIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0UmVmOmluc3RhbmNlSUQ+eG1wLmlpZDo3ZDkxZTFiNS05NGZiLTQ1NmUtODllNS1mNmQzMzEzMjY3Y2E8L3N0UmVmOmluc3RhbmNlSUQ+CiAgICAgICAgICAgIDxzdFJlZjpkb2N1bWVudElEPnhtcC5kaWQ6MzMyODJkMWEtNjJlYy00MmQ3LWE1ZjgtMDY2MzkzYzY2ZTExPC9zdFJlZjpkb2N1bWVudElEPgogICAgICAgICA8L3htcE1NOkRlcml2ZWRGcm9tPgogICAgICAgICA8eG1wTU06RG9jdW1lbnRJRD54bXAuZGlkOjY4MzIzQjI4MzgxMjExRTVBNzMzOUFEMkU1RTk5MTdEPC94bXBNTTpEb2N1bWVudElEPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjY4MzIzQjI3MzgxMjExRTVBNzMzOUFEMkU1RTk5MTdEPC94bXBNTTpJbnN0YW5jZUlEPgogICAgICAgICA8eG1wTU06T3JpZ2luYWxEb2N1bWVudElEPnhtcC5kaWQ6MzMyODJkMWEtNjJlYy00MmQ3LWE1ZjgtMDY2MzkzYzY2ZTExPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCk8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CgVrOZwAAALlSURBVEgN7ZVNSFRRGIbvVTNx7Mewv4WokAS1KFokFP3Yqlo0EZarsiIuSQRSFAbVMsWIIhJpoKgoJFoNBSak1qJFklGhZllhEBaFVKIWTjU9773nykyTMhKICz94z/t93/nOnPf83DN2NBq1JqOlTEZR0jQlbLwnM2l3LC12JXWny3fkZXypnJn2Y6HyUcv+1TU477xzJFTj1jlhG74CZoE+cBRcArKbVihYbznhafj7wFZQACLgOdhP/zfYomYD7QGQCh6Rr4Kt2A/Rjgts26quqkhbkN5fU5z9umJ++qDdNZQzsNxpnKGB/OAq2oeub1kS2wBaTLwHvg7ugXUm55PEBRAQ4Tck5g3IM5095LWAOGEJR1l57NzP3YcvH1rdVn6/sa/Qys/4moXYdPMjZYZ/w3VgqYlFHWAL8EVpJ+Urd9IVhYMp9kUpzkfsXDmxliDM73wfyWwo6Sy1WvtzrUDq8CYGT6ev1PTfYaIe/CUmFr0A7hUwORtuo+42qDY50UHjP4jJrYzxXXdUYfQ2RaIpltO1TYXrgVaquyW74NHIjr1j8gFyd8F307cX7mZBJSbWVdAOF5v4FNxr/CLDIzSWsKdU9fUMB6yLvUVZ+LvMqJew7pHMP0odo4U43Z214JlCTDt4C0H+Tvu7JUFNoBXIxrFjoaDuUbNGtQ/NXgNtlI/VIiDKZDn4gqzTI9pQ8DHtCuCLUFcZ9dnwTgXYZ3AC+HcrQVjcc6ERf5l2ZjtYbPI6rqvGj71fHUxcQF5H0oy4T8RPTJ1oEOhoMxVgywzcgCab+kK4208kI8yvFV9j0n6TiBfmiap3+5ywKXFJT8VZcMMkX8FenfeXqJ2TadeSFBYKvmUl7QzI1Uis1iO3zaf1Hkzvi9QT8AH4X+Ywfgs4DuYAHaXqz7C4EOyZE96Mswj499XNJzywXvV/tE5YX24AfESA7mnSFvfYxwZJ/8IEFI71XEzA9KNPMSVs9L35d88fqzXHyjYnFoEAAAAASUVORK5CYII=">
@@ -138,11 +138,11 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Prazo de Validade*</label>
-                                        <input type="text" class="form-control" required="required" />
+                                        <input type="text" name="prazo" class="form-control" required="required" />
                                     </div>
                                     <div class="col-xs-6 col-md-3">
                                         <label>CVV*</label>
-                                        <input type="text" class="form-control" required="required" />
+                                        <input type="text" name="cvv" class="form-control" required="required" />
                                     </div>
                                     <div class="col-xs-6 col-md-3" style="margin-top:24px">
                                         <img class="cvv-img-valign" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAaCAYAAADfcP5FAAAAAXNSR0IArs4c6QAABBdpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iCiAgICAgICAgICAgIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj4KICAgICAgICAgPHhtcE1NOkRlcml2ZWRGcm9tIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0UmVmOmluc3RhbmNlSUQ+eG1wLmlpZDo2ODMyM0IyOTM4MTIxMUU1QTczMzlBRDJFNUU5OTE3RDwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDo2ODMyM0IyQTM4MTIxMUU1QTczMzlBRDJFNUU5OTE3RDwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgPC94bXBNTTpEZXJpdmVkRnJvbT4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDo2ODMyM0IyQzM4MTIxMUU1QTczMzlBRDJFNUU5OTE3RDwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkluc3RhbmNlSUQ+eG1wLmlpZDo2ODMyM0IyQjM4MTIxMUU1QTczMzlBRDJFNUU5OTE3RDwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcDpDcmVhdG9yVG9vbD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNSAoTWFjaW50b3NoKTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KLGBrtQAAArFJREFUSA3tl01IVFEUx+/TB5oSYx9g9qGEZBaBixKGCiIYsAg3UW1CMpjQNhFhyxbRskBrI6aQIURELdpUEowRoYEFWYtKkAa1hsIoDUVsbPr9n3fkIZQhM+MsOvB755577zvn3K95d5xEImGySRybTADdBAdhra3LlPpCoIdwBX4o6Gp4C5qq5eQ18Ys0Q63QCJJeeAm/ZGRAcohRDUEbq0X6K2hmbstYBtGk3AflMKoMtWSSx3Mq408l8sBG3eD6wudRLvLZmSzmJoNpupRh1oiWLKvkf0KLLUfWzZD/lJ0n+7uLjSBN7Ufwe1m+/QmNYUdVmQqJ19WV4qcBamAbFMAU6DPVDW1uV9cwWqLYnviP/UlqOueql/4kEfm8YPEPeKHTOBWXBImdQN9Qh3Tsoev4vQhKpgeOw2ZYZbVs1atd/dR/Xv42gvlO/1pgdo7RNwz6ODcw8o4F737HjsIt+qpfG4Rbqqt/nu3vp5j6GTrjeeVuQzI3KW+0ttR6WGHtPNofUdYdyBwuKwvZ+pQv2S7rWFeapzAC9XAIRmEA9N3SNWekNhL5hDbF+flaUk/cZCENutL63IrWR9uBMtBp2wLm28zMfCKyJalO6AU+98Bp0HV4L2jTzkAC3oCuqQcg2B0KbUKbz9PTH1Bekv5TlorkrikA0sSm3YHWHpmAabgKEZD00j5R6LrenrsTjT7xanloGsdgDdyDo6CRLFkI1M7LYeugB62Tpj2jE6al2w1q3w+SDjZ4MboWPioh/536OfZ7WLLkOI5pDQar6svLq3IdjD/ILP+/OoeGBhr7+maZgZ22W7Ne0A/WM9huK1OiSgsLzamKClNTUmIqAwFT4LpmKh4378bHTXcsZtoHB83w5KQ/1iuMfckRrMQ4B9ps6yBZTzGtou0RA92pm2HyN944wQ6GS0PBAAAAAElFTkSuQmCC" alt="cvv-code.png">

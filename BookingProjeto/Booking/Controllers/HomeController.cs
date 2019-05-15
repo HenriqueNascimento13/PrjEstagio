@@ -17,6 +17,7 @@ namespace Booking.Controllers
 {
     public class HomeController : Controller
     {
+        
         BookingContext db = new BookingContext();
         //public IActionResult Index()
         //{
@@ -45,7 +46,7 @@ namespace Booking.Controllers
         {
             return View();
         }
-        
+
         public ActionResult Index()
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
@@ -63,7 +64,8 @@ namespace Booking.Controllers
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto";
 
                 string sql2 = "select eq.IDEspecificacao, eq.IDTipoQuarto, eq.Descricao " +
-                              "from EspecificacoesQuarto eq";
+                             "from EspecificacoesQuarto eq, TipoQuarto tq " +
+                             "where tq.IDTipoQuarto = eq.IDTipoQuarto";
 
                 using (var cm = new SqlCommand(sql, cn))
                 {
@@ -139,32 +141,32 @@ namespace Booking.Controllers
 
         //PARA MOSTRAR OS HOTEIS
         /*var list2 = new List<Hoteis>();
-        //string sql2 = "select NomeHotel, NumEstrelas, Morada, Localidade, CodPostal, Pais, QuantidadeQuartos, Descricao, Imagem from Hoteis ";
+        string sql2 = "select NomeHotel, NumEstrelas, Morada, Localidade, CodPostal, Pais, QuantidadeQuartos, Descricao, Imagem from Hoteis ";
 
-         //using (var cm = new SqlCommand(sql2, cn))
-                //{
-                //    var rd = cm.ExecuteReader();
+         using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
 
-                //    while (rd.Read())
-                //    {
-                //        var hoteis = new Hoteis();
+                    while (rd.Read())
+                    {
+                        var hoteis = new Hoteis();
                         
-                //        hoteis.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                //        hoteis.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                //        hoteis.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                //        hoteis.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                //        hoteis.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                //        hoteis.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                //        hoteis.QuantidadeQuartos = rd.GetInt16(rd.GetOrdinal("QuantidadeQuartos"));
-                //        hoteis.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
-                //        hoteis.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                        hoteis.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                        hoteis.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                        hoteis.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                        hoteis.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                        hoteis.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                        hoteis.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                        hoteis.QuantidadeQuartos = rd.GetInt16(rd.GetOrdinal("QuantidadeQuartos"));
+                        hoteis.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
+                        hoteis.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
 
-                //        list2.Add(hoteis);
-                //    }
-                //    rd.Close();
-                //}
-
+                        list2.Add(hoteis);
+                    }
+                    rd.Close();
+                }
         */
+
 
         //PARA AS ESTRELAS
 
@@ -225,6 +227,6 @@ namespace Booking.Controllers
                 list.Add(o);
             }
         }*/
-        
+
     }
 }
