@@ -32,8 +32,8 @@ namespace Booking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //services.AddDbContext<BookingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("henrique")));
-            services.AddDbContext<BookingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("catarina")));
+            services.AddDbContext<BookingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("henrique")));
+            //services.AddDbContext<BookingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("catarina")));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -43,8 +43,8 @@ namespace Booking
             });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                   // Configuration.GetConnectionString("henrique")));
-                   Configuration.GetConnectionString("catarina")));
+                     Configuration.GetConnectionString("henrique")));
+                   //Configuration.GetConnectionString("catarina")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(
                 Options => Options.Stores.MaxLengthForKeys = 128)

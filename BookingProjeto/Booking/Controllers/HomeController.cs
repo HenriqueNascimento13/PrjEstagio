@@ -49,8 +49,8 @@ namespace Booking.Controllers
 
         public ActionResult Index()
         {
-            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
             var list = new List<QuartosDisp>();
 

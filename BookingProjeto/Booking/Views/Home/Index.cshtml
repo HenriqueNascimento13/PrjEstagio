@@ -1,4 +1,4 @@
-﻿@model Booking.Models.ViewModel
+﻿@model List<Booking.Models.QuartosDisp>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -12,7 +12,7 @@
 
 <div class="container" id="containerPage">
     <div class="col-lg-9">
-        @foreach (var item in Model.Quartos)
+        @foreach (var item in Model)
         {
             <div class="container-fluid">
                 <div class="col-md-12" id="main">
