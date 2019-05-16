@@ -47,27 +47,35 @@ namespace Booking.Controllers
             return View();
         }
 
-        public ActionResult Index()
+
+        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, int TipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
+            var list2 = new List<TipoQuarto>();
             var list = new List<QuartosDisp>();
 
-            DateTime checkin = new DateTime();
-            DateTime checkout = new DateTime();
+            var result = CheckAvailability(CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
-                string sql = "select  rs.CheckIn, rs.CheckOut, tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                string sql = "select rs.QuantQuartos, tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
                              "from TipoQuarto tq, Hoteis h, Precario p, Reservas rs " +
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and tq.IDTipoQuarto = rs.IDTipoQuarto ";
+
+                string sql2 = "select tq.Descricao from TipoQuarto tq";
 
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
+
+                    if (result == true)
+                    {
+
+                    }
 
                     while (rd.Read())
                     {
@@ -85,32 +93,86 @@ namespace Booking.Controllers
                         quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
                         quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
                         quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
-                        quartos.CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn"));
-                        quartos.CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"));
+                        quartos.QuantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos"));
 
-                        checkin = rd.GetDateTime(rd.GetOrdinal("CheckIn"));
-                        checkout = rd.GetDateTime(rd.GetOrdinal("CheckOut"));
-
-                        if (false)
-                        {
-                            if (quartos.CheckOut == null || quartos.CheckOut <= DateTime.UtcNow || quartos.CheckOut.Equals("01-01-0001"))
-                            {
-
-                                list.Add(quartos);
-
-                            }
-                        }
-                        else
-                        {
-                            list.Add(quartos);
-                        }
+                        list.Add(quartos);
                     }
                     rd.Close();
                 }
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        var tipo = new TipoQuarto();
+
+                        tipo.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
+
+                        list2.Add(tipo);
+                    }
+
+                    cn.Close();
+                    rd.Close();
+                }
+            }
+            ViewModel model = new ViewModel(list, list2);
+
+            return View(model);
+        }
+
+        public bool CheckAvailability(DateTime CheckIn, DateTime CheckOut, int TipoQuarto, int QuantQuartos)
+        {
+            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+
+            int inventario = 0;
+            int quantQuartos = 0;
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "select tq.IDTipoQuarto, tq.Inventario from TipoQuarto tq where tq.IdTipoQuarto = " + TipoQuarto;
+                string sql2 = "select rs.IDTipoQuarto, rs.QuantQuartos from Reservas rs where rs.IdTipoQuarto = " + TipoQuarto;
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        inventario = rd.GetInt32(rd.GetOrdinal("Inventario"));
+                    }
+                    rd.Close();
+                }
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        quantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos"));
+                    }
+                    rd.Close();
+                }
+
+                for (DateTime i = CheckIn;  i <= CheckOut; i.AddDays(1))
+                {
+                    if (inventario - quantQuartos > QuantQuartos)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
                 cn.Close();
             }
-
-            return View(list);
+            return false;
         }
 
         public IActionResult Book(string hotel, string quarto, decimal preco, DateTime checkin, DateTime checkout )

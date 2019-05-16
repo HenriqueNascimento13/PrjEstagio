@@ -20,12 +20,12 @@
                             <h4>@ViewBag.Quarto</h4>
 
                             <div class="row">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label>Nome do Responsável*</label>
                                     <input type="text" name="nomeR" class="form-control" required="required" />
                                 </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label>Sobrenome do Responsável*</label>
+                                <div class="col-md-3 col-sm-12">
+                                    <label>Sobrenome Responsável*</label>
                                     <input type="text" name="sobrenomeR" class="form-control" required="required" />
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-4">
@@ -37,6 +37,15 @@
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-4">
                                     <label>Crianças</label>
+                                    <select class="form-control" name="criancas">
+                                        <option value="0" selected="selected" label="0">0</option>
+                                        <option value="1" label="1">1</option>
+                                        <option value="2" label="2">2</option>
+                                        <option value="3" label="3">3</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-4">
+                                    <label>Quartos</label>
                                     <select class="form-control" name="criancas">
                                         <option value="0" selected="selected" label="0">0</option>
                                         <option value="1" label="1">1</option>
