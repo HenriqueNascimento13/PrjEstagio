@@ -40,14 +40,11 @@ namespace Booking.Controllers
             return View();
         }
 
-        
 
         public IActionResult Privacy()
         {
             return View();
         }
-
-
 
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
