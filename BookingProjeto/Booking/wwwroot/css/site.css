@@ -58,11 +58,9 @@ body {
 #cont {
     padding-top: 10px;
     padding-bottom: 0px;
-    margin-right: auto;
-    margin-left: 285px;
-    padding-left: 113.5px;
-    padding-right: 65px;
-    width: 970px;
+    padding-left: 25px;
+    padding-right: 208px;
+    width: 1100px;
     height: 100px;
     
 }
@@ -207,6 +205,11 @@ table{
 .hoteis {
     font-weight: 100;
     font-family: inherit;
+}
+
+#pesquisa {
+    margin-left: 30px; 
+    margin-top: 25px;
 }
 
 /*

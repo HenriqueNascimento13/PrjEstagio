@@ -48,13 +48,39 @@ namespace Booking.Controllers
         }
 
 
-        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, int TipoQuarto, int QuantQuartos)
+
+        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
-            var list2 = new List<TipoQuarto>();
+            var list2 = new HashSet<TipoQuarto>().ToList();
             var list = new List<QuartosDisp>();
+
+            long TipoQuarto = 0;
+
+            if (tipoQuarto != null)
+            {
+                using (var cn = new SqlConnection(cs))
+                {
+                    cn.Open();
+
+                    string sql = "select tq.IDTipoQuarto from TipoQuarto tq where tq.Descricao = '" + tipoQuarto + "'";
+
+                    using (var cm = new SqlCommand(sql, cn))
+                    {
+                        var rd = cm.ExecuteReader();
+
+                        if (rd.Read())
+                        {
+                            TipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
+                        }
+
+                        rd.Close();
+                    }
+                    cn.Close();
+                }
+            }
 
             var result = CheckAvailability(CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
@@ -68,16 +94,13 @@ namespace Booking.Controllers
 
                 string sql2 = "select tq.Descricao from TipoQuarto tq";
 
+                if (result == true)
+                {
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
 
-                    if (result == true)
-                    {
-
-                    }
-
-                    while (rd.Read())
+                        while (rd.Read())
                     {
                         var quartos = new QuartosDisp();
 
@@ -98,6 +121,7 @@ namespace Booking.Controllers
                         list.Add(quartos);
                     }
                     rd.Close();
+                    }
                 }
 
                 using (var cm = new SqlCommand(sql2, cn))
@@ -112,6 +136,7 @@ namespace Booking.Controllers
 
                         list2.Add(tipo);
                     }
+                    
 
                     cn.Close();
                     rd.Close();
@@ -122,7 +147,7 @@ namespace Booking.Controllers
             return View(model);
         }
 
-        public bool CheckAvailability(DateTime CheckIn, DateTime CheckOut, int TipoQuarto, int QuantQuartos)
+        public bool CheckAvailability(DateTime CheckIn, DateTime CheckOut, long TipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";

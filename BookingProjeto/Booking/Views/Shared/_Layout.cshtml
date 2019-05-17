@@ -46,21 +46,20 @@
     <div class="container-fluid" id="jumbotron">
         <div class="container-fluid" id="form">
             <div class="container-fluid" id="cont">
-                @using (Html.BeginForm("Index", "Home")) {
-                <form method="POST">
+                <form>
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-sm-12">
                             <label>Entrada <i class="glyphicon">&#xe109;</i></label>
-                            <input type="date" class="form-control" id="entrada">
+                            <input type="date" class="form-control" id="entrada" name="CheckIn">
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-12">
                             <label>Saída <i class="glyphicon">&#xe109;</i> </label>
-                            <input type="date" class="form-control" id="saida">
+                            <input type="date" class="form-control" id="saida" name="CheckOut">
                         </div>
 
-                        <div class="col-lg-3 col-md-3 col-sm-12">
-                            <label>Tipo de Quarto</label>
-                            <select class="form-control">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <label>Quarto</label>
+                            <select class="form-control" name="tipoQuarto">
                                 @foreach (var item in Model.Tipo)
                                 {
                                     <option> @item.Descricao</option>
@@ -70,18 +69,18 @@
 
                         <div class="col-lg-3 col-md-3 col-sm-12">
                             <label>Quantidade de quartos</label>
-                            <select class="form-control">
+                            <select class="form-control" name="QuantQuartos">
                                 <option value="0" selected="selected" label="0">0</option>
                                 <option value="1" label="1">1</option>
                                 <option value="2" label="2">2</option>
                                 <option value="3" label="3">3</option>
                             </select>
                         </div>
-                        <div>
-                            <button type="submit" class="btn btn-info">Pesquisar</button>
+                        <div class="col-lg-1 col-md-3 col-sm-12">
+                            <button asp-action="Index", asp-controller="Home" id="pesquisa" type="submit" class="btn btn-info">Pesquisar</button>
                         </div>
                     </div>
-                </form>}
+                </form>
             </div>
         </div>
     </div>

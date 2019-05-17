@@ -357,7 +357,6 @@ C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XmlDocume
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XmlSerializer.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XPath.dll
 C:\Temp\Git\Projeto\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XPath.XDocument.dll
-C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.exe.config
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csproj.CoreCompileInputs.cache
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.RazorAssemblyInfo.cache
@@ -942,3 +941,4 @@ C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Boo
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.csproj.CopyComplete
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.exe
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.pdb
+C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
