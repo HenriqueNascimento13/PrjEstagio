@@ -46,7 +46,7 @@ namespace Booking.Controllers
             return View();
         }
 
-
+        
 
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
@@ -60,7 +60,7 @@ namespace Booking.Controllers
 
             List<String> list2 = PreencheTipos(cs);
 
-            var list = MostrarQuartos(cs, result);
+            var list = MostrarQuartos(cs, result, CheckIn, CheckOut);
 
             ViewModel model = new ViewModel(list, list2);
 
@@ -123,7 +123,7 @@ namespace Booking.Controllers
             return false;
         }
 
-        public List<QuartosDisp> MostrarQuartos(string cs, bool result)
+        public List<QuartosDisp> MostrarQuartos(string cs, bool result, DateTime ci, DateTime co)
         {
             var list = new List<QuartosDisp>();
             var list2 = new List<QuartosDisp>();
@@ -136,7 +136,7 @@ namespace Booking.Controllers
                              "from TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
                              "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
 
-                string sql2 = "select tq.IDTipoQuarto from TipoQuarto tq";
+                string sql2 = "select tq.IDTipoQuarto, h.IDHotel from TipoQuarto tq, Hoteis h where h.IDHotel = tq.IDHotel";
 
                 if (result == true)
                 {
@@ -149,6 +149,7 @@ namespace Booking.Controllers
                             var id = new QuartosDisp();
 
                             id.IdTipoQuarto = rd2.GetInt64(rd2.GetOrdinal("IDTipoQuarto"));
+                            id.IdHotel = rd2.GetInt64(rd2.GetOrdinal("IDHotel"));
 
                             list2.Add(id);    
                         }
@@ -174,6 +175,8 @@ namespace Booking.Controllers
                             quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
                             quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
                             quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
+                            quartos.CheckIn = ci;
+                            quartos.CheckOut = co;
 
                             list.Add(quartos);
                             
@@ -181,6 +184,7 @@ namespace Booking.Controllers
 
                     }
                 }
+
                 for (int i = 0; i <= list2.Count() - 1; i++)
                 {
                     for (int y = 0; y <= list.Count() - i - 1; y++)
@@ -196,6 +200,7 @@ namespace Booking.Controllers
                         }
                     }
                 }
+                
                 cn.Close();
             }
 
@@ -282,16 +287,15 @@ namespace Booking.Controllers
             return aux;
         }
 
-        
-
-        public IActionResult Book(string hotel, string quarto, decimal preco, DateTime checkin, DateTime checkout )
+        public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut )
         {
+            
 
             ViewBag.Hotel = hotel;
             ViewBag.Quarto = quarto;
             ViewBag.Preco = preco;
-            ViewBag.CheckIn = checkin.ToShortDateString().ToString();
-            ViewBag.CheckOut = checkout.ToShortDateString().ToString();
+            ViewBag.CheckIn = CheckIn.ToShortDateString().ToString();
+            ViewBag.CheckOut = CheckOut.ToShortDateString().ToString();
 
             return View();
         }
