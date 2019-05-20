@@ -289,13 +289,11 @@ namespace Booking.Controllers
 
         public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut )
         {
-            
-
             ViewBag.Hotel = hotel;
             ViewBag.Quarto = quarto;
             ViewBag.Preco = preco;
-            ViewBag.CheckIn = CheckIn.ToShortDateString().ToString();
-            ViewBag.CheckOut = CheckOut.ToShortDateString().ToString();
+            ViewBag.CheckIn = CheckIn.ToString("yyyy-MM-dd");
+            ViewBag.CheckOut = CheckOut.ToString("yyyy-MM-dd");
 
             return View();
         }
