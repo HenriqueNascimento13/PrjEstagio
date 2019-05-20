@@ -8,14 +8,14 @@ namespace Booking.Models
     public class ViewModel
 
     {
-        public ViewModel(List<QuartosDisp> quartos, List<TipoQuarto> tipo)
+        public ViewModel(List<QuartosDisp> quartos, List<String> tipo)
         {
             Quartos = quartos;
             Tipo = tipo;
 
         }
 
-        public List<TipoQuarto> Tipo { get; private set; }
+        public List<String> Tipo { get; private set; }
         public List<QuartosDisp> Quartos { get; private set; }
     }
 }

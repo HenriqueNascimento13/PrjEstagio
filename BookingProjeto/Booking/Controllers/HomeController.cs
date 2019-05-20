@@ -46,103 +46,29 @@ namespace Booking.Controllers
             return View();
         }
 
+
+
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
-            var list2 = new HashSet<TipoQuarto>().ToList();
-            var list = new List<QuartosDisp>();
 
-            long TipoQuarto = 0;
-
-            if (tipoQuarto != null)
-            {
-                using (var cn = new SqlConnection(cs))
-                {
-                    cn.Open();
-
-                    string sql = "select tq.IDTipoQuarto from TipoQuarto tq where tq.Descricao = '" + tipoQuarto + "'";
-
-                    using (var cm = new SqlCommand(sql, cn))
-                    {
-                        var rd = cm.ExecuteReader();
-
-                        if (rd.Read())
-                        {
-                            TipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
-                        }
-
-                        rd.Close();
-                    }
-                    cn.Close();
-                }
-            }
+            long TipoQuarto = BuscarIdtipoQuarto(tipoQuarto, cs);
 
             var result = CheckAvailability(CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
-            using (var cn = new SqlConnection(cs))
-            {
-                cn.Open();
+            List<String> list2 = PreencheTipos(cs);
 
-                string sql = "select rs.QuantQuartos, tq.IdTipoQuarto, h.IdHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
-                             "from TipoQuarto tq, Hoteis h, Precario p, Reservas rs " +
-                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and tq.IDTipoQuarto = rs.IDTipoQuarto ";
+            var list = MostrarQuartos(cs, result);
 
-                string sql2 = "select tq.Descricao from TipoQuarto tq";
-
-                if (result == true)
-                {
-                using (var cm = new SqlCommand(sql, cn))
-                {
-                    var rd = cm.ExecuteReader();
-
-                        while (rd.Read())
-                    {
-                        var quartos = new QuartosDisp();
-
-                        quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IdTipoQuarto"));
-                        quartos.IdHotel = rd.GetInt64(rd.GetOrdinal("IdHotel"));
-                        quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
-                        quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
-                        quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
-                        quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                        quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                        quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                        quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                        quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                        quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                        quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
-                        quartos.QuantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos"));
-
-                        list.Add(quartos);
-                    }
-                    rd.Close();
-                    }
-                }
-
-                using (var cm = new SqlCommand(sql2, cn))
-                {
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
-                    {
-                        var tipo = new TipoQuarto();
-
-                        tipo.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
-
-                        list2.Add(tipo);
-                    }
-                    
-
-                    cn.Close();
-                    rd.Close();
-                }
-            }
             ViewModel model = new ViewModel(list, list2);
 
             return View(model);
         }
+
+
+
 
         public bool CheckAvailability(DateTime CheckIn, DateTime CheckOut, long TipoQuarto, int QuantQuartos)
         {
@@ -181,7 +107,7 @@ namespace Booking.Controllers
                     rd.Close();
                 }
 
-                for (DateTime i = CheckIn;  i <= CheckOut; i.AddDays(1))
+                for (DateTime i = CheckIn; i <= CheckOut; i.AddDays(1))
                 {
                     if (inventario - quantQuartos > QuantQuartos)
                     {
@@ -196,6 +122,167 @@ namespace Booking.Controllers
             }
             return false;
         }
+
+        public List<QuartosDisp> MostrarQuartos(string cs, bool result)
+        {
+            var list = new List<QuartosDisp>();
+            var list2 = new List<QuartosDisp>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "select tq.IDTipoQuarto, r.TipoRegime, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                             "from TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
+                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
+
+                string sql2 = "select tq.IDTipoQuarto from TipoQuarto tq";
+
+                if (result == true)
+                {
+                    using (var cm2 = new SqlCommand(sql2, cn))
+                    {
+                        var rd2 = cm2.ExecuteReader();
+
+                        while (rd2.Read())
+                        {
+                            var id = new QuartosDisp();
+
+                            id.IdTipoQuarto = rd2.GetInt64(rd2.GetOrdinal("IDTipoQuarto"));
+
+                            list2.Add(id);    
+                        }
+                        rd2.Close();
+                    }
+
+                    using (var cm = new SqlCommand(sql, cn))
+                    {
+                        var rd = cm.ExecuteReader();
+
+                        while (rd.Read())
+                        {
+                            var quartos = new QuartosDisp();
+
+                            quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                            quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                            quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                            quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                            quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                            quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                            quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                            quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                            quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                            quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+                            quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
+
+                            list.Add(quartos);
+                            
+                        }rd.Close();
+
+                    }
+                }
+                for (int i = 0; i <= list2.Count() - 1; i++)
+                {
+                    for (int y = 0; y <= list.Count() - i - 1; y++)
+                    {
+                        if (i != y)
+                        {
+                            if (list2[i].IdTipoQuarto == list[y].IdTipoQuarto)
+                            {
+                                QuartosDisp outro = list[i];
+                                list.Remove(outro);
+                            }
+
+                        }
+                    }
+                }
+                cn.Close();
+            }
+
+            return list;
+        }
+
+        public long BuscarIdtipoQuarto(string tipoQuarto, string cs)
+        {
+            long TipoQuarto = 0;
+
+            if (tipoQuarto != null)
+            {
+                using (var cn = new SqlConnection(cs))
+                {
+                    cn.Open();
+
+                    string sql = "select tq.IDTipoQuarto from TipoQuarto tq where tq.Descricao = '" + tipoQuarto + "'";
+
+                    using (var cm = new SqlCommand(sql, cn))
+                    {
+                        var rd = cm.ExecuteReader();
+
+                        if (rd.Read())
+                        {
+                            TipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
+                        }
+
+                        rd.Close();
+                    }
+                    cn.Close();
+                }
+            }
+
+            return TipoQuarto;
+        }
+
+        public List<String> PreencheTipos(string cs)
+        {
+
+            var list2 = new List<String>();
+            var aux = new List<String>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql2 = "select tq.Descricao from TipoQuarto tq";
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        string tipo = "";
+
+                        tipo = rd.GetString(rd.GetOrdinal("Descricao"));
+
+                        list2.Add(tipo);
+                    }
+
+                    aux = list2;
+
+                    rd.Close();
+                }
+                cn.Close();
+            }
+
+            for (int i = 0; i <= list2.Count() - 1; i++)
+            {
+                for (int y = 0; y <= aux.Count() -i - 1; y++)
+                {
+                    if (i != y)
+                    {
+                        if (list2[i].Equals(aux[y]) )
+                        {
+                            string outro = aux[y];
+
+                            aux.Remove(outro);
+                        }
+                    }
+                }
+            }
+            return aux;
+        }
+
+        
 
         public IActionResult Book(string hotel, string quarto, decimal preco, DateTime checkin, DateTime checkout )
         {
