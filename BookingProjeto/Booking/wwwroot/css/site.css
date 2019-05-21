@@ -50,9 +50,8 @@ body {
     border: none;
     background-color: rgb(255,255,255);
     margin-bottom: 3%;
-    height: 220px;
+    height: 250px;
     padding: 0%;
-    float: left;
 }
 
 #cont {
@@ -68,7 +67,7 @@ body {
 #img {
     border: none;
     margin-left: 0%;
-    height: 220px;
+    height: 250px;
     padding: 0%;
 }
 
@@ -100,8 +99,8 @@ h3, h4, h5 {
 }
 
 #containerPage {
-    padding-left: 15px;
-    padding-left: 15px;
+    margin: 0px;
+    padding: 0px;
     background-color: #eaeaea;
 }
 
