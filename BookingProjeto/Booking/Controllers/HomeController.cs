@@ -17,14 +17,15 @@ namespace Booking.Controllers
 {
     public class HomeController : Controller
     {
-        
         BookingContext db = new BookingContext();
+
+        //[HttpGet]
         //public IActionResult Index()
         //{
         //    return View();
         //}
 
-        
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -47,7 +48,7 @@ namespace Booking.Controllers
         }
 
         
-
+        [HttpGet]
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
@@ -56,7 +57,7 @@ namespace Booking.Controllers
 
             long TipoQuarto = BuscarIdtipoQuarto(tipoQuarto, cs);
 
-            var result = CheckAvailability(CheckIn, CheckOut, TipoQuarto, QuantQuartos);
+            var result = CheckAvailability(cs, CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
             List<String> list2 = PreencheTipos(cs);
 
@@ -69,12 +70,8 @@ namespace Booking.Controllers
 
 
 
-
-        public bool CheckAvailability(DateTime CheckIn, DateTime CheckOut, long TipoQuarto, int QuantQuartos)
+        public bool CheckAvailability(string cs, DateTime CheckIn, DateTime CheckOut, long TipoQuarto, int QuantQuartos)
         {
-            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
-
             int inventario = 0;
             int quantQuartos = 0;
 
@@ -109,7 +106,7 @@ namespace Booking.Controllers
 
                 for (DateTime i = CheckIn; i <= CheckOut; i.AddDays(1))
                 {
-                    if (inventario - quantQuartos > QuantQuartos)
+                    if (inventario - quantQuartos >= QuantQuartos)
                     {
                         return true;
                     }
@@ -120,7 +117,7 @@ namespace Booking.Controllers
                 }
                 cn.Close();
             }
-            return false;
+            return true;
         }
 
         public List<QuartosDisp> MostrarQuartos(string cs, bool result, DateTime ci, DateTime co)
@@ -132,11 +129,11 @@ namespace Booking.Controllers
             {
                 cn.Open();
 
-                string sql = "select tq.IDTipoQuarto, r.TipoRegime, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
-                             "from TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
-                             "where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
+                string sql = "Select tq.IDTipoQuarto, r.TipoRegime, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                             "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
+                             "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
 
-                string sql2 = "select tq.IDTipoQuarto, h.IDHotel from TipoQuarto tq, Hoteis h where h.IDHotel = tq.IDHotel";
+                string sql2 = "Select tq.IDTipoQuarto, h.IDHotel from TipoQuarto tq, Hoteis h where h.IDHotel = tq.IDHotel";
 
                 if (result == true)
                 {
@@ -187,11 +184,11 @@ namespace Booking.Controllers
 
                 for (int i = 0; i <= list2.Count() - 1; i++)
                 {
-                    for (int y = 0; y <= list.Count() - i - 1; y++)
+                    for (int y = 1; y <= list.Count() - i - 1; y++)
                     {
                         if (i != y)
                         {
-                            if (list2[i].IdTipoQuarto == list[y].IdTipoQuarto)
+                            if (list2[i].IdTipoQuarto == list[y].IdTipoQuarto /*|| list2[i].IdHotel == list[y].IdHotel*/)
                             {
                                 QuartosDisp outro = list[i];
                                 list.Remove(outro);
@@ -287,15 +284,208 @@ namespace Booking.Controllers
             return aux;
         }
 
-        public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut )
+        [HttpPost]
+        public ActionResult Book(string checkOut, string checkIn, decimal preco, string tipo, string hotel, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)
         {
-            ViewBag.Hotel = hotel;
-            ViewBag.Quarto = quarto;
-            ViewBag.Preco = preco;
-            ViewBag.CheckIn = CheckIn.ToString("yyyy-MM-dd");
-            ViewBag.CheckOut = CheckOut.ToString("yyyy-MM-dd");
+            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+
+            AddCliente(cs, nome, sobrenome, email, telefone, endereco, codPostal, localidade, cc, dataNasc);
+
+            AddPagamento(cs, nomeTitular, numCartao, tipoCartao, prazo, cvv);
+
+            AddReserva(cs, nomeR, sobrenomeR, adultos, criancas, quant, regime, nome, cc, tipoCartao, hotel, tipo, checkOut, checkIn);
 
             return View();
+        }
+
+        public void AddReserva(string cs, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string cc, string tipoCartao, string hotel, string tipo, string checkOut, string checkIn)
+        {
+            int idHotel = 0;
+            int idCliente = 0;
+            int idRegime = 0;
+            int idQuarto = 0;
+            int idPag = 0;
+
+            string sql = "Insert into Reservas values(@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9, @param10, @param11, @param12)";
+
+            string sql2 = "select tp.IDTipoPagamento, tq.IDTipoQuarto, h.IDHotel, rg.IDRegime, cl.IDCliente from TipoPagamento tp, Hoteis h, TipoQuarto tq, Regimes rg, Clientes cl " +
+                "where tq.IDHotel = h.IDHotel and rg.IDHotel = h.IDHotel and tp.Designacao = '" + tipoCartao + "' and h.NomeHotel = '" + hotel +  "' and " +
+                "tq.Descricao = '" + tipo + "' and rg.TipoRegime = '" + regime + "' and cl.Nome = '" + nome + "' and cl.CC = '" + cc + "'";
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        idPag = rd.GetInt16(rd.GetOrdinal("IDTipoPagamento"));
+                        idQuarto = rd.GetInt16(rd.GetOrdinal("IDTipoQuarto"));
+                        idHotel = rd.GetInt16(rd.GetOrdinal("IDTipoPagaIDHotelmento"));
+                        idRegime = rd.GetInt16(rd.GetOrdinal("IDRegime"));
+                        idCliente = rd.GetInt16(rd.GetOrdinal("IDCliente"));
+                    }
+
+                    rd.Close();
+                }
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    cm.Parameters.AddWithValue("@param1", idHotel);
+                    cm.Parameters.AddWithValue("@param2", idCliente);
+                    cm.Parameters.AddWithValue("@param3", idRegime);
+                    cm.Parameters.AddWithValue("@param4", idQuarto);
+                    cm.Parameters.AddWithValue("@param5", idPag);
+                    cm.Parameters.AddWithValue("@param6", adultos);
+                    cm.Parameters.AddWithValue("@param7", criancas);
+                    cm.Parameters.AddWithValue("@param8", checkIn);
+                    cm.Parameters.AddWithValue("@param9", checkOut);
+                    cm.Parameters.AddWithValue("@param10", quant);
+                    cm.Parameters.AddWithValue("@param11", nomeR);
+                    cm.Parameters.AddWithValue("@param12", sobrenomeR);
+                }
+                cn.Close();
+            }
+        }
+
+        public void AddPagamento(string cs, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)
+        {
+            int id = 0;
+            string sql = "Insert into Pagamento values(@param1, @param2, @param3, @param4, @param5)";
+            string sql2 = "Select tp.IDTipoPagamento from TipoPagamento tp where tp.Designacao = '" + tipoCartao + "'";
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        id = rd.GetInt16(rd.GetOrdinal("IDTipoPagamento"));
+                    }
+
+                    rd.Close();
+                }
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    cm.Parameters.AddWithValue("@param1", id);
+                    cm.Parameters.AddWithValue("@param2", nomeTitular);
+                    cm.Parameters.AddWithValue("@param3", numCartao);
+                    cm.Parameters.AddWithValue("@param4", prazo);
+                    cm.Parameters.AddWithValue("@param5", cvv);
+                }
+                cn.Close();
+            }
+        }
+
+
+        public void AddCliente(string cs, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc)
+        {
+            string sql = "Insert into Clientes values(@param1, @param2, @param3, @param4, @param5, @param6, @param7, @param8, @param9)";
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    cm.Parameters.AddWithValue("@param1", nome);
+                    cm.Parameters.AddWithValue("@param2", sobrenome);
+                    cm.Parameters.AddWithValue("@param3", email);
+                    cm.Parameters.AddWithValue("@param4", telefone);
+                    cm.Parameters.AddWithValue("@param5", endereco);
+                    cm.Parameters.AddWithValue("@param6", localidade);
+                    cm.Parameters.AddWithValue("@param7", codPostal);
+                    cm.Parameters.AddWithValue("@param8", cc);
+                    cm.Parameters.AddWithValue("@param9", dataNasc);
+                }
+                cn.Close();
+            }
+        }
+
+        
+        public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut )
+        {
+            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+
+            Dados dados = new Dados(hotel, quarto, preco, CheckIn, CheckOut);
+
+            List<string> list = PreencheRegimes(cs, hotel, quarto);
+            List<string> list2 = PreencheTipoPagamento(cs);
+
+            ViewModel model = new ViewModel(list, list2, dados);
+
+            return View(model);
+        }
+
+        public List<string> PreencheTipoPagamento(string cs)
+        {
+            List<string> list = new List<string>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "select tp.Designacao from TipoPagamento tp";
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        string tipo = "";
+
+                        tipo = rd.GetString(rd.GetOrdinal("Designacao"));
+
+                        list.Add(tipo);
+                    }
+                    rd.Close();
+                }
+                cn.Close();
+            }
+
+            return list;
+        }
+
+        public List<string> PreencheRegimes(string cs, string hotel, string quarto)
+        {
+            List<string> list = new List<string>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "select rg.TipoRegime from Regimes rg, Hoteis h, TipoQuarto tq " +
+                             "where rg.IDHotel = h.IDHotel and h.IDHotel = tq.IDHotel and h.NomeHotel = '" + hotel + "' and tq.Descricao = '" + quarto + "'";
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        string tipo = "";
+
+                        tipo = rd.GetString(rd.GetOrdinal("TipoRegime"));
+
+                        list.Add(tipo);
+                    }
+                    rd.Close();
+                }
+                cn.Close();
+            }
+
+            return list;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,53 @@
+﻿@model Booking.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Form";
+}
+
+<div class="container-fluid" id="jumbotron">
+    <div class="container-fluid" id="form">
+        <div class="container-fluid" id="cont">
+            <form>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <label>Entrada <i class="glyphicon">&#xe109;</i></label>
+                        <input type="date" class="form-control" name="CheckIn">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <label>Saída <i class="glyphicon">&#xe109;</i> </label>
+                        <input type="date" class="form-control" name="CheckOut">
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-12">
+                        <label>Quarto</label>
+                        <select class="form-control" name="tipoQuarto">
+                            @foreach (var item in Model.Tipo)
+                            {
+                                <option> @item</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-12">
+                        <label>Quartos</label>
+                        <select class="form-control" name="QuantQuartos">
+                            <option value="1" selected="selected" label="1">1</option>
+                            <option value="2" label="2">2</option>
+                            <option value="3" label="3">3</option>
+                            <option value="4" label="4">4</option>
+                            <option value="5" label="5">5</option>
+                            <option value="6" label="6">6</option>
+                            <option value="7" label="7">7</option>
+                            <option value="8" label="8">8</option>
+                            <option value="9" label="9">9</option>
+                            <option value="10" label="">10</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-3 col-sm-12">
+                        <button asp-action="Index" , asp-controller="Home" id="pesquisa" type="submit" class="btn btn-info">Pesquisar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
