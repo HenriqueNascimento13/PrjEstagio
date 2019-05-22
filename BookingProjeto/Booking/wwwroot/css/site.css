@@ -49,9 +49,9 @@ body {
 #main {
     border: none;
     background-color: rgb(255,255,255);
-    margin-bottom: 3%;
     height: 250px;
     padding: 0%;
+    margin-bottom: 30px;
 }
 
 #cont {
@@ -225,6 +225,18 @@ table{
     border: 0 none;
     width: 55px;
     text-align: right;
+}
+
+#quartos{
+    margin-top: 25px;
+}
+
+#alert {
+    width: 420px;
+    text-align: center;
+    margin-left: 380px;
+    margin-top: 25px;
+    background-color: palegreen;
 }
 
 /*

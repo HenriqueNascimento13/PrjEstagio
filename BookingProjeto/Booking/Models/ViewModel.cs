@@ -13,9 +13,10 @@ namespace Booking.Models
         //    Tipo = tipo;
         //}
 
-        public ViewModel(List<QuartosDisp> quartos)
+        public ViewModel(List<QuartosDisp> quartos, string message)
         {
             Quartos = quartos;
+            Message = message;
         }
 
         public ViewModel(List<string> regimes, List<string> tipoPagamento, Dados dados)
@@ -24,6 +25,8 @@ namespace Booking.Models
             TipoPagamento = tipoPagamento;
             Dados = dados;
         }
+
+        public string Message { get; private set; }
 
         public List<string> TipoPagamento { get; private set; }
         public List<string> Regimes { get; private set; }

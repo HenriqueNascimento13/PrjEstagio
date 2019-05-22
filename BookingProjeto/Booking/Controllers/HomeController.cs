@@ -41,11 +41,10 @@ namespace Booking.Controllers
         }
 
         
-        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
+        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos, string message)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
-
 
             long TipoQuarto = BuscarIdtipoQuarto(tipoQuarto, cs);
 
@@ -55,7 +54,7 @@ namespace Booking.Controllers
 
             List<string> list2 = PreencheTipos(cs);
 
-            ViewModel model = new ViewModel(list);
+            ViewModel model = new ViewModel(list, message);
 
             ViewBag.List = list2;
 
@@ -287,7 +286,8 @@ namespace Booking.Controllers
 
             AddReserva(cs, nomeR, sobrenomeR, adultos, criancas, quant, regime, nome, cc, tipoCartao, hotel, tipo, checkOut, checkIn, capacidade);
 
-            return View("Index");
+
+            return RedirectToAction("Index", "Home", new { message = "Reserva Efetuada com Sucesso!" });
         }
 
         public void AddReserva(string cs, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string cc, string tipoCartao, string hotel, string tipo, string checkOut, string checkIn, int capacidade)
