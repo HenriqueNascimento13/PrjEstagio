@@ -5,6 +5,19 @@ namespace Booking
 {
     public partial class Clientes
     {
+        public Clientes(string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc)
+        {
+            nome = Nome;
+            sobrenome = Sobrenome;
+            email = Email;
+            telefone = Contacto;
+            endereco = Morada;
+            codPostal = CodPostal;
+            localidade = Localidade;
+            cc = Cc;
+            dataNasc = DataNasc;
+        }
+
         public Clientes()
         {
             Reservas = new HashSet<Reservas>();

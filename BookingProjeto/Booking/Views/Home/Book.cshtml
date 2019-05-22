@@ -207,11 +207,15 @@
                     <strong>@Model.Dados.NomeHotel</strong>
                     <br />
                     <div class="row">
+                        <div class="col-xs-8">Capacidade</div>
+                        <div class="col-xs-4 pull-right"><input name="capacidade" readonly="readonly" value="@Model.Dados.Capacidade" id="inputBookRight" /></div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-8">@Model.Dados.TipoQuarto</div>
-                        <div class="col-xs-4 pull-right"><input name="preco" readonly="readonly" value="@Model.Dados.Preco"€ id="inputBook" style="width:60px"/></div>
+                        <div class="col-xs-4 pull-right"><input name="preco" readonly="readonly" value="@Model.Dados.Preco €" id="inputBookRight" /></div>
+                    </div>
                     </div>
                 </div>
-            </div>
             <div class="titulo">
                 <h4> Contacto e Localização</h4>
             </div>

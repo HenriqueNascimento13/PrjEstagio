@@ -211,11 +211,20 @@ table{
     margin-top: 25px;
 }
 
-#inputBook:focus {
+#inputBook {
     outline: none;
     border-color: none;
     box-shadow: 0 0 0 0;
     border: 0 none;
+}
+
+#inputBookRight {
+    outline: none;
+    border-color: none;
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    width: 55px;
+    text-align: right;
 }
 
 /*

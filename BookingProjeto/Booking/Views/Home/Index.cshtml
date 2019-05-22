@@ -34,7 +34,7 @@
                         <h6 id="desde">Desde</h6>
                         <p id="preco">@item.Preco€</p>
 
-                        <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut })" class="btn btn-info" role="button">Reservar</a>
+                        <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut, capacidade = item.Capacidade })" class="btn btn-info" role="button">Reservar</a>
                     </div>
                 </div>
             </div>
