@@ -19,13 +19,6 @@ namespace Booking.Controllers
     {
         BookingContext db = new BookingContext();
 
-        //[HttpGet]
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -48,7 +41,6 @@ namespace Booking.Controllers
         }
 
         
-        [HttpGet]
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
@@ -59,11 +51,13 @@ namespace Booking.Controllers
 
             var result = CheckAvailability(cs, CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
-            List<String> list2 = PreencheTipos(cs);
-
             var list = MostrarQuartos(cs, result, CheckIn, CheckOut);
 
-            ViewModel model = new ViewModel(list, list2);
+            List<string> list2 = PreencheTipos(cs);
+
+            ViewModel model = new ViewModel(list);
+
+            ViewBag.List = list2;
 
             return View(model);
         }
@@ -118,6 +112,56 @@ namespace Booking.Controllers
                 cn.Close();
             }
             return true;
+        }
+
+        public List<string> PreencheTipos(string cs)
+        {
+
+            var list2 = new List<string>();
+            var aux = new List<string>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql2 = "select tq.Descricao from TipoQuarto tq";
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    while (rd.Read())
+                    {
+                        string tipo = "";
+
+                        tipo = rd.GetString(rd.GetOrdinal("Descricao"));
+
+                        list2.Add(tipo);
+                    }
+
+                    aux = list2;
+
+                    rd.Close();
+                }
+                cn.Close();
+            }
+
+            for (int i = 0; i <= list2.Count() - 1; i++)
+            {
+                for (int y = 0; y <= aux.Count() - i - 1; y++)
+                {
+                    if (i != y)
+                    {
+                        if (list2[i].Equals(aux[y]))
+                        {
+                            string outro = aux[y];
+
+                            aux.Remove(outro);
+                        }
+                    }
+                }
+            }
+            return aux;
         }
 
         public List<QuartosDisp> MostrarQuartos(string cs, bool result, DateTime ci, DateTime co)
@@ -234,55 +278,55 @@ namespace Booking.Controllers
             return TipoQuarto;
         }
 
-        public List<String> PreencheTipos(string cs)
-        {
+        //public List<String> PreencheTipos(string cs)
+        //{
 
-            var list2 = new List<String>();
-            var aux = new List<String>();
+        //    var list2 = new List<String>();
+        //    var aux = new List<String>();
 
-            using (var cn = new SqlConnection(cs))
-            {
-                cn.Open();
+        //    using (var cn = new SqlConnection(cs))
+        //    {
+        //        cn.Open();
 
-                string sql2 = "select tq.Descricao from TipoQuarto tq";
+        //        string sql2 = "select tq.Descricao from TipoQuarto tq";
 
-                using (var cm = new SqlCommand(sql2, cn))
-                {
-                    var rd = cm.ExecuteReader();
+        //        using (var cm = new SqlCommand(sql2, cn))
+        //        {
+        //            var rd = cm.ExecuteReader();
 
-                    while (rd.Read())
-                    {
-                        string tipo = "";
+        //            while (rd.Read())
+        //            {
+        //                string tipo = "";
 
-                        tipo = rd.GetString(rd.GetOrdinal("Descricao"));
+        //                tipo = rd.GetString(rd.GetOrdinal("Descricao"));
 
-                        list2.Add(tipo);
-                    }
+        //                list2.Add(tipo);
+        //            }
 
-                    aux = list2;
+        //            aux = list2;
 
-                    rd.Close();
-                }
-                cn.Close();
-            }
+        //            rd.Close();
+        //        }
+        //        cn.Close();
+        //    }
 
-            for (int i = 0; i <= list2.Count() - 1; i++)
-            {
-                for (int y = 0; y <= aux.Count() -i - 1; y++)
-                {
-                    if (i != y)
-                    {
-                        if (list2[i].Equals(aux[y]) )
-                        {
-                            string outro = aux[y];
+        //    for (int i = 0; i <= list2.Count() - 1; i++)
+        //    {
+        //        for (int y = 0; y <= aux.Count() -i - 1; y++)
+        //        {
+        //            if (i != y)
+        //            {
+        //                if (list2[i].Equals(aux[y]) )
+        //                {
+        //                    string outro = aux[y];
 
-                            aux.Remove(outro);
-                        }
-                    }
-                }
-            }
-            return aux;
-        }
+        //                    aux.Remove(outro);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return aux;
+        //}
 
         [HttpPost]
         public ActionResult Book(string checkOut, string checkIn, decimal preco, string tipo, string hotel, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)

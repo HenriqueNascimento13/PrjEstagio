@@ -211,6 +211,13 @@ table{
     margin-top: 25px;
 }
 
+#inputBook:focus {
+    outline: none;
+    border-color: none;
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+}
+
 /*
 .footer {
     position: fixed;
