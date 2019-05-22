@@ -7,36 +7,40 @@
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+@if (Model.Message != null)
+{
+    <div class="alert alert-success" id="alert">
+        <h3>Reserva Efetuada com Sucesso!</h3>
+    </div>
+}
 
-<h2>@ViewBag.Message</h2>
+<div class="container" id="quartos">
+    @foreach (var item in Model.Quartos)
+    {
+        <div id="main">
+            <div class="col-md-4" id="img">
+                <img src="@item.Imagem" id="imgReservas" />
+            </div>
 
-<div class="container" >
-        @foreach (var item in Model.Quartos)
-        {
-            <div id="main">
-                <div class="col-md-4" id="img">
-                    <img src="@item.Imagem" id="imgReservas" />
+            <div class="col-md-8" id="text" style="left: 0%;">
+
+                <div class="col-md-9">
+                    <h2>Quarto @item.TipoQuarto </h2>
+                    <h4 class="hoteis">@item.NomeHotel - @item.NumEstrelas Estrelas</h4>
+
+                    <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
+
+                    <br />
+                    <p>@item.Capacidade Pessoas</p>
                 </div>
 
-                <div class="col-md-8" id="text" style="left: 0%;">
+                <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
+                    <h6 id="desde">Desde</h6>
+                    <p id="preco">@item.Preco€</p>
 
-                    <div class="col-md-9">
-                        <h2>Quarto @item.TipoQuarto </h2>
-                        <h4 class="hoteis">@item.NomeHotel - @item.NumEstrelas Estrelas</h4>
-
-                        <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
-                            
-                        <br />
-                        <p>@item.Capacidade Pessoas</p>
-                    </div>
-
-                    <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
-                        <h6 id="desde">Desde</h6>
-                        <p id="preco">@item.Preco€</p>
-
-                        <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut })" class="btn btn-info" role="button">Reservar</a>
-                    </div>
+                    <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut, capacidade = item.Capacidade })" class="btn btn-info" role="button">Reservar</a>
                 </div>
             </div>
-        }
+        </div>
+    }
 </div>
