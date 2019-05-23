@@ -46,17 +46,28 @@ namespace Booking.Controllers
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
+            ViewModel model = new ViewModel();
+
             long TipoQuarto = BuscarIdtipoQuarto(tipoQuarto, cs);
 
-            var result = CheckAvailability(cs, CheckIn, CheckOut, TipoQuarto, QuantQuartos);
+            var list = MostrarQuartos(cs, true, CheckIn, CheckOut);
 
-            var list = MostrarQuartos(cs, result, CheckIn, CheckOut);
+            List<string> list3 = PreencheTipos(cs);
 
-            List<string> list2 = PreencheTipos(cs);
+            if (CheckIn.ToString().Equals("01/01/0001 00:00:00") && CheckOut.ToString().Equals("01/01/0001 00:00:00"))
+            {
+                model = new ViewModel(list, message);
+            }
+            else
+            {
+                var result = CheckAvailability(cs, CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
-            ViewModel model = new ViewModel(list, message);
+                var list2 = MostrarQuartos(cs, result, CheckIn, CheckOut);
+                
+                model = new ViewModel(list2, message);
+            }    
 
-            ViewBag.List = list2;
+            ViewBag.List = list3;
 
             return View(model);
         }
@@ -67,6 +78,7 @@ namespace Booking.Controllers
         {
             int inventario = 0;
             int quantQuartos = 0;
+            bool result = true;
 
             using (var cn = new SqlConnection(cs))
             {
@@ -97,20 +109,20 @@ namespace Booking.Controllers
                     rd.Close();
                 }
 
-                for (DateTime i = CheckIn; i <= CheckOut; i.AddDays(1))
+                for (DateTime i = CheckIn; i <= CheckOut; i = i.AddDays(1.0))
                 {
                     if (inventario - quantQuartos >= QuantQuartos)
                     {
-                        return true;
+                        result = true;
                     }
                     else
                     {
-                        return false;
+                        result = false;
                     }
                 }
                 cn.Close();
             }
-            return true;
+            return result;
         }
 
         public List<string> PreencheTipos(string cs)
@@ -473,6 +485,8 @@ namespace Booking.Controllers
             return View(model);
         }
 
+        
+
         public List<string> PreencheTipoPagamento(string cs)
         {
             List<string> list = new List<string>();
@@ -541,35 +555,6 @@ namespace Booking.Controllers
         }
 
 
-
-
-        //PARA MOSTRAR OS HOTEIS
-        /*var list2 = new List<Hoteis>();
-        string sql2 = "select NomeHotel, NumEstrelas, Morada, Localidade, CodPostal, Pais, QuantidadeQuartos, Descricao, Imagem from Hoteis ";
-
-         using (var cm = new SqlCommand(sql2, cn))
-                {
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
-                    {
-                        var hoteis = new Hoteis();
-                        
-                        hoteis.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                        hoteis.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                        hoteis.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                        hoteis.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                        hoteis.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                        hoteis.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                        hoteis.QuantidadeQuartos = rd.GetInt16(rd.GetOrdinal("QuantidadeQuartos"));
-                        hoteis.Descricao = rd.GetString(rd.GetOrdinal("Descricao"));
-                        hoteis.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
-
-                        list2.Add(hoteis);
-                    }
-                    rd.Close();
-                }
-        */
 
 
         //PARA AS ESTRELAS
