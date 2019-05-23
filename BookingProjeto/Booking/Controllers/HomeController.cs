@@ -412,8 +412,9 @@ namespace Booking.Controllers
         public bool Existe(Clientes cl, string cs)
         {
             List<Clientes> list = new List<Clientes>();
+            bool result = false;
 
-            string sql2 = "select * from Clientes";
+            string sql2 = "select Nome, Sobrenome, Contacto, Morada, Localidade, Cc, DataNasc from Clientes";
 
             using (var cn = new SqlConnection(cs))
             {
@@ -429,17 +430,9 @@ namespace Booking.Controllers
 
                         cl2.Nome = rd.GetString(rd.GetOrdinal("Nome"));
                         cl2.Sobrenome = rd.GetString(rd.GetOrdinal("Sobrenome"));
-                        if (cl2.Email != null)
-                        {
-                            cl2.Email = rd.GetString(rd.GetOrdinal("Email"));
-                        }
                         cl2.Contacto = rd.GetString(rd.GetOrdinal("Contacto"));
                         cl2.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                        cl2.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                        if (cl2.Email != null)
-                        {
-                            cl2.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                        }
+                        cl2.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
                         cl2.Cc = rd.GetString(rd.GetOrdinal("Cc"));
                         cl2.DataNasc = rd.GetString(rd.GetOrdinal("DataNasc"));
 
@@ -448,21 +441,21 @@ namespace Booking.Controllers
                     rd.Close();
                 }
 
-                for (int i = 0; i <= list.Count(); i++)
+                for (int i = 0; i <= list.Count() -1; i++)
                 {
-                    if (list[i] == cl)
+                    if (list[i].Nome == cl.Nome && list[i].Sobrenome == cl.Sobrenome && list[i].Contacto == cl.Contacto && list[i].Morada == cl.Morada && list[i].Localidade == cl.Localidade && list[i].Cc == cl.Cc && list[i].DataNasc == cl.DataNasc)
                     {
                         return true;
                     }
-                    else
+                    if (list[i].Nome != cl.Nome || list[i].Sobrenome != cl.Sobrenome || list[i].Contacto != cl.Contacto || list[i].Morada != cl.Morada || list[i].Localidade != cl.Localidade || list[i].Cc != cl.Cc || list[i].DataNasc != cl.DataNasc)
                     {
-                        return false;
+                        result = false;
                     }
                 }
 
                 cn.Close();
             }
-            return false;
+            return result;
         }
         
         public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut, int capacidade)
