@@ -10,6 +10,7 @@ namespace Booking.Models
     {
         public ViewModel()
         {
+
         }
 
         public ViewModel(List<QuartosDisp> quartos, string message)
@@ -18,11 +19,12 @@ namespace Booking.Models
             Message = message;
         }
 
-        public ViewModel(List<string> regimes, List<string> tipoPagamento, Dados dados)
+        public ViewModel(List<string> regimes, List<string> tipoPagamento, Dados dados, List<int> quantQuartos)
         {
             Regimes = regimes;
             TipoPagamento = tipoPagamento;
             Dados = dados;
+            QuantQuartos = quantQuartos;
         }
 
         public string Message { get; private set; }
@@ -30,7 +32,7 @@ namespace Booking.Models
         public List<string> TipoPagamento { get; private set; }
         public List<string> Regimes { get; private set; }
 
-
+        public List<int> QuantQuartos { get; set; }
         public Dados Dados { get; private set; }
         public List<string> Tipo { get; private set; }
         public List<QuartosDisp> Quartos { get; private set; }

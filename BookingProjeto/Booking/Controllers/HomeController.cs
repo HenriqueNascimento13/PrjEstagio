@@ -62,12 +62,45 @@ namespace Booking.Controllers
             {
                 var result = CheckAvailability(cs, CheckIn, CheckOut, TipoQuarto, QuantQuartos);
 
-                var list2 = MostrarQuartos(cs, result, CheckIn, CheckOut);
+                var list2 = MostrarQuartos(cs, result, CheckIn, CheckOut, TipoQuarto);
                 
                 model = new ViewModel(list2, message);
             }    
 
             ViewBag.List = list3;
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Book(int capacidade, string checkOut, string checkIn, decimal preco, string tipo, string hotel, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)
+        {
+            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+
+            AddCliente(cs, nome, sobrenome, email, telefone, endereco, codPostal, localidade, cc, dataNasc);
+
+            AddPagamento(cs, nomeTitular, numCartao, tipoCartao, prazo, cvv);
+
+            AddReserva(cs, nomeR, sobrenomeR, adultos, criancas, quant, regime, nome, cc, tipoCartao, hotel, tipo, checkOut, checkIn, capacidade);
+
+
+            return RedirectToAction("Index", "Home", new { message = "Reserva Efetuada com Sucesso!" });
+        }
+
+        public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut, int capacidade)
+        {
+            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+
+            Dados dados = new Dados(hotel, quarto, preco, CheckIn, CheckOut, capacidade);
+
+            List<string> list = PreencheRegimes(cs, hotel, quarto, capacidade);
+            List<string> list2 = PreencheTipoPagamento(cs);
+            List<int> quantQuartos = PreencheQuantQuartos(cs, hotel, quarto, capacidade/*, CheckIn, CheckOut*/);
+
+            ViewModel model = new ViewModel(list, list2, dados, quantQuartos);
 
             return View(model);
         }
@@ -127,8 +160,7 @@ namespace Booking.Controllers
 
         public List<string> PreencheTipos(string cs)
         {
-
-            var list2 = new List<string>();
+            var list = new List<string>();
             var aux = new List<string>();
 
             using (var cn = new SqlConnection(cs))
@@ -147,35 +179,110 @@ namespace Booking.Controllers
 
                         tipo = rd.GetString(rd.GetOrdinal("Descricao"));
 
-                        list2.Add(tipo);
+                        aux.Add(tipo);
                     }
-
-                    aux = list2;
-
+                    
                     rd.Close();
                 }
                 cn.Close();
             }
 
-            for (int i = 0; i <= list2.Count() - 1; i++)
+            for (int i = 0; i <= aux.Count() - 1; i++)
             {
-                for (int y = 0; y <= aux.Count() - i - 1; y++)
+                string cat = aux[i];
+                if (!list.Contains(cat))
                 {
-                    if (i != y)
-                    {
-                        if (list2[i].Equals(aux[y]))
-                        {
-                            string outro = aux[y];
-
-                            aux.Remove(outro);
-                        }
-                    }
+                    list.Add(cat);
                 }
             }
-            return aux;
+
+            return list;
         }
 
         public List<QuartosDisp> MostrarQuartos(string cs, bool result, DateTime ci, DateTime co)
+        {
+            var list = new List<QuartosDisp>();
+            var list2 = new List<QuartosDisp>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "Select tq.IDTipoQuarto, r.TipoRegime, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                             "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
+                             "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
+
+                string sql2 = "Select tq.IDTipoQuarto, h.IDHotel from TipoQuarto tq, Hoteis h where h.IDHotel = tq.IDHotel";
+
+                if (result == true)
+                {
+                    using (var cm2 = new SqlCommand(sql2, cn))
+                    {
+                        var rd2 = cm2.ExecuteReader();
+
+                        while (rd2.Read())
+                        {
+                            var id = new QuartosDisp();
+
+                            id.IdTipoQuarto = rd2.GetInt64(rd2.GetOrdinal("IDTipoQuarto"));
+                            id.IdHotel = rd2.GetInt64(rd2.GetOrdinal("IDHotel"));
+
+                            list2.Add(id);
+                        }
+                        rd2.Close();
+                    }
+
+                    using (var cm = new SqlCommand(sql, cn))
+                    {
+                        var rd = cm.ExecuteReader();
+
+                        while (rd.Read())
+                        {
+                            var quartos = new QuartosDisp();
+
+                            quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
+                            quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
+                            quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
+                            quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
+                            quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
+                            quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
+                            quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
+                            quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
+                            quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                            quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+                            quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
+                            quartos.CheckIn = ci;
+                            quartos.CheckOut = co;
+
+                            list.Add(quartos);
+
+                        }
+                        rd.Close();
+
+                    }
+                }
+
+                for (int i = 0; i <= list2.Count() - 1; i++)
+                {
+                    for (int y = 1; y <= list.Count() - i - 1; y++)
+                    {
+                        if (i != y)
+                        {
+                            if (list2[i].IdTipoQuarto == list[y].IdTipoQuarto || list2[i].IdHotel == list[y].IdHotel)
+                            {
+                                QuartosDisp outro = list[i];
+                                list.Remove(outro);
+                            }
+                        }
+                    }
+                }
+
+                cn.Close();
+            }
+            return list;
+        }
+
+        public List<QuartosDisp> MostrarQuartos(string cs, bool result, DateTime ci, DateTime co, long TipoQuarto)
         {
             var list = new List<QuartosDisp>();
             var list2 = new List<QuartosDisp>();
@@ -286,21 +393,8 @@ namespace Booking.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult Book(int capacidade, string checkOut, string checkIn, decimal preco, string tipo, string hotel, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)
-        {
-            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
-            AddCliente(cs, nome, sobrenome, email, telefone, endereco, codPostal, localidade, cc, dataNasc);
-
-            AddPagamento(cs, nomeTitular, numCartao, tipoCartao, prazo, cvv);
-
-            AddReserva(cs, nomeR, sobrenomeR, adultos, criancas, quant, regime, nome, cc, tipoCartao, hotel, tipo, checkOut, checkIn, capacidade);
-
-
-            return RedirectToAction("Index", "Home", new { message = "Reserva Efetuada com Sucesso!" });
-        }
+       
 
         public void AddReserva(string cs, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string cc, string tipoCartao, string hotel, string tipo, string checkOut, string checkIn, int capacidade)
         {
@@ -469,23 +563,62 @@ namespace Booking.Controllers
             }
             return result;
         }
-        
-        public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut, int capacidade)
+
+        public List<int> PreencheQuantQuartos(string cs, string hotel, string quarto, int capacidade/*, DateTime CheckIn, DateTime CheckOut*/)
         {
-            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
-            Dados dados = new Dados(hotel, quarto, preco, CheckIn, CheckOut, capacidade);
+            
 
-            List<string> list = PreencheRegimes(cs, hotel, quarto);
-            List<string> list2 = PreencheTipoPagamento(cs);
+            int inventario = 0;
+            long id = 0;
+            int quantQuartos = 0;
+            int total = 0;
 
-            ViewModel model = new ViewModel(list, list2, dados);
 
-            return View(model);
+            List<int> list = new List<int>();
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                string sql = "select tq.Inventario, tq.IDTipoQuarto from TipoQuarto tq, Hoteis h where tq.Descricao = '" + quarto + "' and h.NomeHotel = '" + hotel + "' and  tq.Capacidade = " + capacidade;                
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    if (rd.Read())
+                    {
+                        inventario = rd.GetInt32(rd.GetOrdinal("Inventario"));
+                        id = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
+                    }
+                    rd.Close();
+                }
+
+                string sql2 = "select rs.QuantQuartos from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.IDTipoQuarto = " + id;
+
+                using (var cm = new SqlCommand(sql2, cn))
+                {
+                    var rd = cm.ExecuteReader();
+
+                    if (rd.Read())
+                    {
+                        quantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos"));
+                    }
+                    rd.Close();
+                }
+
+                total = inventario - quantQuartos;
+
+                for (int i = 1; i <= total; i++)
+                {
+                    list.Add(i);
+                }
+
+                cn.Close();
+            }
+            return list;
         }
-
-        
 
         public List<string> PreencheTipoPagamento(string cs)
         {
@@ -517,7 +650,7 @@ namespace Booking.Controllers
             return list;
         }
 
-        public List<string> PreencheRegimes(string cs, string hotel, string quarto)
+        public List<string> PreencheRegimes(string cs, string hotel, string quarto, int capacidade)
         {
             List<string> list = new List<string>();
 
@@ -526,7 +659,7 @@ namespace Booking.Controllers
                 cn.Open();
 
                 string sql = "select rg.TipoRegime from Regimes rg, Hoteis h, TipoQuarto tq " +
-                             "where rg.IDHotel = h.IDHotel and h.IDHotel = tq.IDHotel and h.NomeHotel = '" + hotel + "' and tq.Descricao = '" + quarto + "'";
+                             "where rg.IDHotel = h.IDHotel and h.IDHotel = tq.IDHotel and h.NomeHotel = '" + hotel + "' and tq.Descricao = '" + quarto + "'  and tq.Capacidade = " + capacidade;
 
                 using (var cm = new SqlCommand(sql, cn))
                 {
