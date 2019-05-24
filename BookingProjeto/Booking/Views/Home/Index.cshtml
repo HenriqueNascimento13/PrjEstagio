@@ -7,12 +7,7 @@
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-@if (Model.Message != null)
-{
-    <div class="alert alert-success" id="alert">
-        <h3>Reserva Efetuada com Sucesso!</h3>
-    </div>
-}
+
 
 <div class="container" id="quartos">
     @foreach (var item in Model.Quartos)
