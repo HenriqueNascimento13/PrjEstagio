@@ -43,7 +43,7 @@ namespace Booking
             });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                   // Configuration.GetConnectionString("henrique")));
+                   //Configuration.GetConnectionString("henrique")));
                    Configuration.GetConnectionString("catarina")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(
