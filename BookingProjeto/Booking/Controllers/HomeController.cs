@@ -262,13 +262,13 @@ namespace Booking.Controllers
                     }
                 }
 
-                for (int i = 0; i <= list2.Count() - 1; i++)
+                for (int i = 0; i <= list.Count() - 1; i++)
                 {
-                    for (int y = 1; y <= list.Count() - i - 1; y++)
+                    for (int y = 0; y <= list2.Count() - i - 1; y++)
                     {
                         if (i != y)
                         {
-                            if (list2[i].IdTipoQuarto == list[y].IdTipoQuarto || list2[i].IdHotel == list[y].IdHotel)
+                            if (list2[y].IdTipoQuarto == list[i].IdTipoQuarto)
                             {
                                 QuartosDisp outro = list[i];
                                 list.Remove(outro);
