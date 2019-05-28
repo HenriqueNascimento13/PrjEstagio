@@ -60,7 +60,7 @@ namespace Booking.Controllers
             }
             else
             {
-                var result = CheckAvailability(cs, CheckIn, CheckOut, TipoQuarto, QuantQuartos);
+                var result = CheckAvailability(cs, CheckIn, CheckOut, tipoQuarto, QuantQuartos, TipoQuarto);
 
                 var list2 = MostrarQuartos(cs, result,/* CheckIn, CheckOut,*/ TipoQuarto);
                 
@@ -107,29 +107,40 @@ namespace Booking.Controllers
 
 
 
-        public bool CheckAvailability(string cs, DateTime CheckIn, DateTime CheckOut, long TipoQuarto, int QuantQuartos)
+        public bool CheckAvailability(string cs, DateTime checkIn, DateTime checkOut, string TipoQuarto, int QuantQuartos, long idTQ)
         {
-            int inventario = 0;
-            int quantQuartos = 0;
             bool result = true;
+            int contaReservados = 0;
+            List<CheckAvailability> list = new List<CheckAvailability>();
+            List<Reservas> listReservas = new List<Reservas>();
 
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
-                string sql = "select tq.IDTipoQuarto, tq.Inventario from TipoQuarto tq where tq.IdTipoQuarto = " + TipoQuarto;
-                string sql2 = "select rs.IDTipoQuarto, rs.QuantQuartos from Reservas rs where rs.IdTipoQuarto = " + TipoQuarto;
+                string sql1 = "Select rs.CheckIn, rs.CheckOut, tq.Inventario from TipoQuarto tq, Reservas rs " +
+                    "where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = '" + TipoQuarto + "'";
 
-                using (var cm = new SqlCommand(sql, cn))
+                using (var cm = new SqlCommand(sql1, cn))
                 {
                     var rd = cm.ExecuteReader();
 
                     while (rd.Read())
                     {
-                        inventario = rd.GetInt32(rd.GetOrdinal("Inventario"));
+                        CheckAvailability quarto = new CheckAvailability
+                        {
+                            CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn")),
+                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut")),
+                            Inventario = rd.GetInt32(rd.GetOrdinal("Inventario"))
+                        };
+
+                        contaReservados ++;
+                        list.Add(quarto);
                     }
                     rd.Close();
                 }
+
+                string sql2 = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs where rs.IDTipoQuarto = " + idTQ;
 
                 using (var cm = new SqlCommand(sql2, cn))
                 {
@@ -137,22 +148,45 @@ namespace Booking.Controllers
 
                     while (rd.Read())
                     {
-                        quantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos"));
+                        Reservas reserva = new Reservas
+                        {
+                            Idreserva = rd.GetInt64(rd.GetOrdinal("IDReserva")),
+                            Idhotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
+                            IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
+                            CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn")),
+                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"))
+                        };
+
+                        listReservas.Add(reserva);
                     }
                     rd.Close();
                 }
 
-                for (DateTime i = CheckIn; i <= CheckOut; i = i.AddDays(1.0))
-                {
-                    if (inventario - quantQuartos >= QuantQuartos)
+                foreach (CheckAvailability item in list)
+                {                
+                    for (DateTime i = checkIn; i <= checkOut; i = i.AddDays(1.0))
                     {
-                        result = true;
-                    }
-                    else
-                    {
-                        result = false;
+                        if (item.Inventario - contaReservados >= QuantQuartos)  //resultado = quartos que nunca foram reservados
+                        {
+                            result = true;                            
+                        }
+                        else
+                        {
+                            foreach (Reservas rs in listReservas)
+                            {
+                                if (rs.CheckOut <= checkIn || rs.CheckIn >= checkOut)
+                                {
+                                    result = true;
+                                }
+                                else
+                                {
+                                    result = false;
+                                }
+                            }
+                        }
                     }
                 }
+
                 cn.Close();
             }
             return result;
@@ -167,9 +201,9 @@ namespace Booking.Controllers
             {
                 cn.Open();
 
-                string sql2 = "select tq.Descricao from TipoQuarto tq";
+                string sql = "select tq.Descricao from TipoQuarto tq";
 
-                using (var cm = new SqlCommand(sql2, cn))
+                using (var cm = new SqlCommand(sql, cn))
                 {
                     var rd = cm.ExecuteReader();
 
