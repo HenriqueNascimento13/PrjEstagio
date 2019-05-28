@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <label>Quartos</label>
-                                    <select class="form-control" name="quant">
+                                    <select class="form-control" name="quant" onclick="this.size = 5" onmouseout="this.size = 1"  onmousemove="this.size = 5">
                                         @foreach (var item in Model.QuantQuartos)
                                         {
                                             <option>@item</option>

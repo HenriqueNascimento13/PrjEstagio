@@ -43,8 +43,8 @@ namespace Booking.Controllers
         
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos, string message)
         {
-            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
             ViewModel model = new ViewModel();
 
@@ -54,7 +54,7 @@ namespace Booking.Controllers
 
             List<string> list3 = PreencheTipos(cs);
 
-            if (CheckIn.ToString().Equals("01/01/0001 00:00:00") && CheckOut.ToString().Equals("01/01/0001 00:00:00"))
+            if (CheckIn.ToString().Equals("01-01-0001 00:00:00") && CheckOut.ToString().Equals("01-01-0001 00:00:00"))
             {
                 model = new ViewModel(list, message);
             }
@@ -91,8 +91,8 @@ namespace Booking.Controllers
 
         public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut, int capacidade)
         {
-            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+            var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            //var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
             Dados dados = new Dados(hotel, quarto, preco, CheckIn, CheckOut, capacidade);
 
