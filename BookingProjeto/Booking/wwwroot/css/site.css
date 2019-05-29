@@ -234,22 +234,15 @@ table{
     margin-top: 25px;
 }
 
-#alert {
-    width: 420px;
-    text-align: center;
-    margin-left: 380px;
-    margin-top: 10px;
-    background-color: palegreen;
-}
-
-/*
-.footer {
+#footer {
     position: fixed;
     left: 0;
     bottom: 0;
+    height: 35px;
     width: 100%;
-    background-color: black;
+    padding-bottom: 5px;
+    padding-top: 7px;
+    background-color: #1a1a1a;
     color: white;
     text-align: center;
 }
-*/

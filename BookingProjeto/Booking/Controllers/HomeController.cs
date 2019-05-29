@@ -282,7 +282,11 @@ namespace Booking.Controllers
                         {
                             if (list[i].IdTipoQuarto == list[y].IdTipoQuarto && list[i].Capacidade == list[y].Capacidade)
                             {
-                                list.Remove(list[i]);
+                                if (list[i].Preco > list[y].Preco)
+                                {
+                                    list.Remove(list[i]);
+                                    y--;
+                                }
                             }
                         }
                     }
