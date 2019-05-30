@@ -828,7 +828,6 @@ C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\bin\Debug\net461\Sys
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XmlSerializer.dll
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XPath.dll
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\bin\Debug\net461\System.Xml.XPath.XDocument.dll
-C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.exe.config
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.csproj.CoreCompileInputs.cache
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.RazorAssemblyInfo.cache
