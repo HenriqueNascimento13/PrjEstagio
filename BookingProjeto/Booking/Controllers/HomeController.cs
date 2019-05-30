@@ -41,7 +41,7 @@ namespace Booking.Controllers
         }
 
         
-        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos, string message)
+        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
@@ -56,7 +56,7 @@ namespace Booking.Controllers
 
             if (CheckIn.ToString().Equals("01/01/0001 00:00:00") && CheckOut.ToString().Equals("01/01/0001 00:00:00"))
             {
-                model = new ViewModel(list, message);
+                model = new ViewModel(list);
             }
             else
             {
@@ -64,7 +64,7 @@ namespace Booking.Controllers
 
                 var list2 = MostrarQuartos(cs, result,/* CheckIn, CheckOut,*/ IDTipoQuarto);
 
-                model = new ViewModel(list2, message);
+                model = new ViewModel(list2);
             }    
             ViewBag.List = list3;
 
