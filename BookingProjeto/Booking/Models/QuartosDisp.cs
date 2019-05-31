@@ -11,7 +11,7 @@ namespace Booking.Models
 
         public long IdHotel { get; set; }
 
-        //public int IdRegime { get; set; }
+        public Byte IdRegime { get; set; }
 
         public string Imagem { get; set; }
 
@@ -30,6 +30,8 @@ namespace Booking.Models
         public string CodPostal { get; set; }
 
         public string Pais { get; set; }
+
+        public string TipoRegime { get; set; }
 
         public decimal Preco { get; set; }
 

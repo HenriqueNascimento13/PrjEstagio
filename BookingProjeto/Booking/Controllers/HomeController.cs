@@ -73,8 +73,7 @@ namespace Booking.Controllers
         }
 
 
-        
-        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
+        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos, string message)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
@@ -100,10 +99,10 @@ namespace Booking.Controllers
                 model = new ViewModel(list2);
             }    
             ViewBag.List = list3;
+            ViewBag.Message = message;
 
             return View(model);
-        }
-        
+        }       
 
 
 
@@ -388,7 +387,7 @@ namespace Booking.Controllers
             {
                 cn.Open();
 
-                string sql = "Select tq.IDTipoQuarto, h.IDHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                string sql = "Select tq.IDTipoQuarto, h.IDHotel, r.IDRegime, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, r.TipoRegime, p.Preco " +
                              "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
                              "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
 
@@ -404,6 +403,7 @@ namespace Booking.Controllers
 
                             quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
                             quartos.IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel"));
+                            quartos.IdRegime = rd.GetByte(rd.GetOrdinal("IDRegime"));
                             quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
                             quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
                             quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
@@ -413,6 +413,7 @@ namespace Booking.Controllers
                             quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
                             quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
                             quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
+                            quartos.TipoRegime = rd.GetString(rd.GetOrdinal("TipoRegime"));
                             quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
 
                             list.Add(quartos);  
