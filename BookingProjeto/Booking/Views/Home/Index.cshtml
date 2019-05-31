@@ -13,9 +13,16 @@
         <div id="aviso">
             <h3> @ViewBag.Aviso </h3>
             <h5> * Mude o campo 'Quartos' *</h5>
-</div>
+        </div>
     </div>
 }
+
+@*@if (ViewBag.Message != null)
+{
+    <script>
+        PopUp();
+    </script>    
+}*@
 
     <div class="container" id="quartos">
         @foreach (var item in Model.Quartos)
@@ -41,7 +48,7 @@
                         <h6 id="desde">Desde</h6>
                         <p id="preco">@item.Preco€</p>
 
-                        <a href="@Url.Action("Book", "Home", new { hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut, capacidade = item.Capacidade })" class="btn btn-info" role="button">Reservar</a>
+                        <a href="@Url.Action("Book", "Home", new {/*model = Model.Quartos*/ hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut, capacidade = item.Capacidade })" class="btn btn-info" role="button">Reservar</a>
                     </div>
                 </div>
             </div>
