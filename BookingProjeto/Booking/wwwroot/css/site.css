@@ -246,3 +246,14 @@ table{
     color: white;
     text-align: center;
 }
+
+#aviso {
+    border: none;
+    background-color: #ffdd99;
+    height: 150px;
+    padding: 0%;
+    margin-bottom: 30px;
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
