@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <label>Regime</label>
-                                    <select class="form-control" name="regime" id="regime" onkeyup="getPreco()">
+                                    <select class="form-control" name="regime" @*onkeyup="getPreco()"*@>
                                         @foreach (var item in Model.Regimes)
                                         {
                                             <option value="@item.Preco, @item.Regime">@item.Regime</option>
