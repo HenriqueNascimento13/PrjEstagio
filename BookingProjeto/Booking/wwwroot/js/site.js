@@ -6,3 +6,8 @@
 function PopUp() {
     window.alert("Reserva efectuada!");
 }
+
+function getPreco() {
+    var preco = document.getElementById("abc");
+    alert(texto.value);
+}
