@@ -221,7 +221,7 @@ table{
     border: 0 none;
 }
 
-#inputBookRight {
+.inputBookRight {
     outline: none;
     border-color: none;
     box-shadow: 0 0 0 0;
@@ -256,4 +256,8 @@ table{
     text-align: center;
     padding-top: 5%;
     padding-bottom: 5%;
+}
+
+#regime{
+    margin-bottom: 3%;
 }

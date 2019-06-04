@@ -18,7 +18,7 @@ namespace Booking.Models
             Quartos = quartos;
         }
 
-        public ViewModel(List<string> regimes, List<string> tipoPagamento, Dados dados, List<int> quantQuartos)
+        public ViewModel(List<RegimeQuarto> regimes, List<string> tipoPagamento, Dados dados, List<int> quantQuartos)
         {
             Regimes = regimes;
             TipoPagamento = tipoPagamento;
@@ -27,7 +27,7 @@ namespace Booking.Models
         }
 
         public List<string> TipoPagamento { get; private set; }
-        public List<string> Regimes { get; private set; }
+        public List<RegimeQuarto> Regimes { get; private set; }
 
         public List<int> QuantQuartos { get; set; }
         public Dados Dados { get; private set; }
