@@ -81,7 +81,7 @@ namespace Booking.Controllers
 
             ViewModel model = new ViewModel();
 
-            //long IDTipoQuarto = BuscarIdtipoQuarto(tipoQuarto, cs);
+            string today = DateTime.Now.ToString("yyyy/MM/dd");
 
             var list = MostrarQuartos(cs);
 
@@ -100,15 +100,30 @@ namespace Booking.Controllers
                 model = new ViewModel(list2);
             }    
             ViewBag.List = list3;
+            ViewBag.DataMin = today;
 
             return View(model);
-        }       
+        }
 
 
 
-        public List<QuartosCheck> CheckAvailability(string cs, DateTime checkIn, DateTime checkOut, string TipoQuarto, int QuantQuartos)
+        public void MostraAviso(int aviso)
         {
             int aux = 0;
+
+            if (aux >= aviso)
+            {
+                ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
+            }
+            else
+            {
+                aux = aviso;
+                ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
+            }
+        }
+
+        public List<QuartosCheck> CheckAvailability(string cs, DateTime checkIn, DateTime checkOut, string TipoQuarto, int QuantQuartos)
+        {            
             int contaReservados = 0;
             List<CheckAvailability> list = new List<CheckAvailability>();
             List<Reservas> listReservas = new List<Reservas>();
@@ -181,19 +196,11 @@ namespace Booking.Controllers
                         }
                         else
                         {
-                            if (list.Count() == 0)
-                            {
+                            if (listQuartos.Count() == 0)
+                            {                            
                                 int aviso = item.Inv;
 
-                                if (aux >= aviso)
-                                {
-                                    ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                }
-                                else
-                                {
-                                    aux = aviso;
-                                    ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                }
+                                MostraAviso(aviso);
                             }
                         }
                     }
@@ -243,20 +250,12 @@ namespace Booking.Controllers
                                     }
                                     else
                                     {
-                                        if (listReservas.Count() == 0)
-                                        {                                        
+                                        if (listQuartos.Count() == 0)
+                                        {
                                             contaReservados--;
                                             int aviso = (item.Inv - contaReservados);
 
-                                            if (aux >= aviso)
-                                            {
-                                                ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                            }
-                                            else
-                                            {
-                                                aux = aviso;
-                                                ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                            }
+                                            MostraAviso(aviso);
                                         }
                                     }
                                 }
@@ -276,20 +275,12 @@ namespace Booking.Controllers
                                     }
                                     else
                                     {
-                                        if (list.Count() == 0)
+                                        if (listQuartos.Count() == 0)
                                         {
                                             contaReservados--;
                                             int aviso = (item.Inv - contaReservados);
 
-                                            if (aux >= aviso)
-                                            {
-                                                ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                            }
-                                            else
-                                            {
-                                                aux = aviso;
-                                                ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                            }
+                                            MostraAviso(aviso);
                                         }
                                     }
                                 }               
@@ -310,20 +301,12 @@ namespace Booking.Controllers
                                 }
                                 else
                                 {
-                                    if (listReservas.Count() == 0)
+                                    if (listQuartos.Count() == 0)
                                     {
                                         contaReservados--;
                                         int aviso = (item.Inv - contaReservados);
 
-                                        if (aux >= aviso)
-                                        {
-                                            ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                        }
-                                        else
-                                        {
-                                            aux = aviso;
-                                            ViewBag.Aviso = "Há apenas " + aux + " quartos disponíveis!";
-                                        }
+                                        MostraAviso(aviso);
                                     }
                                 }
                             }
@@ -495,6 +478,7 @@ namespace Booking.Controllers
                             if (list[i].IdTipoQuarto == list[y].IdTipoQuarto && list[i].Capacidade == list[y].Capacidade)
                             {
                                 list.Remove(list[i]);
+                                y--;
                             }
                         }
                     }
@@ -503,36 +487,7 @@ namespace Booking.Controllers
                 cn.Close();               
             }            
             return list;
-        }
-
-        public long BuscarIdtipoQuarto(string tipoQuarto, string cs)
-        {
-            long TipoQuarto = 0;
-
-            if (tipoQuarto != null)
-            {
-                using (var cn = new SqlConnection(cs))
-                {
-                    cn.Open();
-
-                    string sql = "select tq.IDTipoQuarto from TipoQuarto tq where tq.Descricao = @tipoQuarto";
-
-                    using (var cm = new SqlCommand(sql, cn))
-                    {
-                        cm.Parameters.AddWithValue("@tipoQuarto", tipoQuarto);
-                        var rd = cm.ExecuteReader();
-
-                        if (rd.Read())
-                        {
-                            TipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
-                        }
-                        rd.Close();
-                    }
-                    cn.Close();
-                }
-            }
-            return TipoQuarto;
-        }
+        }        
 
         public void AddReserva(string cs, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string cc, string numCartao, string hotel, string tipoQuarto, string checkOut, string checkIn, int capacidade)
         {
