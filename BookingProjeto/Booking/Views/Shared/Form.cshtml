@@ -13,11 +13,11 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Entrada </label>
-                        <input type="date" class="form-control" name="CheckIn">
+                        <input type="date" class="form-control" name="CheckIn" min="@ViewBag.DataMin">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Saída </label>
-                        <input type="date" class="form-control" name="CheckOut">
+                        <input type="date" class="form-control" name="CheckOut" min="@ViewBag.DataMin">
                     </div>
 
                     <div class="col-lg-2 col-md-3 col-sm-12">
