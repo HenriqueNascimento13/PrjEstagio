@@ -74,7 +74,7 @@ namespace Booking.Controllers
         }
 
 
-        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos, string message)
+        public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
@@ -95,12 +95,11 @@ namespace Booking.Controllers
             {
                 List<QuartosCheck> result = CheckAvailability(cs, CheckIn, CheckOut, tipoQuarto, QuantQuartos);
 
-                var list2 = MostrarQuartos(cs, result,/* CheckIn, CheckOut,*/ tipoQuarto);
+                var list2 = MostrarQuartos(cs, result);
 
                 model = new ViewModel(list2);
             }    
             ViewBag.List = list3;
-            ViewBag.Message = message;
 
             return View(model);
         }       
@@ -263,7 +262,6 @@ namespace Booking.Controllers
                                 }
                                 else
                                 {                          
-
                                     if (item.Inv >= QuantQuartos)
                                     {
                                         QuartosCheck check = new QuartosCheck
@@ -316,7 +314,6 @@ namespace Booking.Controllers
                                     {
                                         contaReservados--;
                                         int aviso = (item.Inv - contaReservados);
-
 
                                         if (aux >= aviso)
                                         {
@@ -442,7 +439,7 @@ namespace Booking.Controllers
             return list;
         }
 
-        public List<QuartosDisp> MostrarQuartos(string cs, List<QuartosCheck> result, string TipoQuarto)
+        public List<QuartosDisp> MostrarQuartos(string cs, List<QuartosCheck> result)
         {
             var list = new List<QuartosDisp>();
 
@@ -468,7 +465,7 @@ namespace Booking.Controllers
 
                     while (rd.Read())
                     {
-                            QuartosDisp quartos = new QuartosDisp();
+                        QuartosDisp quartos = new QuartosDisp();
 
                         quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
                         quartos.IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel"));
