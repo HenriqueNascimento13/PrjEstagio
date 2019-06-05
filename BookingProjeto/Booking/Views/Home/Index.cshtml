@@ -49,7 +49,7 @@
                         <p id="preco">@item.Preco€</p>
 
                         <a href="@Url.Action("Book", "Home", new {hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut,
-                                capacidade = item.Capacidade, regime = item.IdRegime, morada = @item.Morada, localidade = @item.Localidade, codPostal = @item.CodPostal, pais = @item.Pais})" class="btn btn-info" role="button">Reservar</a>
+                                capacidade = item.Capacidade, regime = item.TipoRegime, morada = @item.Morada, localidade = @item.Localidade, codPostal = @item.CodPostal, pais = @item.Pais})" class="btn btn-info" role="button">Reservar</a>
                     </div>
                 </div>
             </div>

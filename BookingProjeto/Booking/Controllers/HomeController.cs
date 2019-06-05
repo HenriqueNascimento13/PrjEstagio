@@ -518,7 +518,7 @@ namespace Booking.Controllers
 
                     var rd = cm.ExecuteReader();
 
-                    while (rd.Read())
+                    if (rd.Read())
                     {
                         codPag = rd.GetInt64(rd.GetOrdinal("CodPagamento"));
                         idQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
