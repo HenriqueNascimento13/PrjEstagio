@@ -6,7 +6,6 @@
 }
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
 <div class="container body-content" id="containerPage">
     <form method="POST">
         <div class="main-container">
@@ -56,10 +55,10 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <label>Regime</label>
-                                    <select class="form-control" name="regime">
+                                    <select class="form-control" name="regime" @*onkeyup="getPreco()"*@>
                                         @foreach (var item in Model.Regimes)
                                         {
-                                            <option>@item</option>
+                                            <option value="@item.Preco, @item.Regime">@item.Regime</option>
                                         }
                                     </select>
                                 </div>
@@ -201,29 +200,54 @@
                     <br />
                     <div class="row">
                         <div class="col-xs-8">Capacidade</div>
-                        <div class="col-xs-4 pull-right"><input name="capacidade" readonly="readonly" value="@Model.Dados.Capacidade" id="inputBookRight" /></div>
+                        <div class="col-xs-4 pull-right"><input name="capacidade" readonly="readonly" value="@Model.Dados.Capacidade" class="inputBookRight" /></div>
                     </div>
                     <div class="row">
                         <div class="col-xs-8">@Model.Dados.TipoQuarto</div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-8">@Model.Dados.TipoQuarto</div>
-                        <div class="col-xs-4 pull-right"><input name="preco" readonly="readonly" value="@Model.Dados.Preco €" id="inputBookRight" /></div>
+                    @foreach (var item in Model.Regimes)
+                    {
+                        <div class="row">
+                            <div class="col-xs-8">@item.Regime</div>
+                            <div class="col-xs-4 pull-right"><input name="preco" readonly="readonly" value="@item.Preco €" class="inputBookRight" /></div>
+                        </div>
+                    }
                     </div>
+            </div>
+
+            <div class="titulo">
+                <h4> Legenda de Regimes</h4>
+            </div>
+            <div class="hotel">
+                <div class="row">
+                    <p id="regime"><strong>SA</strong> - Só Alojamento </p>
                 </div>
+                <div class="row">
+                    <p id="regime"><strong>APA</strong> - Alojamento e Pequeno-Almoço </p>
                 </div>
+                <div class="row">
+                    <p id="regime"><strong>MP</strong> - Meia-Pensão (pequeno-almoço e jantar) </p>
+                </div>
+                <div class="row">
+                    <p id="regime"><strong>PC</strong> - Pensão Completa (pequeno-almoço, almoço e jantar) </p>
+                </div>
+                <div class="row">
+                    <p id="regime"><strong>TI</strong> - Tudo Incluído (pequeno-almoço, almoço e jantar) </p>
+                </div>
+            </div>
+                
             <div class="titulo">
                 <h4> Contacto e Localização</h4>
             </div>
             <div class="hotel">
-                <h5>Demo Hotel</h5>
+                <h5>@Model.Dados.NomeHotel</h5>
 
                 <div class="row">
                     <div class="col-xs-1">
                         <span class="glyphicon glyphicon-home"></span>
                     </div>
                     <div class="col-xs-10">
-                        <span>88 Resort Street, Ecke Musterplatz, Little Cayman, 8000, Austrália</span>
+                        <span>@Model.Dados.Morada, @Model.Dados.Localidade, @Model.Dados.CodPostal, @Model.Dados.Pais</span>
                     </div>
                 </div>
                 <br />
@@ -239,42 +263,6 @@
                             Estacionamento coberto no local,
                             Estacionamento na rua
                         </span>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-xs-1">
-                        <span class="glyphicon glyphicon-phone-alt"></span>
-                    </div>
-                    <div class="col-xs-10">
-                        <a href="#">1300 123 456</a>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-xs-1">
-                        <span class="glyphicon glyphicon-phone-alt"></span>
-                    </div>
-                    <div class="col-xs-10">
-                        <a href="tel:61280311222">61280311222</a>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-xs-1">
-                        <span class="glyphicon glyphicon-envelope"></span>
-                    </div>
-                    <div class="col-xs-10">
-                        <a href="mailto:sales@siteminder.com">sales@siteminder.com</a>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-xs-1">
-                        <span class="glyphicon glyphicon-globe"></span>
-                    </div>
-                    <div class="col-xs-10">
-                        <a href="http://www.siteminder.com/thebookingbutton">Visitar o sítio Web</a>
                     </div>
                 </div>
                 <hr />

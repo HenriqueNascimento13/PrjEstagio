@@ -221,7 +221,7 @@ table{
     border: 0 none;
 }
 
-#inputBookRight {
+.inputBookRight {
     outline: none;
     border-color: none;
     box-shadow: 0 0 0 0;
@@ -256,4 +256,26 @@ table{
     text-align: center;
     padding-top: 5%;
     padding-bottom: 5%;
+}
+
+#regime{
+    margin-bottom: 3%;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: transparent;
+    background: none;
+    z-index: 1;
+}
+
+input[type="date"]:before {
+    background: none;
+    display: block;
+    font-family: 'FontAwesome';
+    content: '\f073';
+    width: 15px;
+    height: 20px;
+    position: absolute;
+    top: 43%;
+    right: 8%;
+    color: #999;
 }
