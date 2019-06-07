@@ -17,41 +17,58 @@
     </div>
 }
 
-@*@if (ViewBag.Message != null)
-{
-    <script>
-        PopUp();
-    </script>    
-}*@
+<div class="container" id="quartos">
+    @foreach (var item in Model.Quartos)
+    {
+        <div id="main">
+            <div class="col-md-4" id="img">
+                <img src="@item.Imagem" id="imgReservas" />
+            </div>
 
-    <div class="container" id="quartos">
-        @foreach (var item in Model.Quartos)
-        {
-            <div id="main">
-                <div class="col-md-4" id="img">
-                    <img src="@item.Imagem" id="imgReservas" />
+            <div class="col-md-8" id="text" style="left: 0%;">
+
+                <div class="col-md-9">
+                    <h2>Quarto @item.TipoQuarto </h2>
+                    <h4 class="hoteis">@item.NomeHotel - @item.NumEstrelas Estrelas</h4>
+
+                    <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
+
+                    <br />
+                    <p>@item.Capacidade Pessoas</p>
                 </div>
 
-                <div class="col-md-8" id="text" style="left: 0%;">
+                <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
+                    <h6 id="desde">Desde</h6>
+                    <p id="preco">@item.Preco€</p>
 
-                    <div class="col-md-9">
-                        <h2>Quarto @item.TipoQuarto </h2>
-                        <h4 class="hoteis">@item.NomeHotel - @item.NumEstrelas Estrelas</h4>
-
-                        <p>@item.Morada, @item.Localidade, @item.CodPostal, @item.Pais</p>
-
-                        <br />
-                        <p>@item.Capacidade Pessoas</p>
-                    </div>
-
-                    <div class="col-md-3" style="margin: 10% 0% 5% 0%; text-align: right">
-                        <h6 id="desde">Desde</h6>
-                        <p id="preco">@item.Preco€</p>
-
-                        <a href="@Url.Action("Book", "Home", new {hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = @item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut,
-                                capacidade = item.Capacidade, regime = item.TipoRegime, morada = @item.Morada, localidade = @item.Localidade, codPostal = @item.CodPostal, pais = @item.Pais})" class="btn btn-info" role="button">Reservar</a>
-                    </div>
+                    <a href="@Url.Action("Book", "Home", new {hotel = item.NomeHotel, quarto = item.TipoQuarto, preco = item.Preco, CheckIn = item.CheckIn, CheckOut = item.CheckOut,
+                            capacidade = item.Capacidade, regime = item.TipoRegime, morada = item.Morada, localidade = item.Localidade, codPostal = item.CodPostal, pais = item.Pais})" class="btn btn-info" role="button">Reservar</a>
                 </div>
             </div>
+        </div>
+        @*<table>
+            <tr>
+                <th>Data</th>
+                <th>Inventario</th>
+                <th>Reservados</th>
+                <th>Livres</th>
+            </tr>
+            <tr>
+                @for (DateTime i = ViewBag.ci; i < ViewBag.co; i = i.AddDays(1))
+                {@foreach (var t in ViewBag.listInv.ToList())
+                    {@foreach (var r in ViewBag.listRes.ToList())
+                        {
+                            <th>@i</th>
+
+
+
+                            <th>@t.Inv</th>
+
+
+                            <th>@ViewBag.listRes.Count()</th>
+
+                            <th></th>}}}
+            </tr>
+        </table>*@
         }
     </div>
