@@ -34,5 +34,7 @@ namespace Booking.Models
         public List<string> Tipo { get; private set; }
         public List<QuartosDisp> Quartos { get; private set; }
         public List<QuartosCheck> QuartosCheck { get; private set; }
+        public List<Inventario> Inv { get; private set; }
+        public List<Ocupado> Reservas { get; private set; }
     }
 }

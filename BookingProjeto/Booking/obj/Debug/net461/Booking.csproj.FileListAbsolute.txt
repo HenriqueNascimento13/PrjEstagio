@@ -942,7 +942,6 @@ C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Boo
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.pdb
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Shared\Form.g.cshtml.cs
 C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Shared\Form.g.cshtml.cs
-C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Shared\_Form.g.cshtml.cs
 C:\Temp\Git\Projeto\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
 C:\Users\admin\Desktop\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache
 C:\Users\admin\Desktop\BookingProjeto\Booking\obj\Debug\net461\Booking.exe.config
@@ -1418,3 +1417,4 @@ C:\Users\admin\Desktop\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagam
 C:\Users\admin\Desktop\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagamentoes\Details.g.cshtml.cs
 C:\Users\admin\Desktop\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagamentoes\Edit.g.cshtml.cs
 C:\Users\admin\Desktop\BookingProjeto\Booking\obj\Debug\net461\Razor\Views\Pagamentoes\Index.g.cshtml.cs
+C:\Users\Henrique\Desktop\prjestagio\BookingProjeto\Booking\obj\Debug\net461\Booking.csprojAssemblyReference.cache

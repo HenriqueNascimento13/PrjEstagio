@@ -38,25 +38,9 @@ namespace Booking.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
+        }        
 
-        [HttpPost]
-        public ActionResult Book(int capacidade, string checkOut, string checkIn, decimal preco, string tipo, string hotel, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)
-        {
-            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
-            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
-
-            AddCliente(cs, nome, sobrenome, email, telefone, endereco, codPostal, localidade, cc, dataNasc);
-
-            AddPagamento(cs, nomeTitular, numCartao, tipoCartao, prazo, cvv);
-
-            AddReserva(cs, nomeR, sobrenomeR, adultos, criancas, quant, regime, cc, numCartao, hotel, tipo, checkOut, checkIn, capacidade);
-
-
-            return RedirectToAction("Index", "Home", new { message = "Reserva Efetuada com Sucesso!" });
-        }
-
-
+        
         public ActionResult Book(string hotel, string quarto, decimal preco, DateTime CheckIn, DateTime CheckOut, int capacidade, string morada, string localidade, string codPostal, string pais)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
@@ -74,22 +58,98 @@ namespace Booking.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult Book(int capacidade, string checkOut, string checkIn, decimal preco, string tipo, string hotel, string nomeR, string sobrenomeR, int adultos, int criancas, int quant, string regime, string nome, string sobrenome, string email, string telefone, string endereco, string codPostal, string localidade, string cc, string dataNasc, string nomeTitular, string numCartao, string tipoCartao, string prazo, string cvv)
+        {
+            //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
+            var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
+
+
+            if (VerificaCapacidade(adultos, criancas, capacidade) == true)
+            {
+                AddCliente(cs, nome, sobrenome, email, telefone, endereco, codPostal, localidade, cc, dataNasc);
+
+                AddPagamento(cs, nomeTitular, numCartao, tipoCartao, prazo, cvv);
+
+                AddReserva(cs, nomeR, sobrenomeR, adultos, criancas, quant, regime, cc, numCartao, hotel, tipo, checkOut, checkIn, capacidade);
+            }
+            else
+            {
+                return RedirectToAction("Book", "Home");
+            }                                  
+
+            return RedirectToAction("Index", "Home"/*, new { message = "Reserva Efetuada com Sucesso!" }*/);
+        }
+
+
         public ActionResult Index(DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos)
         {
             //var cs = "Server=Ricki-PC; Database=Booking; Trusted_Connection=True;";
             var cs = "server=DESKTOP-IH74466; database=Booking; Trusted_Connection=True;";
 
+            DateTime today = DateTime.Now;
+
+            ViewBag.Data = today.ToString("yyyy-MM-dd"); //envia a data de hoje para o form
+
+            ViewBag.DataSaida = today.AddDays(2).ToString("yyyy-MM-dd"); //envia a data de hoje para o form
+
+            List<string> list3 = PreencheTipos(cs); //preenche combobox com os tipos de quartos
+
+            ViewBag.List = list3; //envia a lista para o form
+
+            var list = MostrarQuartos(cs); //lista de quartos            
+
+            ViewModel model = ResultadoForm(cs, CheckIn, CheckOut, list, tipoQuarto, QuantQuartos, today); //Resultado da pesquisa  
+
+            return View(model);
+        }
+
+        public List<QuartosCheck> CheckAvailability(string cs, DateTime checkIn, DateTime checkOut, string TipoQuarto, int QuantQuartos)
+        {            
+            List<Inventario> list = GetInventarios(cs, TipoQuarto); //Todos os inventarios do tipo de quarto selecionado
+
+            List<Ocupado> listReservas = GetReservas(cs, TipoQuarto); //Todas as reservas de um tipo de quarto
+
+            List<QuartosCheck> listQuartos = Disponibilidade(list, listReservas, checkIn, checkOut, TipoQuarto, QuantQuartos); //Verifica quartos disponiveis
+
+            return listQuartos;
+        }
+
+        public List<QuartosCheck> CheckAvailability(string cs, DateTime today, string TipoQuarto, int QuantQuartos)
+        {
+            List<Inventario> list = GetInventarios(cs, TipoQuarto); //Todos os inventarios do tipo de quarto selecionado
+
+            List<Ocupado> listReservas = GetReservas(cs, TipoQuarto); //Todas as reservas de um tipo de quarto
+
+            List<QuartosCheck> listQuartos = Disponibilidade(list, listReservas, today, TipoQuarto, QuantQuartos); //Verifica quartos disponiveis
+
+            return listQuartos;
+        }
+
+
+        public bool VerificaCapacidade(int adultos, int criancas, int capacidade)
+        {
+            if (adultos + criancas > capacidade)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public ViewModel ResultadoForm(string cs, DateTime CheckIn, DateTime CheckOut, List<QuartosDisp> list, string tipoQuarto, int QuantQuartos, DateTime today)
+        {
             ViewModel model = new ViewModel();
-
-            string today = DateTime.Now.ToString("yyyy/MM/dd");
-
-            var list = MostrarQuartos(cs);
-
-            List<string> list3 = PreencheTipos(cs);
 
             if (CheckIn.ToString().Equals("01/01/0001 00:00:00") && CheckOut.ToString().Equals("01/01/0001 00:00:00"))
             {
-                model = new ViewModel(list);
+                List<QuartosCheck> result = CheckAvailability(cs, today, tipoQuarto, QuantQuartos);
+
+                var list2 = MostrarQuartos(cs, result);
+
+                model = new ViewModel(list2);
             }
             else
             {
@@ -97,15 +157,19 @@ namespace Booking.Controllers
 
                 var list2 = MostrarQuartos(cs, result);
 
+                ViewBag.listInv = GetInventarios(cs, tipoQuarto);
+
+                ViewBag.listRes = GetReservas(cs, tipoQuarto);
+
+                ViewBag.ci = CheckIn;
+
+                ViewBag.co = CheckOut;
+
                 model = new ViewModel(list2);
-            }    
-            ViewBag.List = list3;
-            ViewBag.DataMin = today;
+            }
 
-            return View(model);
+            return model;
         }
-
-
 
         public void MostraAviso(int aviso)
         {
@@ -122,27 +186,37 @@ namespace Booking.Controllers
             }
         }
 
-        public List<QuartosCheck> CheckAvailability(string cs, DateTime checkIn, DateTime checkOut, string TipoQuarto, int QuantQuartos)
-        {            
-            int contaReservados = 0;
-            List<CheckAvailability> list = new List<CheckAvailability>();
-            List<Reservas> listReservas = new List<Reservas>();
-            List<QuartosCheck> listQuartos = new List<QuartosCheck>();
+        public List<Inventario> GetInventarios(string cs, string TipoQuarto)
+        {
+            List<Inventario> list = new List<Inventario>();
+            string sql = "";
 
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
-                string sql1 = "Select tq.Inventario, tq.IDHotel, tq.IDTipoQuarto from TipoQuarto tq where tq.Descricao = @tipoQuarto";  //Todos os inventarios do tipo de quarto selecionado
-
-                using (var cm = new SqlCommand(sql1, cn))
+                if (TipoQuarto != null)
                 {
-                    cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);
+                    sql = "Select tq.Inventario, tq.IDHotel, tq.IDTipoQuarto from TipoQuarto tq where tq.Descricao = @tipoQuarto";                    
+                }
+                else
+                {
+                    sql = "Select tq.Inventario, tq.IDHotel, tq.IDTipoQuarto from TipoQuarto tq";                    
+                }
+                 
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    if (TipoQuarto != null)
+                    {
+                        cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);
+                    }
+
                     var rd = cm.ExecuteReader();
 
                     while (rd.Read())
                     {
-                        CheckAvailability check = new CheckAvailability
+                        Inventario check = new Inventario
                         {
                             Inv = rd.GetInt32(rd.GetOrdinal("Inventario")),
                             Id = rd.GetInt64(rd.GetOrdinal("IDHotel")),
@@ -153,17 +227,43 @@ namespace Booking.Controllers
                     }
                     rd.Close();
                 }
+                cn.Close();
+            }
 
-                string sql2 = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto";   
-                    //Todas as reservas de um tipo de quarto
-                using (var cm = new SqlCommand(sql2, cn))
+            return list;
+        }
+        public List<Ocupado> GetReservas(string cs, string TipoQuarto)
+        {
+            string sql = "";
+            List<Ocupado> listReservas = new List<Ocupado>();
+            DateTime data = DateTime.Now.AddDays(-1);
+
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+
+                if (TipoQuarto != null)
                 {
-                    cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);
+                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto and rs.CheckOut > @data";
+                }
+                else
+                {
+                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and rs.CheckOut > @data";
+                }
+
+                using (var cm = new SqlCommand(sql, cn))
+                {
+                    if (TipoQuarto != null)
+                    {
+                        cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);                        
+                    }
+
+                    cm.Parameters.AddWithValue("@data", data.ToShortDateString());
                     var rd = cm.ExecuteReader();
 
                     while (rd.Read())
                     {
-                        Reservas reserva = new Reservas
+                        Ocupado ocupado = new Ocupado
                         {
                             Idreserva = rd.GetInt64(rd.GetOrdinal("IDReserva")),
                             Idhotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
@@ -172,152 +272,160 @@ namespace Booking.Controllers
                             CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"))
                         };
 
-                        listReservas.Add(reserva);
+                        listReservas.Add(ocupado);
                     }
                     rd.Close();
-                }                         
-                
+                }
+                cn.Close();
+            }
 
-                foreach (CheckAvailability item in list.ToList())
+            return listReservas;
+        }
+
+        public List<QuartosCheck> AddLista(List<QuartosCheck> listQuartos, long idTipoQuarto, long idHotel, string tipoQuarto, int inventario)
+        {
+            QuartosCheck check = new QuartosCheck
+            {
+                IdTipoQuarto = idTipoQuarto,
+                IdHotel = idHotel,
+                TipoQuarto = tipoQuarto,
+                Inventario = inventario
+            };
+
+            listQuartos.Add(check);
+
+            return listQuartos;
+        }
+
+        public List<QuartosCheck> Disponibilidade(List<Inventario> list, List<Ocupado> listReservas, DateTime checkIn, DateTime checkOut, string TipoQuarto, int QuantQuartos)
+        {
+            int contaReservados = 0;
+            List<QuartosCheck> listQuartos = new List<QuartosCheck>();
+
+            foreach (Inventario item in list.ToList())
+            {
+                if (listReservas.Count == 0)
                 {
-                    if (listReservas.Count == 0)
+                    if (item.Inv >= QuantQuartos)
                     {
-                        if (item.Inv >= QuantQuartos)
+                        listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);                        
+                    }
+                }
+                else
+                {
+                    foreach (Ocupado rs in listReservas.ToList())
+                    {
+                        if (item.Id == rs.Idhotel && item.IdQuarto == rs.IdtipoQuarto)
                         {
-                            QuartosCheck check = new QuartosCheck
-                            {
-                                IdTipoQuarto = item.IdQuarto,
-                                IdHotel = item.Id,
-                                TipoQuarto = TipoQuarto,
-                                Inventario = item.Inv
-                            };
-
-                            listQuartos.Add(check);
-                        }
-                        else
-                        {
-                            if (listQuartos.Count() == 0)
-                            {                            
-                                int aviso = item.Inv;
-
-                                MostraAviso(aviso);
-                            }
+                            contaReservados++;
                         }
                     }
-                    else
-                    {                    
-                        foreach (Reservas rs in listReservas.ToList())
+
+                    foreach (Ocupado rs in listReservas.ToList())
+                    {
+                        if (item.Id == rs.Idhotel && item.IdQuarto == rs.IdtipoQuarto)
                         {
-                            if (item.Id == rs.Idhotel && item.IdQuarto == rs.IdtipoQuarto)
+                            if (item.Inv > contaReservados)
                             {
-                                contaReservados++;
+                                if (item.Inv - contaReservados >= QuantQuartos)
+                                {
+                                    listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                                }
                             }
-                        }
 
-                        foreach (Reservas rs in listReservas.ToList())
-                        {
-                            if (item.Id == rs.Idhotel && item.IdQuarto == rs.IdtipoQuarto)
+                            if (rs.CheckIn >= checkOut || rs.CheckOut <= checkIn)
                             {
-                                if (item.Inv > contaReservados)
+                                if (item.Inv >= QuantQuartos)
                                 {
-                                    if (item.Inv - contaReservados >= QuantQuartos)
-                                    {
-                                        QuartosCheck check = new QuartosCheck
-                                        {
-                                            IdTipoQuarto = item.IdQuarto,
-                                            IdHotel = item.Id,
-                                            TipoQuarto = TipoQuarto,
-                                            Inventario = item.Inv
-                                        };
-
-                                        listQuartos.Add(check);                                        
-                                    }     
+                                    listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
                                 }
-                                                                
-                                if (rs.CheckIn >= checkOut || rs.CheckOut <= checkIn)
-                                {
-                                    if (item.Inv >= QuantQuartos)
-                                    {
-                                        QuartosCheck check = new QuartosCheck
-                                        {
-                                            IdTipoQuarto = item.IdQuarto,
-                                            IdHotel = item.Id,
-                                            TipoQuarto = TipoQuarto,
-                                            Inventario = item.Inv
-                                        };
-
-                                        listQuartos.Add(check);
-                                    }
-                                    else
-                                    {
-                                        if (listQuartos.Count() == 0)
-                                        {
-                                            contaReservados--;
-                                            int aviso = (item.Inv - contaReservados);
-
-                                            MostraAviso(aviso);
-                                        }
-                                    }
-                                }
-                                else
-                                {                          
-                                    if (item.Inv >= QuantQuartos)
-                                    {
-                                        QuartosCheck check = new QuartosCheck
-                                        {
-                                            IdTipoQuarto = item.IdQuarto,
-                                            IdHotel = item.Id,
-                                            TipoQuarto = TipoQuarto,
-                                            Inventario = item.Inv
-                                        };
-
-                                        listQuartos.Add(check);
-                                    }
-                                    else
-                                    {
-                                        if (listQuartos.Count() == 0)
-                                        {
-                                            contaReservados--;
-                                            int aviso = (item.Inv - contaReservados);
-
-                                            MostraAviso(aviso);
-                                        }
-                                    }
-                                }               
                             }
                             else
                             {
                                 if (item.Inv >= QuantQuartos)
                                 {
-                                    QuartosCheck check = new QuartosCheck
-                                    {
-                                        IdTipoQuarto = item.IdQuarto,
-                                        IdHotel = item.Id,
-                                        TipoQuarto = TipoQuarto,
-                                        Inventario = item.Inv
-                                    };
-
-                                    listQuartos.Add(check);
-                                }
-                                else
-                                {
-                                    if (listQuartos.Count() == 0)
-                                    {
-                                        contaReservados--;
-                                        int aviso = (item.Inv - contaReservados);
-
-                                        MostraAviso(aviso);
-                                    }
+                                    listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
                                 }
                             }
                         }
+                        else
+                        {
+                            if (item.Inv >= QuantQuartos)
+                            {
+                                listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                            }
+                        }
                     }
-                    contaReservados = 0;                    
-                }                
-                cn.Close();
+                }
+                contaReservados = 0;
             }
             return listQuartos;
         }
+
+        public List<QuartosCheck> Disponibilidade(List<Inventario> list, List<Ocupado> listReservas, DateTime today, string TipoQuarto, int QuantQuartos)
+        {
+            int contaReservados = 0;
+            List<QuartosCheck> listQuartos = new List<QuartosCheck>();
+
+            foreach (Inventario item in list.ToList())
+            {
+                if (listReservas.Count == 0)
+                {
+                    if (item.Inv >= QuantQuartos)
+                    {
+                        listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                    }
+                }
+                else
+                {
+                    foreach (Ocupado rs in listReservas.ToList())
+                    {
+                        if (item.Id == rs.Idhotel && item.IdQuarto == rs.IdtipoQuarto)
+                        {
+                            contaReservados++;
+                        }
+                    }
+
+                    foreach (Ocupado rs in listReservas.ToList())
+                    {
+                        if (item.Id == rs.Idhotel && item.IdQuarto == rs.IdtipoQuarto)
+                        {
+                            if (item.Inv > contaReservados)
+                            {
+                                if (item.Inv - contaReservados >= QuantQuartos)
+                                {
+                                    listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                                }
+                            }
+                            if (rs.CheckIn >= today || rs.CheckOut <= today.AddDays(2))
+                            {
+                                if (item.Inv >= QuantQuartos)
+                                {
+                                    listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                                }
+                            }
+                            else
+                            {
+                                if (item.Inv >= QuantQuartos)
+                                {
+                                    listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.Inv >= QuantQuartos)
+                            {
+                                listQuartos = AddLista(listQuartos, item.IdQuarto, item.Id, item.TipoQuarto, item.Inv);
+                            }
+                        }
+                    }
+                }
+                contaReservados = 0;
+            }
+            return listQuartos;
+        }
+
 
         public List<string> PreencheTipos(string cs)
         {
@@ -378,22 +486,23 @@ namespace Booking.Controllers
 
                     while (rd.Read())
                     {
-                        var quartos = new QuartosDisp();
-
-                        quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
-                        quartos.IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel"));
-                        quartos.IdRegime = rd.GetByte(rd.GetOrdinal("IDRegime"));
-                        quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
-                        quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
-                        quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
-                        quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                        quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                        quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                        quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                        quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                        quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                        quartos.TipoRegime = rd.GetString(rd.GetOrdinal("TipoRegime"));
-                        quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
+                        var quartos = new QuartosDisp
+                        {
+                            IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
+                            IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
+                            IdRegime = rd.GetByte(rd.GetOrdinal("IDRegime")),
+                            Imagem = rd.GetString(rd.GetOrdinal("Imagem")),
+                            TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao")),
+                            Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade")),
+                            NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel")),
+                            NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas")),
+                            Morada = rd.GetString(rd.GetOrdinal("Morada")),
+                            Localidade = rd.GetString(rd.GetOrdinal("Localidade")),
+                            CodPostal = rd.GetString(rd.GetOrdinal("CodPostal")),
+                            Pais = rd.GetString(rd.GetOrdinal("Pais")),
+                            TipoRegime = rd.GetString(rd.GetOrdinal("TipoRegime")),
+                            Preco = rd.GetDecimal(rd.GetOrdinal("Preco"))
+                        };
 
                         list.Add(quartos);  
                     }
@@ -424,49 +533,65 @@ namespace Booking.Controllers
 
         public List<QuartosDisp> MostrarQuartos(string cs, List<QuartosCheck> result)
         {
+            string sql = "";
             var list = new List<QuartosDisp>();
 
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
 
-                string sql = "Select tq.IDTipoQuarto, h.IDHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
-                                "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
-                                "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime " +
-                                "and tq.Descricao = @tipo and tq.IDHotel = @hotel and tq.IDTipoQuarto = @idTipo and tq.Inventario = @inv";
-
                 foreach (QuartosCheck item in result)
-                {                
-
-                using (var cm = new SqlCommand(sql, cn))
                 {
-                    cm.Parameters.AddWithValue("@tipo", item.TipoQuarto);
-                    cm.Parameters.AddWithValue("@hotel", item.IdHotel);
-                    cm.Parameters.AddWithValue("@idTipo", item.IdTipoQuarto);
-                    cm.Parameters.AddWithValue("@inv", item.Inventario);
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
+                    if (item.TipoQuarto != null)
                     {
-                        QuartosDisp quartos = new QuartosDisp();
-
-                        quartos.IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto"));
-                        quartos.IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel"));
-                        quartos.Imagem = rd.GetString(rd.GetOrdinal("Imagem"));
-                        quartos.TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao"));
-                        quartos.Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade"));
-                        quartos.NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel"));
-                        quartos.NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas"));
-                        quartos.Morada = rd.GetString(rd.GetOrdinal("Morada"));
-                        quartos.Localidade = rd.GetString(rd.GetOrdinal("Localidade"));
-                        quartos.CodPostal = rd.GetString(rd.GetOrdinal("CodPostal"));
-                        quartos.Pais = rd.GetString(rd.GetOrdinal("Pais"));
-                        quartos.Preco = rd.GetDecimal(rd.GetOrdinal("Preco"));
-
-                        list.Add(quartos);
+                        sql = "Select tq.IDTipoQuarto, h.IDHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                            "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
+                            "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime " +
+                            "and tq.Descricao = @tipo and tq.IDHotel = @hotel and tq.IDTipoQuarto = @idTipo and tq.Inventario = @inv";
                     }
-                    rd.Close();
-                }
+                    else
+                    {
+                        sql = "Select tq.IDTipoQuarto, h.IDHotel, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, p.Preco " +
+                            "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
+                            "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime " +
+                            "and tq.IDHotel = @hotel and tq.IDTipoQuarto = @idTipo and tq.Inventario = @inv";
+                    }
+
+
+
+                    using (var cm = new SqlCommand(sql, cn))
+                    {
+                        if (item.TipoQuarto != null)
+                        {
+                            cm.Parameters.AddWithValue("@tipo", item.TipoQuarto);
+                        }
+                        cm.Parameters.AddWithValue("@hotel", item.IdHotel);
+                        cm.Parameters.AddWithValue("@idTipo", item.IdTipoQuarto);
+                        cm.Parameters.AddWithValue("@inv", item.Inventario);
+                        var rd = cm.ExecuteReader();
+
+                        while (rd.Read())
+                        {
+                            QuartosDisp quartos = new QuartosDisp
+                            {
+                                IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
+                                IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
+                                Imagem = rd.GetString(rd.GetOrdinal("Imagem")),
+                                TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao")),
+                                Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade")),
+                                NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel")),
+                                NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas")),
+                                Morada = rd.GetString(rd.GetOrdinal("Morada")),
+                                Localidade = rd.GetString(rd.GetOrdinal("Localidade")),
+                                CodPostal = rd.GetString(rd.GetOrdinal("CodPostal")),
+                                Pais = rd.GetString(rd.GetOrdinal("Pais")),
+                                Preco = rd.GetDecimal(rd.GetOrdinal("Preco"))
+                            };
+
+                            list.Add(quartos);
+                        }
+                        rd.Close();
+                    }
                 }
 
                 for (int i = 0; i <= list.Count() - 1; i++)
