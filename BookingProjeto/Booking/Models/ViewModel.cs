@@ -16,6 +16,14 @@ namespace Booking.Models
         public ViewModel(List<QuartosDisp> quartos)
         {
             Quartos = quartos;
+
+        }
+
+        public ViewModel(List<QuartosDisp> quartos, List<Inventario> inv, List<Ocupado> reservas)
+        {
+            Quartos = quartos;
+            Inv = inv;
+            Reservas = reservas;
         }
 
         public ViewModel(List<RegimeQuarto> regimes, List<string> tipoPagamento, Dados dados, List<int> quantQuartos)
