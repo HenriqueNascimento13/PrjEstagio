@@ -19,11 +19,11 @@ namespace Booking.Models
 
         }
 
-        public ViewModel(List<QuartosDisp> quartos, List<Inventario> inv, List<Ocupado> reservas)
+        public ViewModel(List<QuartosDisp> quartos, List<Inventario> inv, List<Ocupado> ocupado)
         {
             Quartos = quartos;
             Inv = inv;
-            Reservas = reservas;
+            Ocupado = ocupado;
         }
 
         public ViewModel(List<RegimeQuarto> regimes, List<string> tipoPagamento, Dados dados, List<int> quantQuartos)
@@ -43,6 +43,6 @@ namespace Booking.Models
         public List<QuartosDisp> Quartos { get; private set; }
         public List<QuartosCheck> QuartosCheck { get; private set; }
         public List<Inventario> Inv { get; private set; }
-        public List<Ocupado> Reservas { get; private set; }
+        public List<Ocupado> Ocupado { get; private set; }
     }
 }

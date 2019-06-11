@@ -46,14 +46,15 @@
                 </div>
             </div>
         </div>
+
         @foreach (Inventario t in Model.Inv)
         {
-            @*@foreach (Inventario r in Model)
-            {*@
-                @if (Model.Inv != null && item.IdTipoQuarto == t.IdQuarto)
+            @foreach (Ocupado r in Model.Ocupado)
+            {
+                @if (item.IdHotel == t.Id && item.IdTipoQuarto == t.IdQuarto && item.IdHotel == r.Idhotel && item.IdTipoQuarto == r.IdtipoQuarto)
                 {
                     <div style="margin-bottom: 2%">
-                        <table border="1" width="50%" align="center">
+                        <table @*class="table"*@  border="1" width="50%" align="center">
                             <tr>
                                 <th> Data </th>
                                 <th> Inventario </th>
@@ -61,17 +62,20 @@
                                 <th> Livres </th>
                             </tr>
 
-                            <tr>
-                                <th>@t.Id</th>
-                                <th>@t.Inv</th>
-                                <th>@t.TipoQuarto</th>
-                                <th>@t.IdQuarto</th>
-                            </tr>
+                            @foreach (DateTime data in r.Datas)
+                            {
+                                <tr>
+                                    <th>@data.ToShortDateString()</th>
+                                    <th>@t.Inv</th>
+                                    <th>@r.QuantQuartos</th>
+                                    <th>@(t.Inv - r.QuantQuartos)</th>
+                                </tr>
+                            }
 
                         </table>
                     </div>
                 }
-            @*}*@
+            }
         }
     }
 </div>

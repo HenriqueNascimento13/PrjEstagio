@@ -20,13 +20,14 @@ namespace Booking.Models
             CheckOut = checkOut;
         }
 
-        public Ocupado(long idReserva, long idHotel, long idTipoQuarto, DateTime checkIn, DateTime checkOut, List<DateTime> datas)
+        public Ocupado(long idReserva, long idHotel, long idTipoQuarto, DateTime checkIn, DateTime checkOut, int quantQuartos, List<DateTime> datas)
         {
             Idreserva = idReserva;
             Idhotel = idHotel;
             IdtipoQuarto = idTipoQuarto;
             CheckIn = checkIn;
             CheckOut = checkOut;
+            QuantQuartos = quantQuartos;
             Datas = datas;
         }
 

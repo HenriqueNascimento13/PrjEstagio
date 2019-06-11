@@ -50,7 +50,7 @@ namespace Booking.Controllers
 
             ViewBag.Data = today.ToString("yyyy-MM-dd"); //envia a data de hoje para o form
 
-            ViewBag.DataSaida = today.AddDays(2).ToString("yyyy-MM-dd"); //envia a data de hoje para o form
+            ViewBag.DataSaida = today.AddDays(2).ToString("yyyy-MM-dd"); //envia a data para o form
 
             Dados dados = new Dados(hotel, quarto, preco, CheckIn, CheckOut, capacidade, morada, localidade, codPostal, pais);
 
@@ -112,7 +112,7 @@ namespace Booking.Controllers
         {            
             List<Inventario> list = GetInventarios(cs, TipoQuarto); //Todos os inventarios do tipo de quarto selecionado
 
-            List<Ocupado> listReservas = GetReservas(cs, TipoQuarto, checkIn, checkOut); //Todas as reservas de um tipo de quarto
+            List<Ocupado> listReservas = GetReservas(cs, TipoQuarto/*, checkIn, checkOut*/); //Todas as reservas de um tipo de quarto
 
             List<QuartosCheck> listQuartos = Disponibilidade(list, listReservas, checkIn, checkOut, TipoQuarto, QuantQuartos); //Verifica quartos disponiveis
 
@@ -151,21 +151,21 @@ namespace Booking.Controllers
             {
                 List<QuartosCheck> result = CheckAvailability(cs, today, tipoQuarto, QuantQuartos);
 
-                var list2 = MostrarQuartos(cs, result);
+                var list = MostrarQuartos(cs, result);
 
-                model = new ViewModel(list2);
+                model = new ViewModel(list, GetInventarios(cs, tipoQuarto), GetReservas(cs, tipoQuarto));
             }
             else
             {
                 List<QuartosCheck> result = CheckAvailability(cs, CheckIn, CheckOut, tipoQuarto, QuantQuartos);
 
-                var list2 = MostrarQuartos(cs, result);
+                var list = MostrarQuartos(cs, result);
 
                 ViewBag.ci = CheckIn;
 
                 ViewBag.co = CheckOut;
 
-                model = new ViewModel(list2, GetInventarios(cs, tipoQuarto), GetReservas(cs, tipoQuarto));
+                model = new ViewModel(list, GetInventarios(cs, tipoQuarto), GetReservas(cs, tipoQuarto));
             }
 
             return model;
@@ -233,10 +233,10 @@ namespace Booking.Controllers
             return list;
         }
 
-        public List<Ocupado> GetReservas(string cs, string TipoQuarto, DateTime ci, DateTime? co)
+        public List<Ocupado> GetReservas(string cs, string TipoQuarto/*, DateTime ci, DateTime? co*/)
         {
             string sql = "";
-            List<Ocupado> listReservas = new List<Ocupado>();
+            List<Ocupado> listReservas = new List<Ocupado>();            
             DateTime data = DateTime.Now.AddDays(-1);
 
             using (var cn = new SqlConnection(cs))
@@ -245,11 +245,11 @@ namespace Booking.Controllers
 
                 if (TipoQuarto != null)
                 {
-                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto and rs.CheckOut > @data";
+                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut, rs.QuantQuartos from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto"/* and rs.CheckOut > @data*/;
                 }
                 else
                 {
-                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and rs.CheckOut > @data";
+                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut, rs.QuantQuartos from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto"/* and rs.CheckOut > @data*/;
                 }
 
                 using (var cm = new SqlCommand(sql, cn))
@@ -259,24 +259,27 @@ namespace Booking.Controllers
                         cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);
                     }
 
-                    cm.Parameters.AddWithValue("@data", data.ToShortDateString());
+                    //cm.Parameters.AddWithValue("@data", data.ToShortDateString());
                     var rd = cm.ExecuteReader();
 
                     while (rd.Read())
                     {
+                        List<DateTime> listDatas = new List<DateTime>();
+
+                        for (DateTime i = rd.GetDateTime(rd.GetOrdinal("CheckIn")); i < rd.GetDateTime(rd.GetOrdinal("CheckOut")); i = i.AddDays(1))
+                        {
+                            listDatas.Add(i);
+                        }
                         Ocupado ocupado = new Ocupado
                         {
                             Idreserva = rd.GetInt64(rd.GetOrdinal("IDReserva")),
                             Idhotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
                             IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
                             CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn")),
-                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"))
+                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut")),
+                            QuantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos")),
+                            Datas = listDatas
                         };
-
-                        for (DateTime i = ocupado.CheckIn; i < ocupado.CheckOut; i = i.AddDays(1))
-                        {
-                            ocupado.Datas.Add(i);
-                        }
 
                         listReservas.Add(ocupado);
                     }
@@ -285,59 +288,55 @@ namespace Booking.Controllers
                 cn.Close();
             }
 
+            listReservas = OrganizaReservas(listReservas);
+
             return listReservas;
         }
 
-        public List<Ocupado> GetReservas(string cs, string TipoQuarto)
+        public List<Ocupado> OrganizaReservas(List<Ocupado> listReservas)
         {
-            string sql = "";
-            List<Ocupado> listReservas = new List<Ocupado>();
-            DateTime data = DateTime.Now.AddDays(-1);
-
-            using (var cn = new SqlConnection(cs))
+            for (int i = 0; i <= listReservas.Count() - 1; i++)
             {
-                cn.Open();
-
-                if (TipoQuarto != null)
+                for (int y = 0; y <= listReservas.Count() - 1; y++)
                 {
-                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto and rs.CheckOut > @data";
-                }
-                else
-                {
-                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and rs.CheckOut > @data";
-                }
-
-                using (var cm = new SqlCommand(sql, cn))
-                {
-                    if (TipoQuarto != null)
+                    if (i != y)
                     {
-                        cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);                        
-                    }
-
-                    cm.Parameters.AddWithValue("@data", data.ToShortDateString());
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
-                    {
-                        Ocupado ocupado = new Ocupado
+                        if (listReservas[i].IdtipoQuarto == listReservas[y].IdtipoQuarto && listReservas[i].Idhotel == listReservas[y].Idhotel && 
+                            listReservas[i].CheckIn == listReservas[y].CheckIn && listReservas[i].CheckOut == listReservas[y].CheckOut)
                         {
-                            Idreserva = rd.GetInt64(rd.GetOrdinal("IDReserva")),
-                            Idhotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
-                            IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
-                            CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn")),
-                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"))
-                        };
-
-                        listReservas.Add(ocupado);
+                            listReservas[y].QuantQuartos += listReservas[i].QuantQuartos;
+                            listReservas.Remove(listReservas[i]);
+                            y--;
+                        }
+                        else
+                        {
+                            if (listReservas[i].IdtipoQuarto == listReservas[y].IdtipoQuarto && listReservas[i].Idhotel == listReservas[y].Idhotel)
+                            {
+                                //foreach (DateTime j in listReservas[i].Datas)
+                                //{
+                                //    foreach (DateTime k in listReservas[y].Datas)
+                                //    {
+                                for (DateTime j = listReservas[i].CheckIn; j < listReservas[i].CheckOut; j = j.AddDays(1))
+                                {
+                                    for (DateTime k = listReservas[y].CheckIn; k < listReservas[y].CheckOut; k = k.AddDays(1))
+                                    {
+                                        if (k == j)
+                                        {
+                                            listReservas[y].QuantQuartos += listReservas[i].QuantQuartos;
+                                            //listReservas.Remove(listReservas[i]);
+                                            //y--;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                    rd.Close();
                 }
-                cn.Close();
-            }            
+            }
 
             return listReservas;
         }
-
+                
         public List<QuartosCheck> AddLista(List<QuartosCheck> listQuartos, long idTipoQuarto, long idHotel, string tipoQuarto, int inventario)
         {
             QuartosCheck check = new QuartosCheck
