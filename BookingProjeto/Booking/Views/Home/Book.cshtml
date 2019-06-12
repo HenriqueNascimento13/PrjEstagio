@@ -6,7 +6,7 @@
 }
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<div class="container body-content" id="containerPage">
+<div class="container body-content" id="containerPage"  onSubmit="PopUp()">
     <form method="POST">
         <div class="main-container">
 
@@ -177,7 +177,7 @@
                         <strong>Verifique os dados antes de fazer uma reserva</strong>
                         <br />
                         <br />
-                        <button asp-action="Book" asp-controller="Home" class="btn btn-success" type="submit" onclick="PopUp()"> Reservar agora <i class="glyphicon glyphicon-chevron-right" style="color:white"></i> </button>
+                        <button asp-action="Book" asp-controller="Home" class="btn btn-success" type="submit"> Reservar agora <i class="glyphicon glyphicon-chevron-right" style="color:white"></i> </button>
                     </div>
                 </div>
             </div>
@@ -199,12 +199,13 @@
                 <div>
                     <strong>@Model.Dados.NomeHotel</strong>
                     <br />
+                    
+                    <div class="row">
+                        <div class="col-xs-8">@Model.Dados.TipoQuarto</div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-8">Capacidade</div>
                         <div class="col-xs-4 pull-right"><input name="capacidade" readonly="readonly" value="@Model.Dados.Capacidade" class="inputBookRight" /></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-8">@Model.Dados.TipoQuarto</div>
                     </div>
                     @foreach (var item in Model.Regimes)
                     {

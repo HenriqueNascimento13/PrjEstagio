@@ -50,7 +50,7 @@ namespace Booking.Controllers
 
             ViewBag.Data = today.ToString("yyyy-MM-dd"); //envia a data de hoje para o form
 
-            ViewBag.DataSaida = today.AddDays(2).ToString("yyyy-MM-dd"); //envia a data de hoje para o form
+            ViewBag.DataSaida = today.AddDays(2).ToString("yyyy-MM-dd"); //envia a data para o form
 
             Dados dados = new Dados(hotel, quarto, preco, CheckIn, CheckOut, capacidade, morada, localidade, codPostal, pais);
 
@@ -101,11 +101,9 @@ namespace Booking.Controllers
 
             List<string> list3 = PreencheTipos(cs); //preenche combobox com os tipos de quartos
 
-            ViewBag.List = list3; //envia a lista para o form
+            ViewBag.List = list3; //envia a lista para o form         
 
-            var list = MostrarQuartos(cs); //lista de quartos            
-
-            ViewModel model = ResultadoForm(cs, CheckIn, CheckOut, list, tipoQuarto, QuantQuartos, today); //Resultado da pesquisa  
+            ViewModel model = ResultadoForm(cs, CheckIn, CheckOut, tipoQuarto, QuantQuartos, today); //Resultado da pesquisa  
 
             return View(model);
         }
@@ -114,7 +112,7 @@ namespace Booking.Controllers
         {            
             List<Inventario> list = GetInventarios(cs, TipoQuarto); //Todos os inventarios do tipo de quarto selecionado
 
-            List<Ocupado> listReservas = GetReservas(cs, TipoQuarto); //Todas as reservas de um tipo de quarto
+            List<Ocupado> listReservas = GetReservas(cs, TipoQuarto/*, checkIn, checkOut*/); //Todas as reservas de um tipo de quarto
 
             List<QuartosCheck> listQuartos = Disponibilidade(list, listReservas, checkIn, checkOut, TipoQuarto, QuantQuartos); //Verifica quartos disponiveis
 
@@ -145,7 +143,7 @@ namespace Booking.Controllers
             }
         }
 
-        public ViewModel ResultadoForm(string cs, DateTime CheckIn, DateTime CheckOut, List<QuartosDisp> list, string tipoQuarto, int QuantQuartos, DateTime today)
+        public ViewModel ResultadoForm(string cs, DateTime CheckIn, DateTime CheckOut, string tipoQuarto, int QuantQuartos, DateTime today)
         {
             ViewModel model = new ViewModel();
 
@@ -153,25 +151,21 @@ namespace Booking.Controllers
             {
                 List<QuartosCheck> result = CheckAvailability(cs, today, tipoQuarto, QuantQuartos);
 
-                var list2 = MostrarQuartos(cs, result);
+                var list = MostrarQuartos(cs, result);
 
-                model = new ViewModel(list2);
+                model = new ViewModel(list, GetInventarios(cs, tipoQuarto), GetReservas(cs, tipoQuarto));
             }
             else
             {
                 List<QuartosCheck> result = CheckAvailability(cs, CheckIn, CheckOut, tipoQuarto, QuantQuartos);
 
-                var list2 = MostrarQuartos(cs, result);
-
-                ViewBag.listInv = GetInventarios(cs, tipoQuarto);
-
-                ViewBag.listRes = GetReservas(cs, tipoQuarto);
+                var list = MostrarQuartos(cs, result);
 
                 ViewBag.ci = CheckIn;
 
                 ViewBag.co = CheckOut;
 
-                model = new ViewModel(list2);
+                model = new ViewModel(list, GetInventarios(cs, tipoQuarto), GetReservas(cs, tipoQuarto));
             }
 
             return model;
@@ -238,10 +232,11 @@ namespace Booking.Controllers
 
             return list;
         }
-        public List<Ocupado> GetReservas(string cs, string TipoQuarto)
+
+        public List<Ocupado> GetReservas(string cs, string TipoQuarto/*, DateTime ci, DateTime? co*/)
         {
             string sql = "";
-            List<Ocupado> listReservas = new List<Ocupado>();
+            List<Ocupado> listReservas = new List<Ocupado>();            
             DateTime data = DateTime.Now.AddDays(-1);
 
             using (var cn = new SqlConnection(cs))
@@ -250,32 +245,40 @@ namespace Booking.Controllers
 
                 if (TipoQuarto != null)
                 {
-                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto and rs.CheckOut > @data";
+                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut, rs.QuantQuartos from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and tq.Descricao = @tipoQuarto"/* and rs.CheckOut > @data*/;
                 }
                 else
                 {
-                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto and rs.CheckOut > @data";
+                    sql = "select rs.IDReserva, rs.IDHotel, rs.IDTipoQuarto, rs.CheckIn, rs.CheckOut, rs.QuantQuartos from Reservas rs, TipoQuarto tq where rs.IDTipoQuarto = tq.IDTipoQuarto"/* and rs.CheckOut > @data*/;
                 }
 
                 using (var cm = new SqlCommand(sql, cn))
                 {
                     if (TipoQuarto != null)
                     {
-                        cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);                        
+                        cm.Parameters.AddWithValue("@tipoQuarto", TipoQuarto);
                     }
 
-                    cm.Parameters.AddWithValue("@data", data.ToShortDateString());
+                    //cm.Parameters.AddWithValue("@data", data.ToShortDateString());
                     var rd = cm.ExecuteReader();
 
                     while (rd.Read())
                     {
+                        List<DateTime> listDatas = new List<DateTime>();
+
+                        for (DateTime i = rd.GetDateTime(rd.GetOrdinal("CheckIn")); i < rd.GetDateTime(rd.GetOrdinal("CheckOut")); i = i.AddDays(1))
+                        {
+                            listDatas.Add(i);
+                        }
                         Ocupado ocupado = new Ocupado
                         {
                             Idreserva = rd.GetInt64(rd.GetOrdinal("IDReserva")),
                             Idhotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
                             IdtipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
                             CheckIn = rd.GetDateTime(rd.GetOrdinal("CheckIn")),
-                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut"))
+                            CheckOut = rd.GetDateTime(rd.GetOrdinal("CheckOut")),
+                            QuantQuartos = rd.GetInt32(rd.GetOrdinal("QuantQuartos")),
+                            Datas = listDatas
                         };
 
                         listReservas.Add(ocupado);
@@ -285,9 +288,67 @@ namespace Booking.Controllers
                 cn.Close();
             }
 
+            listReservas = OrganizaReservas(listReservas);
+
             return listReservas;
         }
 
+        public List<Ocupado> OrganizaReservas(List<Ocupado> listReservas)
+        {
+            
+
+            for (int i = 0; i <= listReservas.Count() - 1; i++)
+            {
+                for (int y = 0; y <= listReservas.Count() - 1; y++)
+                {
+                    if (i != y)
+                    {
+                        if (listReservas[i].IdtipoQuarto == listReservas[y].IdtipoQuarto && listReservas[i].Idhotel == listReservas[y].Idhotel && 
+                            listReservas[i].CheckIn == listReservas[y].CheckIn && listReservas[i].CheckOut == listReservas[y].CheckOut)
+                        {
+                            listReservas[y].QuantQuartos += listReservas[i].QuantQuartos;
+                            listReservas.Remove(listReservas[i]);
+                            y--;
+                        }
+                        //else
+                        //{
+                        //    if (listReservas[i].IdtipoQuarto == listReservas[y].IdtipoQuarto && listReservas[i].Idhotel == listReservas[y].Idhotel)
+                        //    {
+                        //        int numj = 0;
+                        //        foreach (DateTime k in listReservas[y].Datas)
+                        //        {
+                        //            int numk = 0;
+                        //            foreach (DateTime j in listReservas[i].Datas)
+                        //            {
+                        //                //for (DateTime l = listReservas[i].CheckIn; l < listReservas[i].CheckOut; l = l.AddDays(1))
+                        //                //{
+                        //                //    for (DateTime m = listReservas[y].CheckIn; m < listReservas[y].CheckOut; m = m.AddDays(1))
+                        //                //    {
+                        //                if (k == j)
+                        //                {
+                        //                    if (listReservas[i].Datas[0] == listReservas[y].Datas[3])
+                        //                    {
+                        //                        listReservas[y].QuantQuartos += listReservas[i].QuantQuartos;
+
+                        //                        //y--;
+                        //                    }
+
+                        //                }
+                        //                numk++;
+                        //            }
+                        //            listReservas[i].Datas.RemoveAt(numj);
+                        //            numj++;
+                        //        }
+
+                        //    }
+                        //}
+                    }
+                }
+            }
+
+            return listReservas;
+        }
+                
         public List<QuartosCheck> AddLista(List<QuartosCheck> listQuartos, long idTipoQuarto, long idHotel, string tipoQuarto, int inventario)
         {
             QuartosCheck check = new QuartosCheck
@@ -433,70 +494,6 @@ namespace Booking.Controllers
             return listQuartos;
         }
         
-        
-
-        public List<QuartosDisp> MostrarQuartos(string cs)
-        {
-            var list = new List<QuartosDisp>();
-
-            using (var cn = new SqlConnection(cs))
-            {
-                cn.Open();
-
-                string sql = "Select tq.IDTipoQuarto, h.IDHotel, r.IDRegime, tq.Imagem, tq.Descricao, tq.Capacidade, h.NomeHotel, h.NumEstrelas, h.Morada, h.Localidade, h.CodPostal, h.Pais, r.TipoRegime, p.Preco " +
-                             "From TipoQuarto tq, Hoteis h, Precario p, Regimes r " +
-                             "Where tq.IDHotel = h.IDHotel and tq.IDTipoQuarto = p.IDTipoQuarto and r.IDRegime = p.IDRegime";
-
-                using (var cm = new SqlCommand(sql, cn))
-                {
-                    var rd = cm.ExecuteReader();
-
-                    while (rd.Read())
-                    {
-                        var quartos = new QuartosDisp
-                        {
-                            IdTipoQuarto = rd.GetInt64(rd.GetOrdinal("IDTipoQuarto")),
-                            IdHotel = rd.GetInt64(rd.GetOrdinal("IDHotel")),
-                            IdRegime = rd.GetByte(rd.GetOrdinal("IDRegime")),
-                            Imagem = rd.GetString(rd.GetOrdinal("Imagem")),
-                            TipoQuarto = rd.GetString(rd.GetOrdinal("Descricao")),
-                            Capacidade = rd.GetByte(rd.GetOrdinal("Capacidade")),
-                            NomeHotel = rd.GetString(rd.GetOrdinal("NomeHotel")),
-                            NumEstrelas = rd.GetString(rd.GetOrdinal("NumEstrelas")),
-                            Morada = rd.GetString(rd.GetOrdinal("Morada")),
-                            Localidade = rd.GetString(rd.GetOrdinal("Localidade")),
-                            CodPostal = rd.GetString(rd.GetOrdinal("CodPostal")),
-                            Pais = rd.GetString(rd.GetOrdinal("Pais")),
-                            TipoRegime = rd.GetString(rd.GetOrdinal("TipoRegime")),
-                            Preco = rd.GetDecimal(rd.GetOrdinal("Preco"))
-                        };
-
-                        list.Add(quartos);  
-                    }
-                    rd.Close();
-                }
-
-                for (int i = 0; i <= list.Count() - 1; i++)
-                {
-                    for (int y = 0; y <= list.Count() - 1; y++)
-                    {
-                        if (i != y)
-                        {
-                            if (list[i].IdTipoQuarto == list[y].IdTipoQuarto && list[i].Capacidade == list[y].Capacidade)
-                            {
-                                if (list[i].Preco > list[y].Preco)
-                                {
-                                    list.Remove(list[i]);
-                                    y--;
-                                }
-                            }
-                        }
-                    }
-                }
-                cn.Close();
-            }
-            return list;
-        }
 
         public List<QuartosDisp> MostrarQuartos(string cs, List<QuartosCheck> result)
         {

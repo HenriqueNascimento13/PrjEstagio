@@ -46,29 +46,36 @@
                 </div>
             </div>
         </div>
-        @*<table>
-            <tr>
-                <th>Data</th>
-                <th>Inventario</th>
-                <th>Reservados</th>
-                <th>Livres</th>
-            </tr>
-            <tr>
-                @for (DateTime i = ViewBag.ci; i < ViewBag.co; i = i.AddDays(1))
-                {@foreach (var t in ViewBag.listInv.ToList())
-                    {@foreach (var r in ViewBag.listRes.ToList())
-                        {
-                            <th>@i</th>
 
+        @foreach (Inventario t in Model.Inv)
+        {
+            @foreach (Ocupado r in Model.Ocupado)
+            {
+                @if (item.IdHotel == t.Id && item.IdTipoQuarto == t.IdQuarto && item.IdHotel == r.Idhotel && item.IdTipoQuarto == r.IdtipoQuarto)
+                {
+                    <div style="margin-bottom: 2%">
+                        <table @*class="table"*@  border="1" width="50%" align="center">
+                            <tr>
+                                <th> Data </th>
+                                <th> Inventario </th>
+                                <th> Reservados </th>
+                                <th> Livres </th>
+                            </tr>
 
+                            @foreach (DateTime data in r.Datas)
+                            {
+                                <tr>
+                                    <th>@data.ToShortDateString()</th>
+                                    <th>@t.Inv</th>
+                                    <th>@r.QuantQuartos</th>
+                                    <th>@(t.Inv - r.QuantQuartos)</th>
+                                </tr>
+                            }
 
-                            <th>@t.Inv</th>
-
-
-                            <th>@ViewBag.listRes.Count()</th>
-
-                            <th></th>}}}
-            </tr>
-        </table>*@
+                        </table>
+                    </div>
+                }
+            }
         }
-    </div>
+    }
+</div>

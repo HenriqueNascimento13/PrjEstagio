@@ -11,7 +11,6 @@ namespace Booking.Models
         {
 
         }
-
         public Ocupado(long idReserva, long idHotel, long idTipoQuarto, DateTime checkIn, DateTime checkOut)
         {
             Idreserva = idReserva;
@@ -21,12 +20,23 @@ namespace Booking.Models
             CheckOut = checkOut;
         }
 
+        public Ocupado(long idReserva, long idHotel, long idTipoQuarto, DateTime checkIn, DateTime checkOut, int quantQuartos, List<DateTime> datas)
+        {
+            Idreserva = idReserva;
+            Idhotel = idHotel;
+            IdtipoQuarto = idTipoQuarto;
+            CheckIn = checkIn;
+            CheckOut = checkOut;
+            QuantQuartos = quantQuartos;
+            Datas = datas;
+        }
+
         public long Idreserva { get; set; }
         public long Idhotel { get; set; }
         public long IdtipoQuarto { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
         public int QuantQuartos { get; set; }
-        public DateTime Data { get; set; }
+        public List<DateTime> Datas { get; set; }
     }
 }
